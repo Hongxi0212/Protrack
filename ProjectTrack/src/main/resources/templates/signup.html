@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5; Program Framework base on Spring">
+    <meta name="author" content="hasan突击队">
+    <meta name="keywords" content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link href="/css/vendor/360/app.css" rel="stylesheet">
+    <link href="/css/vendor/360/tabler.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="page page-center">
+    <div class="container-tight py-2">
+        <div class="text-center mb-2">
+            <p class="navbar-brand-autodark" style="font-size: 28px; font-weight: bold">Project Track</p>
+        </div>
+
+        <form class="card card-md">
+            <input type="hidden">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Create new account</h2>
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input id="name" type="text" class="form-control " name="name" value="">
+
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input id="email" type="email" class="form-control " name="email" value="" autocomplete="email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="role" class="form-label">Join as a</label>
+                    <div class="input-group input-group-flat">
+                        <select class="form-select" id='role' name='role'>
+                            <option  value="Student">Student</option>
+                            <option  value="Instructor">Instructor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="timezone" class="form-label">Timezone</label>
+
+                    <select id='timezone' name='timezone' class="form-select form-control ">
+
+                        <option  value="">Select</option>
+
+                        <option  value="Africa/Abidjan">Africa/Abidjan</option>
+
+                        <option  value="America/Adak">America/Adak</option>
+
+                        <option  value="Antarctica/Casey">Antarctica/Casey</option>
+
+                        <option  value="Arctic/Longyearbyen">Arctic/Longyearbyen</option>
+
+                        <option  value="Asia/Aden">Asia/Aden</option>
+
+                        <option  value="Atlantic/Azores">Atlantic/Azores</option>
+
+                        <option  value="Australia/Adelaide">Australia/Adelaide</option>
+
+                        <option  value="Europe/Amsterdam">Europe/Amsterdam</option>
+
+                        <option  value="Indian/Antananarivo">Indian/Antananarivo</option>
+
+                        <option  value="Pacific/Apia">Pacific/Apia</option>
+
+                        <option  value="UTC">UTC</option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" type="password" class="form-control " name="password" autocomplete="new-password">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password-confirm" class="form-label">Confirm Password</label>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary w-100">Create new account</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

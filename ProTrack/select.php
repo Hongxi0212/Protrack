@@ -2,7 +2,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "123456";
+$password = "";
 $database = "store";
 
 // 创建连接
