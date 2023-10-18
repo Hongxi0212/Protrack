@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jQuery.Gantt - Test Suite 01</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=IE8">
+    <link href="../css/style.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            padding: 0 0 50px 0;
+        }
+
+        .contain {
+            width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+
+</head>
+<body>
+<div class="gantt_ot" style="width:1200px; margin:100px auto;">
+    <div class="gantt"></div>
+</div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.fn.gantt.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        var today = moment();
+        var andTwoHours = moment().add(2, "hours");
+
+        var today_friendly = "/Date(" + today.valueOf() + ")/";
+        var next_friendly = "/Date(" + andTwoHours.valueOf() + ")/";
+
+        $(".gantt").gantt({
+            source: [
+                {
+                    name: "task1",
+                    desc: "",
+                    values: [
+                        {
+                        from: "/Date(1320192000000)/", //这里需要的时间为毫秒
+                        //。计算方式为时间变量减去时间初始值（1970-1-1）的差值换算为毫秒
+                        to: "/Date(1320592000000)/",
+                        label: "Label",
+                        customClass: "ganttRed" //这里是这条记录的在甘特图上的颜色
+                    }
+                    ]
+                },
+                {
+                    name: "task2",
+                    desc: "Comment",
+                    values: [
+                        {
+                        from: "/Date(1322611200000)/",
+                        to: "/Date(1323302400000)/",
+                        label: "",
+                        customClass: "ganttGreen"
+                    }
+                    ]
+                }
+            ],
+            scale: "hours",
+            minScale: "hours",
+            navigate: "scroll"
+        });
+
+    });
+
+</script>
+</body>
+
+</html>

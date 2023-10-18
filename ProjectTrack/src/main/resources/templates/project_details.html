@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5; Program Framework base on Spring">
+    <meta name="author" content="hasan突击队">
+    <meta name="keywords"
+          content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../static/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="../static/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="../static/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="../static/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="../static/vendor/niceadmin/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: NiceAdmin
+    * Updated: Sep 18 2023 with Bootstrap v5.3.2
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="/dashboard_stu" class="logo d-flex align-items-center">
+            <span class="d-none d-lg-block">ProTrack</span>
+        </a>
+    </div>
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown pe-3">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Stu. CBA</span>
+                </a>
+            </li><!-- End Profile Nav -->
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
+</header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/dashboard_stu">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-heading">Pages</li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/projects">
+                <i class="bi bi-gem"></i>
+                <span>Projects</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/message">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>Messages</span>
+            </a>
+        </li><!-- End F.A.Q Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/calendar">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <span>Calendar</span>
+            </a>
+        </li><!-- End Register Page Nav -->
+
+        <li class="nav-heading">Others</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Logout</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/contact">
+                <i class="bi bi-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </li><!-- End Contact Page Nav -->
+    </ul>
+</aside>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Gamified Network</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+                <li class="breadcrumb-item active">Project Details</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                    Overview
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Plan
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">
+                                    Syllabus
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                                    Validation
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <h5 class="card-title">About</h5>
+                                <p class="small fst-italic">This is a Capstone Design Project.</p>
+
+                                <h5 class="card-title">Details</h5>
+                                <p class="small fst-italic">This is a Capstone Design Project.</p>
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-edit">
+
+                                <!-- Profile Edit Form -->
+                                <form>
+                                    <div class="row mb-3">
+                                        <label for="projectTitle_plan" class="col-md-3 col-form-label">Project
+                                            Title</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="projectTitle_plan" type="text" class="form-control"
+                                                   id="projectTitle_plan" value="Gamified Network">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="teamNumbers_plan"
+                                               class="col-md-3 col-form-label">Team Numbers</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="teamNumbers_plan" type="text" class="form-control"
+                                                   id="teamNumbers_plan"
+                                                   value="4">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Team
+                                            Members</label>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:25%;">Name</th>
+                                                            <th style="width:25%">ID</th>
+                                                            <th style="width:25%">Contact</th>
+                                                            <th style="width:25%">Designation</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Name"
+                                                                       value="Jane Doe"></td>
+                                                            <td><input type="text" class="form-control" placeholder="ID"
+                                                                       value="123"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Contact"
+                                                                       value="janedoe123@yahoo.com"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Designation" value="Leader"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Name"
+                                                                       value="John Doe"></td>
+                                                            <td><input type="text" class="form-control" placeholder="ID"
+                                                                       value="256"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Contact"
+                                                                       value="johndoe256@yahoo.com"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Designation" value="Member"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="meetingTime" class="col-md-3 col-form-label">Meeting
+                                            Time</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="meetingTime" type="text" class="form-control" id="meetingTime"
+                                                   value="Wed. 4-5pm">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="meetingPlace" class="col-md-3 col-form-label">Meeting
+                                            Place</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="meetingPlace" type="text" class="form-control"
+                                                   id="meetingPlace"
+                                                   value="Office">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Deliverables</label>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:10%;">Task</th>
+                                                            <th style="width:26%;">Item</th>
+                                                            <th style="width:16%">Phase</th>
+                                                            <th style="width:16%">Responsible</th>
+                                                            <th style="width:16%">Mode</th>
+                                                            <th style="width:16%">Comment</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control" value="1"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="User interface">
+                                                            </td>
+                                                            <td><input type="text" class="form-control" value="IV"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="John Doe"></td>
+                                                            <td><input type="text" class="form-control" value="Link">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Comment">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control" value="1.1">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="Login screen">
+                                                            </td>
+                                                            <td><input type="text" class="form-control" value="IV"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="John Doe"></td>
+                                                            <td><input type="text" class="form-control" value="Link">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Comment">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control" value="1.2">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="Signup screen">
+                                                            </td>
+                                                            <td><input type="text" class="form-control" value="IV"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="John Doe"></td>
+                                                            <td><input type="text" class="form-control" value="Link">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Comment">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control" value="2"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="ER Diagram"></td>
+                                                            <td><input type="text" class="form-control" value="I"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="Jane Doe"></td>
+                                                            <td><input type="text" class="form-control" value="Image">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Comment">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" class="form-control" value="2.1">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="Revise ER Diagram"></td>
+                                                            <td><input type="text" class="form-control" value="I"></td>
+                                                            <td><input type="text" class="form-control"
+                                                                       value="Jane Doe"></td>
+                                                            <td><input type="text" class="form-control" value="Image">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                       placeholder="Comment">
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-settings">
+
+                                <!-- Settings Form -->
+                                <form>
+                                    <div class="row mb-3">
+                                        <label for="projectTitle_title" class="col-md-3 col-form-label">Project
+                                            Title</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="projectTitle_title" type="text" class="form-control"
+                                                   id="projectTitle_title" value="Gamified Network">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="totalPoints" class="col-md-3 col-form-label">Total Points</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="totalPoints" type="text" class="form-control"
+                                                   id="totalPoints" value="60">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="learnOutcomes" class="col-md-3 col-form-label">Learn
+                                            Outcomes</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="learnOutcomes" class="form-control" id="learnOutcomes"
+                                                      style="height: 100px">By the end of the course, students are expected to be able to model, design, implement and deploy a BCNF/3NF relational database application on a server for the end-users complete with web-based user interfaces.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="competencyEarn" class="col-md-3 col-form-label">Competencies
+                                            Earned</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="competencyEarn" class="form-control" id="competencyEarn"
+                                                      style="height: 100px">Students will learn to use Flask, MySQL, CKEditor and integration of PDF based newsletter authoring and editing tools.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="description" class="col-md-3 col-form-label">Description</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="description" class="form-control" id="description"
+                                                      style="height: 100px">In this project, you will design a blogging database in which readers and writers could come together to discuss current affairs. An editorial board will moderate the submissions and thus will have the authority to edit or disallow content written by an author, or retract contents. Readers will be able to comment on articles, and on other readers’ comments in ways similar to Facebook. All the articles will have to be presented in the form of a newsletter in PDF with active links to multimedia contents such as pictures, videos, sounds and other types of contents.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Requirements</label>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:25%;">System</th>
+                                                <th style="width:25%">Software</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="System"
+                                                           value="MySQL"></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="CKEditor"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="System"
+                                                           value="XAMPP"></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="WordTune"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value=""></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="PDFCreator"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value=""></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="Faker/Mockaroo"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Deliverables</label>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:20%;">Item</th>
+                                                <th style="width:10%">Phase</th>
+                                                <th style="width:20%">Date</th>
+                                                <th style="width:10%">Mode</th>
+                                                <th style="width:15%">Assessment</th>
+                                                <th style="width:15%">Necessity</th>
+                                                <th style="width:10%">Weight</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Item"
+                                                           value="ER Diagram"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Phase"
+                                                           value="I"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Date"
+                                                           value="7th February, 2023"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Mode"
+                                                           value="Image"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Assessment Standard"
+                                                           value="Competent"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Necessity"
+                                                           value="Required"></td>
+                                                <td><input type="text" class="form-control" placeholder="Weight"
+                                                           value="10%"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Item"
+                                                           value="BCNF Model"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Phase"
+                                                           value="II"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Date"
+                                                           value="5th March, 2023"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Mode"
+                                                           value="Text"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Assessment Standard"
+                                                           value="Accompished"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Necessity"
+                                                           value="Required"></td>
+                                                <td><input type="text" class="form-control" placeholder="Weight"
+                                                           value="20%"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Item"
+                                                           value="Query 1"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Phase"
+                                                           value="Open"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Date"
+                                                           value="3rd April, 2023"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Mode"
+                                                           value="Link"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Assessment Standard"
+                                                           value="Competent"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Necessity"
+                                                           value="Expected"></td>
+                                                <td><input type="text" class="form-control" placeholder="Weight"
+                                                           value="40%"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Item"
+                                                           value="User interface"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Phase"
+                                                           value="III"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Date"
+                                                           value="10th May, 2023"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Mode"
+                                                           value="Link"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Assessment Standard"
+                                                           value="Accompished"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Necessity"
+                                                           value="Required"></td>
+                                                <td><input type="text" class="form-control" placeholder="Weight"
+                                                           value="30%"></td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Assignment Rubrics</label>
+                                        <table class="table table-bordered">
+
+                                            <tbody style="height: 300px;display: inline-block;width: 100%;overflow: auto;">
+                                            <tr>
+                                                <td colspan="5" style="text-align: center;">Assessment</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1">&nbsp;</td>
+                                                <td colspan="1">0.0~3</td>
+                                                <td colspan="1">3.1~6</td>
+                                                <td colspan="1">6.1~10</td>
+                                                <td colspan="1">10</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Category</b></td>
+                                                <td><b>Developing</b></td>
+                                                <td><b>Competent</b></td>
+                                                <td><b>Accomplished</b></td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top;">User Interface design</td>
+                                                <td style="vertical-align: top;">
+                                                    a. Some of the functionalities are implemented.<br>
+                                                    b. The interface did not meet aesthetic standards expected.<br>
+                                                    c. Tool choices were flawed.
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    a. Choice of tools are reasonable.<br>
+                                                    b. Layout is acceptable and some of the functionalities are
+                                                    implemented.
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    a. Student delivered a fully functional web interface for user
+                                                    interaction for all the expected functions.<br>
+                                                    b. Made prudent choice of tools.<br>
+                                                    c. No known bug or errors present.<br>
+                                                    d. The layout and color schemes are visually pleasant.
+                                                </td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </form><!-- End settings Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                <form>
+                                    <div class="row mb-3">
+                                        <label for="projectTitle_validation" class="col-md-2 col-form-label">Project
+                                            Title</label>
+                                        <div class="col-md-10">
+                                            <input name="projectTitle_validation" type="text" class="form-control"
+                                                   id="projectTitle_validation" value="Gamified Network">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <label for="teamNumbers_validation" class="col-md-2 col-form-label">Team
+                                            Number:</label>
+                                        <div class="col-md-4">
+                                            <input name="teamNumbers_validation" type="text" class="form-control"
+                                                   id="teamNumbers_validation" value=" 4">
+                                        </div>
+
+                                        <label for="evaludationDate" class="col-md-2 col-form-label">Date at
+                                            Evaluation:</label>
+                                        <div class="col-md-4">
+                                            <input name="evaludationDate" type="text" class="form-control"
+                                                   id="evaludationDate" value=" 10th May 2023">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="phaseNumber" class="col-md-2 col-form-label">Phase Number:</label>
+                                        <div class="col-md-4">
+                                            <input name="phaseNumber" type="text" class="form-control"
+                                                   id="phaseNumber" value=" 4">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="all" checked>
+                                                <label class="form-check-label" for="all">All</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="phase1" checked>
+                                                <label class="form-check-label" for="phase1">7th Feb, 2023</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="phase2">
+                                                <label class="form-check-label" for="phase2">5th Mar, 2023</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="phase3" checked>
+                                                <label class="form-check-label" for="phase3">3rd Apr, 2023</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="phase4" checked>
+                                                <label class="form-check-label" for="phase4">3rd Apr, 2023</label>
+
+                                            </div>
+
+                                            <!--
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                                                                                            <label class="form-check-label" for="newProducts">
+                                                                                                Information on new products and services
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" id="proOffers">
+                                                                                            <label class="form-check-label" for="proOffers">
+                                                                                                Marketing and promo offers
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                                                                                            <label class="form-check-label" for="securityNotify">
+                                                                                                Security alerts
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        -->
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-2 col-form-label">Deliverables</label>
+                                        <div class="col-md-10">
+
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:40%;text-align: center;font-style: italic;">Item
+                                                    </th>
+                                                    <th style="width:40%;text-align: center;font-style: italic;">Mode
+                                                    </th>
+                                                    <th style="width:20%;text-align: center;font-style: italic;">
+                                                        Points
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody style="font-style: italic;">
+                                                <tr>
+                                                    <td>ER Diagram</td>
+                                                    <td>Image</td>
+                                                    <td>7</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>BCNF Model</td>
+                                                    <td>Text</td>
+                                                    <td>5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Query 1</td>
+                                                    <td>Link</td>
+                                                    <td>9</td>
+                                                </tr>
+                                                <tr bgcolor="#FAEBEB">
+                                                    <td>User Interface</td>
+                                                    <td>Link</td>
+                                                    <td>3</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="rubric" class="col-md-2 col-form-label">Rubric</label>
+                                        <div class="col-md-10">
+                                            <textarea name="rubric" class="form-control" id="rubric"
+                                                      style="height: 100px">https://www.testmysoftware.org</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-2 col-form-label">Strengths</label>
+                                        <div class="col-md-4">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:50%;text-align: center;">Student</th>
+                                                    <th style="width:50%;text-align: center;">Instructor</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <textarea class="form-control"></textarea>
+                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <label class="col-md-2 col-form-label">Weaknesses</label>
+                                        <div class="col-md-4">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:50%;text-align: center;">Student</th>
+                                                    <th style="width:50%;text-align: center;">Instructor</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <textarea class="form-control"></textarea>
+                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <label class="col-md-2 col-form-label">Errors/bugs</label>
+                                        <div class="col-md-4">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:50%;text-align: center;">Student</th>
+                                                    <th style="width:50%;text-align: center;">Instructor</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <textarea class="form-control"></textarea>
+                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <label class="col-md-2 col-form-label">Comments</label>
+                                        <div class="col-md-4">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:50%;text-align: center;">Student</th>
+                                                    <th style="width:50%;text-align: center;">Instructor</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <textarea class="form-control"></textarea>
+                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </form><!-- End Change Password Form -->
+
+                            </div>
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="copyright">
+        Copyright &copy; <strong><span>hasan突击队</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+</footer><!-- End Footer -->
+
+
+<!-- Vendor JS Files -->
+<script src="../static/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../static/vendor/chart.js/chart.umd.js"></script>
+<script src="../static/vendor/echarts/echarts.min.js"></script>
+<script src="../static/vendor/quill/quill.min.js"></script>
+<script src="../static/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="../static/vendor/tinymce/tinymce.min.js"></script>
+<script src="../static/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="../static/vendor/niceadmin/main.js"></script>
+
+</body>
+</html>
