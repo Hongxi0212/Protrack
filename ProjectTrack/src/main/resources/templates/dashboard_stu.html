@@ -16,14 +16,14 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
           rel="stylesheet">
 
-    <link href="../static/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../static/css/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../static/css/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="../static/css/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="../static/css/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../static/css/vendor/simple-datatables/style.css" rel="stylesheet">
-    <link href="../static/css/vendor/niceadmin/style.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/vendor/niceadmin/style.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -39,7 +39,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="/dashboard_stu" class="logo d-flex align-items-center">
+        <a href="/home" class="logo d-flex align-items-center">
             <span class="d-none d-lg-block">ProTrack</span>
         </a>
     </div>
@@ -68,7 +68,7 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/projects">
+            <a class="nav-link collapsed" href="/projects_stu">
                 <i class="bi bi-gem"></i>
                 <span>Projects</span>
             </a>
@@ -112,7 +112,7 @@
         <h1>Dashboard</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                <li class="breadcrumb-item"><a href="/dashboard_stu">Home</a></li>
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
         </nav>
@@ -128,12 +128,11 @@
                         <div class="card info-card sales-card">
                             <div class="card-body">
                                 <h5 class="card-title">ProTrack <span>| CS360</span></h5>
-                                <img src="../static/images/sql.png" width="300" height="200"/>
+                                <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
                                 <div>
                                     <ul class="nav" style="padding-top: 20px">
-                                        <li class="nav-item ms-3"><a href="#">View</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Edit</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Validate</a></li>
+                                        <li class="nav-item ms-3"><a href="/project_details">View</a></li>
+                                        <li class="nav-item ms-3"><a href="/project_details">Validate</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -144,12 +143,11 @@
                         <div class="card info-card revenue-card">
                             <div class="card-body">
                                 <h5 class="card-title">Gamified Network <span>| CS480</span></h5>
-                                <img src="../static/images/sql.png" width="300" height="200"/>
+                                <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
                                 <div>
                                     <ul class="nav" style="padding-top: 20px">
-                                        <li class="nav-item ms-3"><a href="#">View</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Edit</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Validate</a></li>
+                                        <li class="nav-item ms-3"><a href="/project_details">View</a></li>
+                                        <li class="nav-item ms-3"><a href="/project_details">Validate</a></li>
                                     </ul>
                                 </div>
                             </div>

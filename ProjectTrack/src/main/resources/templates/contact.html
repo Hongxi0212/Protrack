@@ -16,14 +16,14 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
           rel="stylesheet">
 
-    <link href="../static/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../static/css/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../static/css/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="../static/css/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="../static/css/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../static/css/vendor/simple-datatables/style.css" rel="stylesheet">
-    <link href="../static/css/vendor/niceadmin/style.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/vendor/niceadmin/style.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -39,7 +39,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="/dashboard_stu" class="logo d-flex align-items-center">
+        <a href="/home" class="logo d-flex align-items-center">
             <span class="d-none d-lg-block">ProTrack</span>
         </a>
     </div>
@@ -68,7 +68,7 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/projects">
+            <a class="nav-link collapsed" href="/projects_stu">
                 <i class="bi bi-gem"></i>
                 <span>Projects</span>
             </a>
@@ -114,12 +114,12 @@
         <h1>Contact</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="/dashboard_stu">Home</a></li>
                 <li class="breadcrumb-item">Others</li>
                 <li class="breadcrumb-item active">Contact</li>
             </ol>
         </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <section class="section contact">
         <div class="row gy-4">
@@ -158,7 +158,7 @@
 
             <div class="col-6">
                 <div class="card p-4">
-                    <form action="forms/contact.php" method="post" class="php-email-form">
+                    <form class="php-email-form">
                         <div class="row gy-4">
 
                             <div class="col-md-6">
@@ -174,18 +174,10 @@
                             </div>
 
                             <div class="col-md-12">
-                                <textarea class="form-control" name="message" rows="6" placeholder="Message"
-                                          required></textarea>
+                                <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
                             </div>
 
-                            <div class="col-md-12 text-center">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                                <button type="submit">Send Message</button>
-                            </div>
-
+                            <button type="submit">Send Message</button>
                         </div>
                     </form>
                 </div>
@@ -201,7 +193,7 @@
         </div>
     </section>
 
-</main><!-- End #main -->
+</main>
 
 <footer id="footer" class="footer">
     <div class="copyright">
@@ -215,22 +207,6 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
 </footer>
-
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
-
-<!-- Vendor JS Files -->
-<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/chart.js/chart.umd.js"></script>
-<script src="assets/vendor/echarts/echarts.min.js"></script>
-<script src="assets/vendor/quill/quill.min.js"></script>
-<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
 
 </body>
 
