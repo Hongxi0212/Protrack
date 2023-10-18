@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Projects</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -49,23 +49,21 @@
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <span class="d-none d-md-block dropdown-toggle ps-2">Stu. CBA</span>
                 </a>
-            </li><!-- End Profile Nav -->
+            </li>
         </ul>
-    </nav><!-- End Icons Navigation -->
+    </nav>
 
-</header><!-- End Header -->
+</header>
 
-<!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
         <li class="nav-item">
             <a class="nav-link collapsed" href="/dashboard_stu">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li>
 
         <li class="nav-heading">Pages</li>
 
@@ -75,20 +73,21 @@
                 <span>Projects</span>
             </a>
         </li>
+<!--
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/message">
                 <i class="bi bi-menu-button-wide"></i>
                 <span>Messages</span>
             </a>
-        </li><!-- End F.A.Q Page Nav -->
-
+        </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="/calendar">
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Calendar</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li>
+-->
 
         <li class="nav-heading">Others</li>
 
@@ -97,15 +96,15 @@
                 <i class="bi bi-box-arrow-in-right"></i>
                 <span>Logout</span>
             </a>
-        </li><!-- End Login Page Nav -->
-
+        </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="/contact">
                 <i class="bi bi-envelope"></i>
                 <span>Contact</span>
             </a>
-        </li><!-- End Contact Page Nav -->
+        </li>
     </ul>
+
 </aside>
 
 <main id="main" class="main">
@@ -127,7 +126,6 @@
 
                 <div class="card">
                     <div class="card-body pt-3">
-                        <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
@@ -161,8 +159,6 @@
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-edit">
-
-                                <!-- Profile Edit Form -->
                                 <form>
                                     <div class="row mb-3">
                                         <label for="projectTitle_plan" class="col-md-3 col-form-label">Project
@@ -348,14 +344,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-
-                                </form><!-- End Profile Edit Form -->
-
+                                </form>
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
-
-                                <!-- Settings Form -->
                                 <form>
                                     <div class="row mb-3">
                                         <label for="projectTitle_title" class="col-md-3 col-form-label">Project
@@ -453,6 +445,7 @@
                                                 <th style="width:10%">Weight</th>
                                             </tr>
                                             </thead>
+
                                             <tbody>
                                             <tr>
                                                 <td><input type="text" class="form-control"
@@ -475,8 +468,8 @@
                                                            value="Required"></td>
                                                 <td><input type="text" class="form-control" placeholder="Weight"
                                                            value="10%"></td>
-
                                             </tr>
+
                                             <tr>
                                                 <td><input type="text" class="form-control"
                                                            placeholder="Item"
@@ -498,8 +491,8 @@
                                                            value="Required"></td>
                                                 <td><input type="text" class="form-control" placeholder="Weight"
                                                            value="20%"></td>
-
                                             </tr>
+
                                             <tr>
                                                 <td><input type="text" class="form-control"
                                                            placeholder="Item"
@@ -521,8 +514,8 @@
                                                            value="Expected"></td>
                                                 <td><input type="text" class="form-control" placeholder="Weight"
                                                            value="40%"></td>
-
                                             </tr>
+
                                             <tr>
                                                 <td><input type="text" class="form-control"
                                                            placeholder="Item"
@@ -544,7 +537,6 @@
                                                            value="Required"></td>
                                                 <td><input type="text" class="form-control" placeholder="Weight"
                                                            value="30%"></td>
-
                                             </tr>
                                             </tbody>
                                         </table>
@@ -553,11 +545,11 @@
                                     <div class="row mb-3">
                                         <label class="col-md-3 col-form-label">Assignment Rubrics</label>
                                         <table class="table table-bordered">
-
                                             <tbody style="height: 300px;display: inline-block;width: 100%;overflow: auto;">
                                             <tr>
                                                 <td colspan="5" style="text-align: center;">Assessment</td>
                                             </tr>
+
                                             <tr>
                                                 <td colspan="1">&nbsp;</td>
                                                 <td colspan="1">0.0~3</td>
@@ -565,6 +557,7 @@
                                                 <td colspan="1">6.1~10</td>
                                                 <td colspan="1">10</td>
                                             </tr>
+
                                             <tr>
                                                 <td><b>Category</b></td>
                                                 <td><b>Developing</b></td>
@@ -572,6 +565,7 @@
                                                 <td><b>Accomplished</b></td>
                                                 <td>&nbsp;</td>
                                             </tr>
+
                                             <tr>
                                                 <td style="vertical-align: top;">User Interface design</td>
                                                 <td style="vertical-align: top;">
@@ -594,18 +588,13 @@
                                                 <td>&nbsp;</td>
                                             </tr>
 
-
                                             </tbody>
                                         </table>
-
                                     </div>
-
-                                </form><!-- End settings Form -->
-
+                                </form>
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
-                                <!-- Change Password Form -->
                                 <form>
                                     <div class="row mb-3">
                                         <label for="projectTitle_validation" class="col-md-2 col-form-label">Project
@@ -615,7 +604,6 @@
                                                    id="projectTitle_validation" value="Gamified Network">
                                         </div>
                                     </div>
-
 
                                     <div class="row mb-3">
                                         <label for="teamNumbers_validation" class="col-md-2 col-form-label">Team
@@ -660,36 +648,13 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="phase4" checked>
                                                 <label class="form-check-label" for="phase4">3rd Apr, 2023</label>
-
                                             </div>
-
-                                            <!--
-                                                                                        <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                                                                            <label class="form-check-label" for="newProducts">
-                                                                                                Information on new products and services
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" id="proOffers">
-                                                                                            <label class="form-check-label" for="proOffers">
-                                                                                                Marketing and promo offers
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                                                                                            <label class="form-check-label" for="securityNotify">
-                                                                                                Security alerts
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        -->
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label class="col-md-2 col-form-label">Deliverables</label>
                                         <div class="col-md-10">
-
                                             <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
@@ -702,28 +667,31 @@
                                                     </th>
                                                 </tr>
                                                 </thead>
+
                                                 <tbody style="font-style: italic;">
                                                 <tr>
                                                     <td>ER Diagram</td>
                                                     <td>Image</td>
                                                     <td>7</td>
                                                 </tr>
+
                                                 <tr>
                                                     <td>BCNF Model</td>
                                                     <td>Text</td>
                                                     <td>5</td>
                                                 </tr>
+
                                                 <tr>
                                                     <td>Query 1</td>
                                                     <td>Link</td>
                                                     <td>9</td>
                                                 </tr>
-                                                <tr bgcolor="#FAEBEB">
+
+                                                <tr>
                                                     <td>User Interface</td>
                                                     <td>Link</td>
                                                     <td>3</td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -747,14 +715,12 @@
                                                     <th style="width:50%;text-align: center;">Instructor</th>
                                                 </tr>
                                                 </thead>
+
                                                 <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <textarea class="form-control"></textarea>
-                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
                                                     <td><textarea class="form-control"></textarea></td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -768,14 +734,12 @@
                                                     <th style="width:50%;text-align: center;">Instructor</th>
                                                 </tr>
                                                 </thead>
+
                                                 <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <textarea class="form-control"></textarea>
-                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
                                                     <td><textarea class="form-control"></textarea></td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -788,14 +752,12 @@
                                                     <th style="width:50%;text-align: center;">Instructor</th>
                                                 </tr>
                                                 </thead>
+
                                                 <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <textarea class="form-control"></textarea>
-                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
                                                     <td><textarea class="form-control"></textarea></td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -809,24 +771,19 @@
                                                     <th style="width:50%;text-align: center;">Instructor</th>
                                                 </tr>
                                                 </thead>
+
                                                 <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <textarea class="form-control"></textarea>
-                                                    </td>
+                                                    <td><textarea class="form-control"></textarea></td>
                                                     <td><textarea class="form-control"></textarea></td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-
-                                </form><!-- End Change Password Form -->
-
+                                </form>
                             </div>
-
-                        </div><!-- End Bordered Tabs -->
+                        </div>
 
                     </div>
                 </div>
@@ -835,9 +792,8 @@
         </div>
     </section>
 
-</main><!-- End #main -->
+</main>
 
-<!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
         Copyright &copy; <strong><span>hasan突击队</span></strong>. All Rights Reserved
@@ -849,10 +805,8 @@
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
-</footer><!-- End Footer -->
+</footer>
 
-
-<!-- Vendor JS Files -->
 <script src="../static/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../static/vendor/chart.js/chart.umd.js"></script>
@@ -862,7 +816,6 @@
 <script src="../static/vendor/tinymce/tinymce.min.js"></script>
 <script src="../static/vendor/php-email-form/validate.js"></script>
 
-<!-- Template Main JS File -->
 <script src="../static/vendor/niceadmin/main.js"></script>
 
 </body>

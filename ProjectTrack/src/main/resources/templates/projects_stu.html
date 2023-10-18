@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Projects</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,16 +36,15 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="/dashboard_prof" class="logo d-flex align-items-center">
+        <a href="/dashboard_stu" class="logo d-flex align-items-center">
             <span class="d-none d-lg-block">ProTrack</span>
         </a>
-    </div><!-- End Logo -->
-
+    </div>
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Prof. ABC</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Stu. CBA</span>
                 </a>
             </li>
         </ul>
@@ -53,12 +52,11 @@
 
 </header>
 
-
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link " href="/dashboard_prof">
+            <a class="nav-link collapsed" href="/dashboard_stu">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -67,7 +65,7 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/projects">
+            <a class="nav-link" href="/projects">
                 <i class="bi bi-gem"></i>
                 <span>Projects</span>
             </a>
@@ -96,6 +94,7 @@
                 <span>Logout</span>
             </a>
         </li>
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="/contact">
                 <i class="bi bi-envelope"></i>
@@ -109,85 +108,52 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Dashboard</h1>
+        <h1>Projects</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
+                <li class="breadcrumb-item active">Projects</li>
             </ol>
         </nav>
     </div>
 
-    <section class="section dashboard">
+    <section class="section">
         <div class="row">
-
-            <div class="col-lg-8">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="card info-card sales-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ProTrack <span>| CS360</span></h5>
-                                <img src="../static/images/sql.png" width="300" height="200"/>
-                                <div>
-                                    <ul class="nav" style="padding-top: 20px">
-                                        <li class="nav-item ms-3"><a href="#">View</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Edit</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Validate</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+            <div class="col-4">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">ProTrack <span>| CS360</span></h5>
+                        <img src="../static/images/sql.png" width="300" height="200"/>
+                        <div>
+                            <ul class="nav" style="padding-top: 20px">
+                                <li class="nav-item ms-3"><a href="#">View</a></li>
+                                <li class="nav-item ms-3"><a href="#">Validate</a></li>
+                            </ul>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="card info-card revenue-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Gamified Network <span>| CS480</span></h5>
-                                <img src="../static/images/sql.png" width="300" height="200"/>
-                                <div>
-                                    <ul class="nav" style="padding-top: 20px">
-                                        <li class="nav-item ms-3"><a href="#">View</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Edit</a></li>
-                                        <li class="nav-item ms-3"><a href="#">Validate</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="card">
+            <div class="col-4">
+                <div class="card info-card revenue-card">
                     <div class="card-body">
-                        <h5 class="card-title">Messages <span>| Recently</span></h5>
-                        <div class="activity">
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">11 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                <div class="activity-content">
-                                    Student DDD sent you a message: ...
-                                </div>
-                            </div>
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 hrs</div>
-                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                <div class="activity-content">
-                                    Student EEE made an appointment for meeting: ...
-                                </div>
-                            </div>
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">3 days</div>
-                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                <div class="activity-content">
-                                    Student FFF submited the deliverable of ProTrack
-                                </div>
-                            </div>
+                        <h5 class="card-title">Gamified Network <span>| CS480</span></h5>
+                        <img src="../static/images/sql.png" width="300" height="200"/>
+                        <div>
+                            <ul class="nav" style="padding-top: 20px">
+                                <li class="nav-item ms-3"><a href="/project_details">View</a></li>
+                                <li class="nav-item ms-3"><a href="#">Validate</a></li>
+                            </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="card info-card revenue-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Join Project</h5>
+                        <img src="../static/images/plus.png" width="100px" height="100px">
                     </div>
                 </div>
             </div>
