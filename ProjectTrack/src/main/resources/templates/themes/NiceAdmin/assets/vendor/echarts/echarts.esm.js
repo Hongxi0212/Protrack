@@ -16146,7 +16146,7 @@ function enableSubTypeDefaulter(target) {
   };
 }
 /**
- * Implements `TopologicalTravelable<any>` for `entity`.
+ * Implements `TopologicalTravelable<any>` for `entities`.
  *
  * Topological travel on Activity Network (Activity On Vertices).
  * Dependencies is defined in Model.prototype.dependencies, like ['xAxis', 'yAxis'].

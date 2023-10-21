@@ -1569,7 +1569,7 @@
         'entity': [
           {
             pattern: /&[\da-z]{1,8};/i,
-            alias: 'named-entity'
+            alias: 'named-entities'
           },
           /&#x?[\da-f]{1,8};/i
         ]
