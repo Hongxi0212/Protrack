@@ -6,12 +6,15 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5; Program Framework base on Spring">
+    <meta name="description"
+          content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5; Program Framework base on Spring">
     <meta name="author" content="hasan突击队">
-    <meta name="keywords" content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+    <meta name="keywords"
+          content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
 
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -20,7 +23,8 @@
     <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
-    <link href="/vendor/niceadmin/style.css" rel="stylesheet">
+
+    <link href="/css/main.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -70,21 +74,21 @@
                 <span>Projects</span>
             </a>
         </li>
-<!--
+        <!--
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/message">
-                <i class="bi bi-menu-button-wide"></i>
-                <span>Messages</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/calendar">
-                <i class="bi bi-layout-text-window-reverse"></i>
-                <span>Calendar</span>
-            </a>
-        </li>
--->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/message">
+                        <i class="bi bi-menu-button-wide"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/calendar">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <span>Calendar</span>
+                    </a>
+                </li>
+        -->
 
         <li class="nav-heading">Others</li>
 
@@ -112,6 +116,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/dashboard_stu">Home</a></li>
+                <li class="breadcrumb-item active">Pages</li>
                 <li class="breadcrumb-item active">Projects</li>
             </ol>
         </nav>
@@ -153,10 +158,37 @@
                 <div class="card info-card revenue-card">
                     <div class="card-body">
                         <h5 class="card-title">Join Project</h5>
-                        <img src="/images/plus.png" width="100px" height="100px">
+                        <img src="/images/plus.png" id="join_image" width="100px" height="100px" onclick="openModal()">
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="join_modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <label for="joinCode" class="col-3 col-form-label">Course Code</label>
+                                <div class="col-9">
+                                    <input name="joinCode" type="text" class="form-control"
+                                           id="joinCode" value="CS360_JASAN">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-10">
+                                </div>
+                                <div class="col-2 text-center">
+                                    <button type="submit" class="btn btn-primary">Join</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -174,6 +206,15 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
 </footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function openModal() {
+        $('#join_modal').modal('show');
+    }
+</script>
 
 </body>
 </html>

@@ -19,4 +19,9 @@ public class ProjectsController {
     public String project_details() {
         return "project_details";
     }
+
+    @GetMapping("/project_create")
+    public String project_create() {
+        return "project_create";
+    }
 }
