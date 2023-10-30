@@ -13,7 +13,8 @@
           content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
 
     <link href="/vendor/360/tabler.min.css" rel="stylesheet"/>
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,33 +44,29 @@
 <div class="page page-center">
     <div class="container-tight py-2">
 
-        <form class="card card-md" action="/register" method="post">
-            <input type="hidden">
+        <form id="register-form" class="card card-md">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Create new account</h2>
                 <div class="mb-3">
-                    <label class="form-label">Name</label>
-                    <input id="name" type="text" class="form-control " name="name" value="">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" name="name" type="text" class="form-control" value="">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Email address</label>
-                    <input id="email" type="email" class="form-control " name="email" value="" autocomplete="email">
+                    <label for="email" class="form-label">Email address</label>
+                    <input id="email" name="email" type="email" class="form-control" value="" autocomplete="email">
                 </div>
 
                 <div class="mb-3">
-                    <label for="role" class="form-label">Join as a</label>
-                    <div class="input-group input-group-flat">
-                        <select class="form-select" id='role' name='role'>
-                            <option value="Student">Student</option>
-                            <option value="Instructor">Instructor</option>
-                        </select>
-                    </div>
+                    <label for="role" class="form-label">Role</label>
+                    <select id="role" name="role" class="form-select">
+                        <option value="Student">Student</option>
+                        <option value="Instructor">Instructor</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">
                     <label for="timezone" class="form-label">Timezone</label>
-
                     <select id='timezone' name='timezone' class="form-select form-control ">
 
                         <option value="">Select</option>
@@ -101,18 +98,18 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input id="password" type="password" class="form-control " name="password"
+                    <input id="password" name="password" type="password" class="form-control"
                            autocomplete="new-password">
                 </div>
 
                 <div class="mb-3">
                     <label for="password-confirm" class="form-label">Confirm Password</label>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                    <input id="password-confirm" name="password_confirm" type="password" class="form-control"
                            autocomplete="new-password">
                 </div>
 
                 <div class="form-footer">
-                    <button type="submit" class="btn btn-primary w-100">Create new account</button>
+                    <button id="register-btn" class="btn btn-primary w-100">Create new account</button>
                 </div>
             </div>
         </form>
@@ -132,5 +129,6 @@
     </div>
 </footer>
 
+<script src="/js/RegisterSubmit.js"></script>
 </body>
 </html>

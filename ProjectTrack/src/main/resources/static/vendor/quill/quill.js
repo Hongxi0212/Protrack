@@ -3543,7 +3543,7 @@ var ContainerBlot = /** @class */ (function (_super) {
         });
         removedNodes.forEach(function (node) {
             // Check node has actually been removed
-            // One exception is Chrome does not immediately remove IFRAMEs
+            // One exceptions is Chrome does not immediately remove IFRAMEs
             // from DOM but MutationRecord is correct in its reported removal
             if (node.parentNode != null &&
                 // @ts-ignore

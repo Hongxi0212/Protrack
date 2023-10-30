@@ -8062,9 +8062,9 @@
         var nextIdx = 0;
 
         while ( // Be `!resultItem` only when `nextIdx >= result.length`.
-        (resultItem = result[nextIdx]) && ( // (1) Existing models that already have id should be able to mapped to. Because
+        (resultItem = result[nextIdx]) && ( // (1) Existing entities that already have id should be able to mapped to. Because
         // after mapping performed, model will always be assigned with an id if user not given.
-        // After that all models have id.
+        // After that all entities have id.
         // (2) If new option has id, it can only set to a hole or append to the last. It should
         // not be merged to the existings with different id. Because id should not be overwritten.
         // (3) Name can be overwritten, because axis use name as 'show label text'.
@@ -8108,7 +8108,7 @@
 
 
     function makeIdAndName(mapResult) {
-      // We use this id to hash component models and view instances
+      // We use this id to hash component entities and view instances
       // in echarts. id can be specified by user, or auto generated.
       // The id generation rule ensures new view instance are able
       // to mapped to old instance when setOption are called in
@@ -17945,7 +17945,7 @@
                 }
 
                 return;
-              } // TODO Before multiple tooltips get supported, we do this check to avoid unexpected exception.
+              } // TODO Before multiple tooltips get supported, we do this check to avoid unexpected exceptions.
 
 
               if (mainType === 'tooltip') {

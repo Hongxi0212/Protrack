@@ -8201,9 +8201,9 @@
         var nextIdx = 0;
 
         while ( // Be `!resultItem` only when `nextIdx >= result.length`.
-        (resultItem = result[nextIdx]) && ( // (1) Existing models that already have id should be able to mapped to. Because
+        (resultItem = result[nextIdx]) && ( // (1) Existing entities that already have id should be able to mapped to. Because
         // after mapping performed, model will always be assigned with an id if user not given.
-        // After that all models have id.
+        // After that all entities have id.
         // (2) If new option has id, it can only set to a hole or append to the last. It should
         // not be merged to the existings with different id. Because id should not be overwritten.
         // (3) Name can be overwritten, because axis use name as 'show label text'.
@@ -8247,7 +8247,7 @@
 
 
     function makeIdAndName(mapResult) {
-      // We use this id to hash component models and view instances
+      // We use this id to hash component entities and view instances
       // in echarts. id can be specified by user, or auto generated.
       // The id generation rule ensures new view instance are able
       // to mapped to old instance when setOption are called in
@@ -18653,7 +18653,7 @@
                 }
 
                 return;
-              } // TODO Before multiple tooltips get supported, we do this check to avoid unexpected exception.
+              } // TODO Before multiple tooltips get supported, we do this check to avoid unexpected exceptions.
 
 
               if (mainType === 'tooltip') {
@@ -74068,7 +74068,7 @@
       // [Rule]
       // If `renderItem` returns `null`/`undefined`/`false`, remove the previous el if existing.
       //     (It seems that violate the "merge" principle, but most of users probably intuitively
-      //     regard "return;" as "show nothing element whatever", so make a exception to meet the
+      //     regard "return;" as "show nothing element whatever", so make a exceptions to meet the
       //     most cases.)
       // The rule or "merge" see [STRATEGY_MERGE].
       // If `elOption` is `null`/`undefined`/`false` (when `renderItem` returns nothing).
@@ -75650,7 +75650,7 @@
         axisId: axisModel.id,
         value: value,
         // Caustion: viewHelper.getValueLabel is actually on "view stage", which
-        // depends that all models have been updated. So it should not be performed
+        // depends that all entities have been updated. So it should not be performed
         // here. Considering axisPointerModel used here is volatile, which is hard
         // to be retrieve in TooltipView, we prepare parameters here.
         valueLabelOpt: {
@@ -79420,7 +79420,7 @@
           addToEffected(dataZoomModel);
         }
       }); // Start from the given dataZoomModels, travel the graph to find
-      // all of the linked dataZoom models.
+      // all of the linked dataZoom entities.
 
       var foundNewLink;
 
