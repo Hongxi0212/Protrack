@@ -13,7 +13,8 @@
           content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
 
     <link href="/vendor/360/tabler.min.css" rel="stylesheet"/>
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -33,7 +34,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="/home" class="logo d-flex align-items-center">
+        <a href="/protrack/home" class="logo d-flex align-items-center">
             <span class="d-none d-lg-block">ProTrack</span>
         </a>
     </div>
@@ -41,24 +42,21 @@
 </header>
 
 <div class="page page-center">
-    <div class="container-tight">
+    <div class="container-tight py-2">
 
-        <form class="card card-md">
-            <input type="hidden">
+        <form id="login-form" class="card card-md">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Login to your account</h2>
                 <div class="mb-3">
-                    <label class="form-label">Email address</label>
-                    <input id="email" type="email" class="form-control " name="email" value="" autocomplete="email">
+                    <label for="email" class="form-label">Email address</label>
+                    <input id="email" name="email" type="email" class="form-control" value="" autocomplete="email">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label"> Password </label>
-                    <div class="input-group input-group-flat">
-                        <input id="password" type="password" class="form-control " name="password">
-                    </div>
+                    <label for="password" class="form-label"> Password </label>
+                    <input id="password" name="password" type="password" class="form-control ">
                 </div>
                 <div class="form-footer">
-                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                    <button id="login-btn" class="btn btn-primary w-100">Sign in</button>
                 </div>
             </div>
         </form>

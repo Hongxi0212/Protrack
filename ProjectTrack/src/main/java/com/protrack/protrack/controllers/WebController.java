@@ -19,7 +19,7 @@ public class WebController {
    }
 
    @GetMapping("/signup")
-   public String showSignupPage(Model model) {
+   public String showSignupPage() {
       return "signup";
    }
 

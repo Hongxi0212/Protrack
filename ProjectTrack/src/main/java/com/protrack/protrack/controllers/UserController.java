@@ -1,12 +1,22 @@
 package com.protrack.protrack.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.protrack.protrack.entities.TrackUser;
 import com.protrack.protrack.services.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.midi.Track;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/trackuser")
@@ -18,35 +28,47 @@ public class UserController {
    }
 
    @GetMapping("/all")
-   public ResponseEntity<List<TrackUser>> getAllUsers(){
-      List<TrackUser> users=service.findAllUsers();
+   public ResponseEntity<List<TrackUser>> getAllUsers() {
+      List<TrackUser> users = service.findAllUsers();
 
       return new ResponseEntity<>(users, HttpStatus.OK);
    }
 
    @GetMapping("/find/{id}")
-   public ResponseEntity<TrackUser> getUserById(@PathVariable("id") Integer id){
-      TrackUser user=service.findUserById(id);
+   public ResponseEntity<TrackUser> getUserById(@PathVariable("id") Integer id) {
+      TrackUser user = service.findUserById(id);
 
       return new ResponseEntity<>(user, HttpStatus.OK);
    }
 
    @PostMapping("/register")
-   public ResponseEntity<TrackUser> addUser(@RequestBody TrackUser user){
-      TrackUser newUser=service.addUser(user);
+   public ResponseEntity<TrackUser> handleRegister(@RequestBody TrackUser user) {
+      TrackUser newUser = service.addUser(user);
 
-      return new ResponseEntity<>(newUser,HttpStatus.CREATED);
+      return new ResponseEntity<>(newUser, HttpStatus.CREATED);
    }
 
-   @PutMapping("/update")
-   public ResponseEntity<TrackUser> updateUser(@RequestBody TrackUser user){
-      TrackUser updateUser=service.updateUser(user);
+   @PostMapping("/login")
+   public String login(@RequestParam String email, @RequestParam String password, Model model) {
+      TrackUser account = service.findUserByEmail(email);
+      if (account.getEmail().equals(email) && account.getPassword().equals(password)) {
+         return "redirect:/protrack/dashboard/stu";
+      } else {
+         model.addAttribute("error", "Invalid username or password");
+         return "login"; // 返回登录页面
+      }
+   }
 
-      return new ResponseEntity<>(updateUser,HttpStatus.OK);
+
+   @PutMapping("/update")
+   public ResponseEntity<TrackUser> updateUser(@RequestBody TrackUser user) {
+      TrackUser updateUser = service.updateUser(user);
+
+      return new ResponseEntity<>(updateUser, HttpStatus.OK);
    }
 
    @DeleteMapping("/delete/{id}")
-   public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id){
+   public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
       service.deleteUser(id);
 
       return new ResponseEntity<>(HttpStatus.OK);
