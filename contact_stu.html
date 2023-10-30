@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact us</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5; Program Framework base on Spring">
+    <meta name="author" content="hasan突击队">
+    <meta name="keywords"
+          content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/vendor/niceadmin/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: NiceAdmin
+    * Updated: Sep 18 2023 with Bootstrap v5.3.2
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="/protrack/home" class="logo d-flex align-items-center">
+            <span class="d-none d-lg-block">ProTrack</span>
+        </a>
+    </div>
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown pe-3">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Stu. CBA</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/protrack/dashboard_stu">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-heading">Pages</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/protrack/projects_stu">
+                <i class="bi bi-gem"></i>
+                <span>Projects</span>
+            </a>
+        </li>
+        <!--
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/message">
+                        <i class="bi bi-menu-button-wide"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/calendar">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <span>Calendar</span>
+                    </a>
+                </li>
+        -->
+
+        <li class="nav-heading">Others</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/protrack/contact">
+                <i class="bi bi-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </li>
+    </ul>
+
+</aside>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Contact</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/protrack/dashboard_stu">Home</a></li>
+                <li class="breadcrumb-item">Others</li>
+                <li class="breadcrumb-item active">Contact</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section contact">
+        <div class="row gy-4">
+
+            <div class="col-3">
+                <div class="info-box card">
+                    <i class="bi bi-geo-alt"></i>
+                    <h3>Address</h3>
+                    <p>A108 Adam Street,<br>New York, NY 535022</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="info-box card">
+                    <i class="bi bi-telephone"></i>
+                    <h3>Call Us</h3>
+                    <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="info-box card">
+                    <i class="bi bi-envelope"></i>
+                    <h3>Email Us</h3>
+                    <p>info@example.com<br>contact@example.com</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="info-box card">
+                    <i class="bi bi-clock"></i>
+                    <h3>Open Hours</h3>
+                    <p>Monday - Friday<br>9:00AM - 05:00PM</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-6">
+                <div class="card p-4">
+                    <form class="php-email-form">
+                        <div class="row gy-4">
+
+                            <div class="col-md-6">
+                                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                            </div>
+
+                            <div class="col-md-6 ">
+                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                            </div>
+
+                            <button type="submit">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card p-4">
+                    <iframe style="max-width: 100%; height: 355px"
+                            id="gmap_canvas"
+                            src="https://maps.google.com/maps?width=400&amp;height=200&amp;hl=en&amp;q=901%20Paradise%20Creek%20St%20Moscow+(Hongxi%20Address)&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer id="footer" class="footer">
+    <div class="copyright">
+        Copyright &copy; <strong><span>hasan突击队</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+</footer>
+
+</body>
+
+</html>
