@@ -1,19 +1,19 @@
 document.getElementById('login-btn').addEventListener('click', async function() {
-    const userName = document.getElementById('email').value.trim();
+    const email = document.getElementById('email').value.trim();
     let password = document.getElementById('password').value.trim();
     event.preventDefault();
 
-    let canLogin = userName && password;
+    let canLogin = email && password;
 
     if (canLogin) {
-        fetch('/login', {
+        fetch('/trackuser/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: userName,
-                encrypted: password
+                email: email,
+                password: password
             })
         })
             .then(function (response) {

@@ -21,56 +21,66 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/trackuser")
 public class UserController {
-   private final UserService service;
+    private final UserService service;
 
-   public UserController(UserService service) {
-      this.service = service;
-   }
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
-   @GetMapping("/all")
-   public ResponseEntity<List<TrackUser>> getAllUsers() {
-      List<TrackUser> users = service.findAllUsers();
+    @GetMapping("/all")
+    public ResponseEntity<List<TrackUser>> getAllUsers() {
+        List<TrackUser> users = service.findAllUsers();
 
-      return new ResponseEntity<>(users, HttpStatus.OK);
-   }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
-   @GetMapping("/find/{id}")
-   public ResponseEntity<TrackUser> getUserById(@PathVariable("id") Integer id) {
-      TrackUser user = service.findUserById(id);
+    @GetMapping("/find/{id}")
+    public ResponseEntity<TrackUser> getUserById(@PathVariable("id") Integer id) {
+        TrackUser user = service.findUserById(id);
 
-      return new ResponseEntity<>(user, HttpStatus.OK);
-   }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
-   @PostMapping("/register")
-   public ResponseEntity<TrackUser> handleRegister(@RequestBody TrackUser user) {
-      TrackUser newUser = service.addUser(user);
+    @PostMapping("/register")
+    public ResponseEntity<TrackUser> handleRegister(@RequestBody TrackUser user) {
+        TrackUser newUser = service.addUser(user);
 
-      return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-   }
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
 
-   @PostMapping("/login")
-   public String login(@RequestParam String email, @RequestParam String password, Model model) {
-      TrackUser account = service.findUserByEmail(email);
-      if (account.getEmail().equals(email) && account.getPassword().equals(password)) {
-         return "redirect:/protrack/dashboard/stu";
-      } else {
-         model.addAttribute("error", "Invalid username or password");
-         return "login"; // 返回登录页面
-      }
-   }
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> handleLogin(@RequestBody String loginInfo) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsNode = mapper.readTree(loginInfo);
+        String email = jsNode.get("email").asText();
+        String password = jsNode.get("password").asText();
+
+        TrackUser account = service.findUserByEmail(email);
+       Map<String, Object> response = new HashMap<>();
+        if (account.getEmail().equals(email) && account.getPassword().equals(password)) {
+            response.put("success",true);
+            response.put("message","Login Successful");
+            return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+        }
+        else{
+           response.put("success",false);
+           response.put("message","Incorrect Account or Password");
+           return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
+        }
+    }
 
 
-   @PutMapping("/update")
-   public ResponseEntity<TrackUser> updateUser(@RequestBody TrackUser user) {
-      TrackUser updateUser = service.updateUser(user);
+    @PutMapping("/update")
+    public ResponseEntity<TrackUser> updateUser(@RequestBody TrackUser user) {
+        TrackUser updateUser = service.updateUser(user);
 
-      return new ResponseEntity<>(updateUser, HttpStatus.OK);
-   }
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
 
-   @DeleteMapping("/delete/{id}")
-   public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
-      service.deleteUser(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
+        service.deleteUser(id);
 
-      return new ResponseEntity<>(HttpStatus.OK);
-   }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

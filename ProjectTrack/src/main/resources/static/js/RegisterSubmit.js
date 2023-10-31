@@ -1,11 +1,11 @@
 document.getElementById('register-btn').addEventListener('click', async function () {
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let role = document.getElementById("role").value.trim();
+    let timezone = document.getElementById("timezone").value.trim();
     event.preventDefault();
 
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let role = document.getElementById("role").value;
-    let timezone = document.getElementById("timezone").value;
 
     let user = {
         name: name,
@@ -26,4 +26,7 @@ document.getElementById('register-btn').addEventListener('click', async function
             alert(response.status);
             window.location.href = "/protrack/login"
         })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 });
