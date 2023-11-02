@@ -1,20 +1,30 @@
 package com.protrack.protrack.entities;
 
-
 import jakarta.persistence.*;
 
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class TrackUser implements Serializable {
+@Table(name = "trackusers")
+public class TrackUser {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "UID")
    private Integer id;
+   @Column(name = "Name")
    private String name;
+   @Column(name = "Email")
    private String email;
+   @Column(name="Role")
    private String role;
+   @Column(name = "Timezone")
    private String timezone;
+   @Column(name = "Password")
    private String password;
+
+   @OneToMany(mappedBy = "trackUser")
+   private Set<Member> members = new HashSet<>();
 
    public TrackUser() {
    }

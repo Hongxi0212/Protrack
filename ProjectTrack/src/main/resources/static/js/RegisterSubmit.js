@@ -6,7 +6,6 @@ document.getElementById('register-btn').addEventListener('click', async function
     let timezone = document.getElementById("timezone").value.trim();
     event.preventDefault();
 
-
     let user = {
         name: name,
         email: email,

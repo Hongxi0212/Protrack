@@ -1,0 +1,7 @@
+
+TrackUsers (UID, Name, Email, Role, Timezone, Password)
+Projects (PID, Title, TotalPoints, Outcomes, Earned, Description, MeetingTime, MeetingPlace)
+Deliverables (PID, UID, Item, Number, Phase, Date, Mode, Necessity, Assessment, Point, Weight, Comment)
+Members (PID, UID, Designation)
+Requirements (PID, System, Software)
+Rubrics (PID, Category, Developing, Component, Accomplished, Perfect)
