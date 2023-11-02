@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <ul class="nav" style="padding-top: 20px">
                                 <li class="nav-item ms-3"><a href="/protrack/project/view">View</a></li>
                                 <li class="nav-item ms-3"><a href="/protrack/project/edit">Edit</a></li>
-                                <li class="nav-item ms-3"><a href="/protrack/project/details">Validate</a></li>
+                                <li class="nav-item ms-3"><a href="/protrack/project/view">Validate</a></li>
                             </ul>
                         </div>
                     </div>
