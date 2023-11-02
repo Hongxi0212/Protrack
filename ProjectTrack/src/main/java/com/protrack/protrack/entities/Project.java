@@ -3,6 +3,7 @@ package com.protrack.protrack.entities;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @Entity
@@ -12,6 +13,8 @@ public class Project {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "PID")
    private Integer id;
+   @Column(name = "Code")
+   private Integer code;
    @Column(name = "Title")
    private String title;
    @Column(name = "Points")
@@ -58,6 +61,13 @@ public class Project {
 
    public void setId(Integer pid) {
       this.id = pid;
+   }
+
+   public void setCode() {
+      Random r = new Random();
+      code = r.nextInt(10000);
+
+      code += id * 10000;
    }
 
    public String getTitle() {

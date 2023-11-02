@@ -112,194 +112,60 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Horizontal Form</h5>
-                        <form>
+                        <h5 class="card-title">Create New Form</h5>
+                        <form class="project_create_form">
                             <div class="row mb-3">
-                                <label for="projectTitle_plan" class="col-md-3 col-form-label">Project
-                                    Title</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="projectTitle_plan" type="text" class="form-control"
-                                           id="projectTitle_plan" value="Gamified Network">
+                                <label for="create_project_title" class="col-3 col-form-label">Project Title</label>
+                                <div class="col-3">
+                                    <input id="create_project_title"  name="create_project_title" type="text" class="form-control" value="Title">
+                                </div>
+
+                                <label for="create_project_points"
+                                       class="col-3 col-form-label">Total Points</label>
+                                <div class="col-3">
+                                    <input id="create_project_points" name="create_project_points" type="text" class="form-control"
+                                           value="20">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label for="teamNumbers_plan"
-                                       class="col-md-3 col-form-label">Team Numbers</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="teamNumbers_plan" type="text" class="form-control"
-                                           id="teamNumbers_plan"
-                                           value="4">
+                                <label for="create_project_outcome" class="col-md-3 col-form-label">Learn
+                                    Outcomes</label>
+                                <div class="col-9">
+                                            <textarea id="create_project_outcome" name="create_project_outcome" class="form-control" style="height: 100px">What will be expected to learn after this project?</textarea>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-md-3 col-form-label">Team
-                                    Members</label>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th style="width:25%;">Name</th>
-                                                    <th style="width:25%">ID</th>
-                                                    <th style="width:25%">Contact</th>
-                                                    <th style="width:25%">Designation</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Name"
-                                                               value="Jane Doe"></td>
-                                                    <td><input type="text" class="form-control" placeholder="ID"
-                                                               value="123"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Contact"
-                                                               value="janedoe123@yahoo.com"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Designation" value="Leader"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Name"
-                                                               value="John Doe"></td>
-                                                    <td><input type="text" class="form-control" placeholder="ID"
-                                                               value="256"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Contact"
-                                                               value="johndoe256@yahoo.com"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Designation" value="Member"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="meetingTime" class="col-md-3 col-form-label">Meeting
-                                    Time</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="meetingTime" type="text" class="form-control" id="meetingTime"
-                                           value="Wed. 4-5pm">
+                                <label for="create_project_earned" class="col-md-3 col-form-label">Competencies
+                                    Earned</label>
+                                <div class="col-9">
+                                            <textarea id="create_project_earned" name="create_project_earned" class="form-control" style="height: 100px">What Students will learn from this project?</textarea>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label for="meetingPlace" class="col-md-3 col-form-label">Meeting
-                                    Place</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="meetingPlace" type="text" class="form-control"
-                                           id="meetingPlace"
-                                           value="Office">
+                                <label for="create_project_description" class="col-md-3 col-form-label">Description</label>
+                                <div class="col-9">
+                                            <textarea id="create_project_description" name="create_project_description" class="form-control" style="height: 100px">What is this project about?</textarea>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-md-3 col-form-label">Deliverables</label>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th style="width:15%;">Task</th>
-                                                    <th style="width:25%;">Item</th>
-                                                    <th style="width:15%">Phase</th>
-                                                    <th style="width:15%">Responsible</th>
-                                                    <th style="width:15%">Mode</th>
-                                                    <th style="width:15%">Comment</th>
-                                                </tr>
-                                                </thead>
+                                <label for="create_project_mtime" class="col-3 col-form-label">Meeting Time</label>
+                                <div class="col-3">
+                                    <input id="create_project_mtime"  name="create_project_mtime" type="text" class="form-control" value="How Often?">
+                                </div>
 
-                                                <tbody>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" value="1"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="User interface">
-                                                    </td>
-                                                    <td><input type="text" class="form-control" value="IV"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="John Doe"></td>
-                                                    <td><input type="text" class="form-control" value="Link">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Comment">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" value="1.1">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="Login screen">
-                                                    </td>
-                                                    <td><input type="text" class="form-control" value="IV"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="John Doe"></td>
-                                                    <td><input type="text" class="form-control" value="Link">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Comment">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" value="1.2">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="Signup screen">
-                                                    </td>
-                                                    <td><input type="text" class="form-control" value="IV"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="John Doe"></td>
-                                                    <td><input type="text" class="form-control" value="Link">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Comment">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" value="2"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="ER Diagram"></td>
-                                                    <td><input type="text" class="form-control" value="I"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="Jane Doe"></td>
-                                                    <td><input type="text" class="form-control" value="Image">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Comment">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" value="2.1">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="Revise ER Diagram"></td>
-                                                    <td><input type="text" class="form-control" value="I"></td>
-                                                    <td><input type="text" class="form-control"
-                                                               value="Jane Doe"></td>
-                                                    <td><input type="text" class="form-control" value="Image">
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                               placeholder="Comment">
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <label for="create_project_mplace"
+                                       class="col-3 col-form-label">Meeting Place</label>
+                                <div class="col-3">
+                                    <input id="create_project_mplace" name="create_project_mplace" type="text" class="form-control"
+                                           value="Where?">
+                                </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button id="project_create_btn" class="btn btn-primary">Create</button>
                             </div>
                         </form>
                     </div>
@@ -324,6 +190,8 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
 </footer>
+
+<script src="/js/ProjectCreateSubmit.js"></script>
 
 </body>
 </html>

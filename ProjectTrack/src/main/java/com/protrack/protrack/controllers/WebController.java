@@ -47,9 +47,14 @@ public class WebController {
       return "projects_stu";
    }
 
-   @GetMapping("/project/details")
+   @GetMapping("/project/view")
    public String project_details() {
-      return "project_details";
+      return "project_view";
+   }
+
+   @GetMapping("/project/edit")
+   public String project_edit(){
+      return "project_edit";
    }
 
    @GetMapping("/project/create")

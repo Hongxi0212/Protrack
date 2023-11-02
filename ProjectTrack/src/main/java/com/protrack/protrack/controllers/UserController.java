@@ -56,16 +56,23 @@ public class UserController {
         String password = jsNode.get("password").asText();
 
         TrackUser account = service.findUserByEmail(email);
-       Map<String, Object> response = new HashMap<>();
+        String role = account.getRole();
+        Map<String, Object> response = new HashMap<>();
         if (account.getEmail().equals(email) && account.getPassword().equals(password)) {
-            response.put("success",true);
-            response.put("message","Login Successful");
-            return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
-        }
-        else{
-           response.put("success",false);
-           response.put("message","Incorrect Account or Password");
-           return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
+            response.put("success", true);
+            response.put("message", "Login Successful");
+            if(role.equals("Student")){
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            if(role.equals("Instructor")){
+                return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+            }
+
+            return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
+        } else {
+            response.put("success", false);
+            response.put("message", "Incorrect Account or Password");
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
     }
 

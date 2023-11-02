@@ -10,5 +10,5 @@ public interface ProjectRepo extends JpaRepository<Project,Integer> {
 
    Optional<Project> findProjectById(Integer id);
 
-   Optional<Project> findUserByTitle(String title);
+   Optional<Project> findProjectByCode(Integer code);
 }

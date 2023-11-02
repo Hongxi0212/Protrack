@@ -107,45 +107,13 @@
     <section class="section dashboard">
         <div class="row">
 
-            <div class="col-lg-8">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="card info-card sales-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ProTrack <span>| CS360</span></h5>
-                                <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
-                                <div>
-                                    <ul class="nav" style="padding-top: 20px">
-                                        <li class="nav-item ms-3"><a href="/protrack/project/details">View</a></li>
-                                        <li class="nav-item ms-3"><a href="/protrack/project/details">Edit</a></li>
-                                        <li class="nav-item ms-3"><a href="/protrack/project/details">Validate</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card info-card revenue-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Gamified Network <span>| CS480</span></h5>
-                                <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
-                                <div>
-                                    <ul class="nav" style="padding-top: 20px">
-                                        <li class="nav-item ms-3"><a href="/protrack/project/details">View</a></li>
-                                        <li class="nav-item ms-3"><a href="/protrack/project/details">Edit</a></li>
-                                        <li class="nav-item ms-3"><a href="/protrack/project/details">Validate</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="col-8">
+                <div id="projects-container" class="row">
+                    <!--Dynamic Load Project Card-->
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Messages <span>| Recently</span></h5>
@@ -194,6 +162,8 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
 </footer>
+
+<script src="/js/LoadAllProjectsOnDashboard.js"></script>
 
 </body>
 </html>

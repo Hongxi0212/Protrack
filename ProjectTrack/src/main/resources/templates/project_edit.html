@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5; Program Framework base on Spring">
+    <meta name="author" content="hasan突击队">
+    <meta name="keywords"
+          content="adminkit, bootstrap 5, spring, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <link href="/css/main.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: NiceAdmin
+    * Updated: Sep 18 2023 with Bootstrap v5.3.2
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="/protrack/home" class="logo d-flex align-items-center">
+            <span class="d-none d-lg-block">ProTrack</span>
+        </a>
+    </div>
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown pe-3">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Stu. CBA</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/protrack/dashboard/stu">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-heading">Pages</li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/protrack/projects/stu">
+                <i class="bi bi-gem"></i>
+                <span>Projects</span>
+            </a>
+        </li>
+
+        <li class="nav-heading">Others</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/protrack/login">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/protrack/contact">
+                <i class="bi bi-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </li>
+    </ul>
+
+</aside>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Gamified Network</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/protrack/dashboard/prof">Home</a></li>
+                <li class="breadcrumb-item"><a href="/protrack/projects/prof">Projects</a></li>
+                <li class="breadcrumb-item active">Edit Project</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                    Overall
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Members
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">
+                                    Deliverables
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                                    Requirements
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <form class="project_create_form">
+                                    <div class="row mb-3">
+                                        <label for="create_project_title" class="col-3 col-form-label">Project
+                                            Title</label>
+                                        <div class="col-3">
+                                            <input id="create_project_title" name="create_project_title" type="text"
+                                                   class="form-control" value="Title">
+                                        </div>
+
+                                        <label for="create_project_points"
+                                               class="col-3 col-form-label">Total Points</label>
+                                        <div class="col-3">
+                                            <input id="create_project_points" name="create_project_points" type="text"
+                                                   class="form-control"
+                                                   value="20">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="create_project_outcome" class="col-md-3 col-form-label">Learn
+                                            Outcomes</label>
+                                        <div class="col-9">
+                                            <textarea id="create_project_outcome" name="create_project_outcome"
+                                                      class="form-control" style="height: 100px">What will be expected to learn after this project?</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="create_project_earned" class="col-md-3 col-form-label">Competencies
+                                            Earned</label>
+                                        <div class="col-9">
+                                            <textarea id="create_project_earned" name="create_project_earned"
+                                                      class="form-control" style="height: 100px">What Students will learn from this project?</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="create_project_description" class="col-md-3 col-form-label">Description</label>
+                                        <div class="col-9">
+                                            <textarea id="create_project_description" name="create_project_description"
+                                                      class="form-control" style="height: 100px">What is this project about?</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="create_project_mtime" class="col-3 col-form-label">Meeting
+                                            Time</label>
+                                        <div class="col-3">
+                                            <input id="create_project_mtime" name="create_project_mtime" type="text"
+                                                   class="form-control" value="How Often?">
+                                        </div>
+
+                                        <label for="create_project_mplace"
+                                               class="col-3 col-form-label">Meeting Place</label>
+                                        <div class="col-3">
+                                            <input id="create_project_mplace" name="create_project_mplace" type="text"
+                                                   class="form-control"
+                                                   value="Where?">
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button id="project_edit_overall_btn" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-edit">
+                                <form>
+
+                                    <div class="row mb-3">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:20%;">Name</th>
+                                                <th style="width:20%">ID</th>
+                                                <th style="width:20%">Contact</th>
+                                                <th style="width:20%">Designation</th>
+                                                <th style="width:20%">Operation</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Name"
+                                                           value="Jane Doe"></td>
+                                                <td><input type="text" class="form-control" placeholder="ID"
+                                                           value="123"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Contact"
+                                                           value="janedoe123@yahoo.com"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Designation" value="Leader"></td>
+                                                <td>
+                                                    <button id="1" class="btn btn-danger">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Name"
+                                                           value="John Doe"></td>
+                                                <td><input type="text" class="form-control" placeholder="ID"
+                                                           value="256"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Contact"
+                                                           value="johndoe256@yahoo.com"></td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Designation" value="Member"></td>
+                                                <td>
+                                                    <button id="2" class="btn btn-danger">Delete</button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center">
+                                        <button id="project_edit_members_btn" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-settings">
+                                <form>
+
+                                    <div class="row mb-3">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:15%;">Task</th>
+                                                <th style="width:25%;">Item</th>
+                                                <th style="width:15%">Phase</th>
+                                                <th style="width:15%">Responsible</th>
+                                                <th style="width:15%">Mode</th>
+                                                <th style="width:15%">Comment</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value="1"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="User interface">
+                                                </td>
+                                                <td><input type="text" class="form-control" value="IV"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="John Doe"></td>
+                                                <td><input type="text" class="form-control" value="Link">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Comment">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value="1.1">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           value="Login screen">
+                                                </td>
+                                                <td><input type="text" class="form-control" value="IV"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="John Doe"></td>
+                                                <td><input type="text" class="form-control" value="Link">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Comment">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value="1.2">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           value="Signup screen">
+                                                </td>
+                                                <td><input type="text" class="form-control" value="IV"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="John Doe"></td>
+                                                <td><input type="text" class="form-control" value="Link">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Comment">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value="2"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="ER Diagram"></td>
+                                                <td><input type="text" class="form-control" value="I"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="Jane Doe"></td>
+                                                <td><input type="text" class="form-control" value="Image">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Comment">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value="2.1">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           value="Revise ER Diagram"></td>
+                                                <td><input type="text" class="form-control" value="I"></td>
+                                                <td><input type="text" class="form-control"
+                                                           value="Jane Doe"></td>
+                                                <td><input type="text" class="form-control" value="Image">
+                                                </td>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="Comment">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center">
+                                        <button id="project_edit_deliverable_btn" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <form>
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Requirements</label>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:25%;">System</th>
+                                                <th style="width:25%">Software</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="System"
+                                                           value="CKEditor"></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="MySQL"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control"
+                                                           placeholder="System"
+                                                           value="WordTune"></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="XAMPP"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value=""></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="PDFCreator"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control" value=""></td>
+                                                <td><input type="text" class="form-control" placeholder="Software"
+                                                           value="Faker/Mockaroo"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <label class="col-md-3 col-form-label">Rubrics</label>
+                                        <table class="table table-bordered">
+                                            <tbody style="height: 300px;display: inline-block;width: 100%;overflow: auto;">
+                                            <tr>
+                                                <td colspan="5" style="text-align: center;">Assessment</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="1">&nbsp;</td>
+                                                <td colspan="1">0~3</td>
+                                                <td colspan="1">3.1~6</td>
+                                                <td colspan="1">6.1~10</td>
+                                                <td colspan="1">10</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Category</b></td>
+                                                <td><b>Developing</b></td>
+                                                <td><b>Competent</b></td>
+                                                <td><b>Accomplished</b></td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="vertical-align: top;">User Interface design</td>
+                                                <td style="vertical-align: top;">
+                                                  <textarea name="create_project_outcome" class="form-control"
+                                                            style="height: 100px">a. Some of the functionalities are implemented.
+                                                    b. The interface did not meet aesthetic standards expected.
+                                                    c. Tool choices were flawed.
+                                                  </textarea>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                  <textarea name="create_project_outcome" class="form-control"
+                                                      style="height: 100px">a. Choice of tools are reasonable.
+                                                    b. Layout is acceptable and some of the functionalities are implemented.
+                                                  </textarea>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                  <textarea name="create_project_outcome" class="form-control"
+                                                            style="height: 100px">a. Student delivered a fully functional web interface for user interaction for all the expected functions.
+                                                    b. Made prudent choice of tools.
+                                                    c. No known bug or errors present.
+                                                    d. The layout and color schemes are visually pleasant.
+                                                  </textarea>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center">
+                                        <button id="project_edit_requirement_btn" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer id="footer" class="footer">
+    <div class="copyright">
+        Copyright &copy; <strong><span>hasan突击队</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+</footer>
+
+<script src="/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
+<script src="/vendor/echarts/echarts.min.js"></script>
+<script src="/vendor/quill/quill.min.js"></script>
+<script src="/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/vendor/tinymce/tinymce.min.js"></script>
+<script src="/vendor/php-email-form/validate.js"></script>
+
+<script src="/vendor/niceadmin/main.js"></script>
+
+</body>
+</html>

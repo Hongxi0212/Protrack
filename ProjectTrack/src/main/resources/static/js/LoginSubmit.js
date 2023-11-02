@@ -18,7 +18,12 @@ document.getElementById('login-btn').addEventListener('click', async function() 
         })
             .then(function (response) {
                 alert(response.status);
-                window.location.href = "/protrack/dashboard/stu"
+                if(response.ok){
+                    window.location.href = "/protrack/dashboard/stu"
+                }
+                if(response.status===202){
+                    window.location.href = "/protrack/dashboard/prof"
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
