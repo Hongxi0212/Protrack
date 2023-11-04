@@ -26,20 +26,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 container.appendChild(projectElement);
             });
 
-            const addProjectElement=document.createElement('div');
-            addProjectElement.className='col-4';
-            addProjectElement.innerHTML=`
+            const addProjectElement = document.createElement('div');
+            addProjectElement.className = 'col-4';
+            addProjectElement.innerHTML = `
             <div class="card info-card revenue-card">
                 <div class="card-body">
                     <h5 class="card-title">New Project</h5>
-                    <a href="/protrack/project/create">
-                        <img src="/images/plus.png" width="100px" height="100px">
-                    </a>
+                    <img src="/images/plus.png" width="100px" height="100px" onclick="openCreateProjectModal()">
                 </div>
             </div>
+            
+            
+            <div class="modal fade" id="create_project_modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <label for="joinCode" class="col-3 col-form-label">Course Code</label>
+                                <div class="col-9">
+                                    <input name="joinCode" type="text" class="form-control" id="joinCode" value="CS360_JASAN">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-10">
+                                </div>
+                                <div class="col-2 text-center">
+                                    <button type="submit" class="btn btn-primary">Join</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             `;
-
             container.appendChild(addProjectElement);
         })
         .catch(error => console.error('Error:', error));
 });
+
+function openCreateProjectModal() {
+    $('create_project_modal').modal('show');
+}
