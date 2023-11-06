@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     fetch('/project/find/all')
         .then(response => response.json())
-        .then(projects => {
+        .then(allProjects => {
             const container = document.getElementById('projects-container');
-            projects.forEach(project => {
+            allProjects.forEach(project => {
                 const projectElement = document.createElement('div');
                 projectElement.className = 'col-6';
                 projectElement.innerHTML = `
@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <div class="card-body">
                         <h5 class="card-title">${project.title}</h5>
                         <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
-                        
                     </div>
                 </div>
             `;

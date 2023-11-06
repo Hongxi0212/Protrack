@@ -2,6 +2,7 @@ package com.protrack.protrack.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -32,8 +33,8 @@ public class WebController {
       return "dashboard_prof";
    }
 
-   @GetMapping("/dashboard/stu")
-   public String dashboard_stu() {
+   @GetMapping("/dashboard/stu/{uid}")
+   public String dashboard_stu(@PathVariable String uid) {
       return "dashboard_stu";
    }
 
@@ -42,14 +43,14 @@ public class WebController {
       return "projects_prof";
    }
 
-   @GetMapping("/projects/stu")
-   public String projects_stu() {
+   @GetMapping("/projects/stu/{uid}")
+   public String projects_stu(@PathVariable String uid) {
       return "projects_stu";
    }
 
-   @GetMapping("/project/view")
-   public String project_details() {
-      return "project_view";
+   @GetMapping("/{projectTitle}/view")
+   public String project_details(@PathVariable String projectTitle) {
+      return "project_details";
    }
 
    @GetMapping("/project/edit")

@@ -21,11 +21,11 @@ document.getElementById('register-btn').addEventListener('click', async function
         },
         body: JSON.stringify(user)
     })
-        .then(function (response) {
-            alert(response.status);
-            window.location.href = "/protrack/login"
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    .then(function (response) {
+        alert(response.status);
+        window.location.href = "/protrack/login"
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });

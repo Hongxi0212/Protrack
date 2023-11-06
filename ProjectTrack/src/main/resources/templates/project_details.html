@@ -48,7 +48,7 @@
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Prof. ABC</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Prof. CBA</span>
                 </a>
             </li>
         </ul>
@@ -95,13 +95,12 @@
 
 <main id="main" class="main">
 
-    <div class="pagetitle">
-        <h1>Gamified Network</h1>
+    <div id="container_title" class="pagetitle">
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/protrack/home">Home</a></li>
-                <li class="breadcrumb-item"><a href="/protrack/projects/prof">Projects</a></li>
-                <li class="breadcrumb-item active">Create Project</li>
+                <li class="breadcrumb-item"><a href="/protrack/dashboard/stu">Home</a></li>
+                <li class="breadcrumb-item"><a href="/protrack/projects/stu">Projects</a></li>
+                <li class="breadcrumb-item active">View Project</li>
             </ol>
         </nav>
     </div>
@@ -111,68 +110,28 @@
             <div class="col-12">
 
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Create New Form</h5>
-                        <form class="project_create_form">
-                            <div class="row mb-3">
-                                <label for="create_project_title" class="col-3 col-form-label">Project Title</label>
-                                <div class="col-3">
-                                    <input id="create_project_title"  name="create_project_title" type="text" class="form-control" value="Title">
-                                </div>
+                    <div class="card-body pt-3">
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab_overview">
+                                    Overview
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_plan">Plan
+                                </button>
+                            </li>
 
-                                <label for="create_project_points"
-                                       class="col-3 col-form-label">Total Points</label>
-                                <div class="col-3">
-                                    <input id="create_project_points" name="create_project_points" type="text" class="form-control"
-                                           value="20">
-                                </div>
-                            </div>
+                        </ul>
 
-                            <div class="row mb-3">
-                                <label for="create_project_outcome" class="col-md-3 col-form-label">Learn
-                                    Outcomes</label>
-                                <div class="col-9">
-                                            <textarea id="create_project_outcome" name="create_project_outcome" class="form-control" style="height: 100px">What will be expected to learn after this project?</textarea>
-                                </div>
-                            </div>
+                        <div id="container_tab" class="tab-content pt-2">
 
-                            <div class="row mb-3">
-                                <label for="create_project_earned" class="col-md-3 col-form-label">Competencies
-                                    Earned</label>
-                                <div class="col-9">
-                                            <textarea id="create_project_earned" name="create_project_earned" class="form-control" style="height: 100px">What Students will learn from this project?</textarea>
-                                </div>
-                            </div>
+                        </div>
 
-                            <div class="row mb-3">
-                                <label for="create_project_description" class="col-md-3 col-form-label">Description</label>
-                                <div class="col-9">
-                                            <textarea id="create_project_description" name="create_project_description" class="form-control" style="height: 100px">What is this project about?</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="create_project_mtime" class="col-3 col-form-label">Meeting Time</label>
-                                <div class="col-3">
-                                    <input id="create_project_mtime"  name="create_project_mtime" type="text" class="form-control" value="How Often?">
-                                </div>
-
-                                <label for="create_project_mplace"
-                                       class="col-3 col-form-label">Meeting Place</label>
-                                <div class="col-3">
-                                    <input id="create_project_mplace" name="create_project_mplace" type="text" class="form-control"
-                                           value="Where?">
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <button id="project_create_btn" class="btn btn-primary">Create</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
 
             </div>
-
         </div>
     </section>
 
@@ -191,6 +150,9 @@
     </div>
 </footer>
 
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/profProjViewPageManager.js"></script>
 
 </body>
 </html>

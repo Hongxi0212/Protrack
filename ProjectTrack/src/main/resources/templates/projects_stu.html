@@ -108,72 +108,8 @@
     </div>
 
     <section class="section">
-        <div class="row">
-            <div class="col-4">
-                <div class="card info-card sales-card">
-                    <div class="card-body">
-                        <h5 class="card-title">ProTrack <span>| CS360</span></h5>
-                        <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
-                        <div>
-                            <ul class="nav" style="padding-top: 20px">
-                                <li class="nav-item ms-3"><a href="/protrack/project/view">View</a></li>
-                                <li class="nav-item ms-3"><a href="/protrack/project/view">Validate</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-4">
-                <div class="card info-card revenue-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gamified Network <span>| CS480</span></h5>
-                        <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
-                        <div>
-                            <ul class="nav" style="padding-top: 20px">
-                                <li class="nav-item ms-3"><a href="/protrack/project/view   ">View</a></li>
-                                <li class="nav-item ms-3"><a href="/protrack/project/details">Validate</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-4">
-                <div class="card info-card revenue-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Join Project</h5>
-                        <img src="/images/plus.png" id="join_image" width="100px" height="100px" onclick="openModal()">
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="join_modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row mb-3">
-                                <label for="joinCode" class="col-3 col-form-label">Course Code</label>
-                                <div class="col-9">
-                                    <input name="joinCode" type="text" class="form-control"
-                                           id="joinCode" value="CS360_JASAN">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-10">
-                                </div>
-                                <div class="col-2 text-center">
-                                    <button type="submit" class="btn btn-primary">Join</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div id="projects-container" class="row">
+            <!--Dynamic Load Project Card-->
         </div>
     </section>
 
@@ -192,14 +128,8 @@
     </div>
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    function openModal() {
-        $('#join_modal').modal('show');
-    }
-</script>
+<script src="/js/stuProjsPageManager.js"></script>
 
 </body>
 </html>

@@ -813,7 +813,7 @@ h6 {
     padding: 0;
 }
 
-#join_image{
+#project_join_image, #project_create_image{
     cursor:pointer;
 }
 

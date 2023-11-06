@@ -1,9 +1,10 @@
 package com.protrack.protrack.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.security.SecureRandom;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 @Entity
@@ -15,16 +16,10 @@ public class Project {
    private Integer id;
    @Column(name = "Code")
    private Integer code;
+   @Column(name = "Link")
+   private String link;
    @Column(name = "Title")
    private String title;
-   @Column(name = "Points")
-   private Integer totalPoints;
-   @Column(name = "Outcomes")
-   private String outcomes;
-   @Column(name = "Earned")
-   private String earned;
-   @Column(name = "Description")
-   private String description;
    @Column(name = "MTime")
    private String meetingTime;
    @Column(name = "MPlace")
@@ -34,6 +29,7 @@ public class Project {
    private Rubric rubric;
 
    @OneToMany(mappedBy = "project")
+   @JsonManagedReference
    private Set<Member> members = new HashSet<>();
 
    @OneToMany(mappedBy = "project")
@@ -45,29 +41,38 @@ public class Project {
    public Project() {
    }
 
-   public Project(String title, Integer totalPoints, String outcomes, String earned, String description, String meetingTime, String meetingPlace) {
+   public Project(String title, String link) {
       this.title = title;
-      this.totalPoints = totalPoints;
-      this.outcomes = outcomes;
-      this.earned = earned;
-      this.description = description;
-      this.meetingTime = meetingTime;
-      this.meetingPlace = meetingPlace;
+      this.link = link;
    }
 
    public Integer getId() {
       return id;
    }
 
-   public void setId(Integer pid) {
-      this.id = pid;
+   public void setId(Integer id) {
+      this.id = id;
+   }
+
+   public Integer getCode() {
+      return code;
    }
 
    public void setCode() {
-      Random r = new Random();
+      SecureRandom r = new SecureRandom();
       code = r.nextInt(10000);
 
       code += id * 10000;
+
+      System.out.println(code);
+   }
+
+   public String getLink() {
+      return link;
+   }
+
+   public void setLink(String link) {
+      this.link = link;
    }
 
    public String getTitle() {
@@ -76,38 +81,6 @@ public class Project {
 
    public void setTitle(String title) {
       this.title = title;
-   }
-
-   public Integer getTotalPoints() {
-      return totalPoints;
-   }
-
-   public void setTotalPoints(Integer totalPoints) {
-      this.totalPoints = totalPoints;
-   }
-
-   public String getOutcomes() {
-      return outcomes;
-   }
-
-   public void setOutcomes(String outcomes) {
-      this.outcomes = outcomes;
-   }
-
-   public String getEarned() {
-      return earned;
-   }
-
-   public void setEarned(String earned) {
-      this.earned = earned;
-   }
-
-   public String getDescription() {
-      return description;
-   }
-
-   public void setDescription(String description) {
-      this.description = description;
    }
 
    public String getMeetingTime() {
@@ -124,5 +97,29 @@ public class Project {
 
    public void setMeetingPlace(String meetingPlace) {
       this.meetingPlace = meetingPlace;
+   }
+
+   public Set<Member> getMembers() {
+      return members;
+   }
+
+   public void setMembers(Set<Member> members) {
+      this.members = members;
+   }
+
+   public Set<Requirement> getRequirements() {
+      return requirements;
+   }
+
+   public void setRequirements(Set<Requirement> requirements) {
+      this.requirements = requirements;
+   }
+
+   public Set<Deliverable> getDeliverables() {
+      return deliverables;
+   }
+
+   public void setDeliverables(Set<Deliverable> deliverables) {
+      this.deliverables = deliverables;
    }
 }

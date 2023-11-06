@@ -35,11 +35,20 @@ public class ProjectService {
             "Project by Code: "+code+" was not found!"));
    }
 
+   public Project findProjectByTitle(String title){
+      return repository.findProjectByTitle(title).orElseThrow(()->new ProjectNotFoundException(
+            "Project by Title: "+title+" was not found!"));
+   }
+
    public List<Project> findAllProjects(){
       return repository.findAll();
    }
 
    public void deleteProject(Integer id){
       repository.deleteProjectById(id);
+   }
+
+   public List<Project> getProjectWithUserId(Integer id){
+      return repository.findProjectByUserId(id);
    }
 }
