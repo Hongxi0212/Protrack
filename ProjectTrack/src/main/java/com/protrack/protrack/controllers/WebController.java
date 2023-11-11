@@ -53,13 +53,19 @@ public class WebController {
       return "project_details";
    }
 
+   @GetMapping("/stu/{id}/{projectTitle}/view")
+   public String project_details(@PathVariable String projectTitle, @PathVariable String id) {
+      return "project_view_stu";
+   }
+
    @GetMapping("/project/edit")
    public String project_edit(){
       return "project_edit";
    }
 
+/*
    @GetMapping("/project/create")
    public String project_create() {
       return "project_create";
-   }
+   }*/
 }

@@ -1,9 +1,12 @@
 package com.protrack.protrack.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "members")
@@ -16,6 +19,9 @@ public class Member {
    @Column(name = "Designation")
    private String designation;
 
+   @OneToMany(mappedBy = "member")
+   private Set<Deliverable> deliverables = new HashSet<>();
+
    @ManyToOne
    @JoinColumn(name = "PID")
    @JsonBackReference
@@ -23,7 +29,7 @@ public class Member {
 
    @ManyToOne
    @JoinColumn(name = "UID")
-   @JsonBackReference
+   @JsonManagedReference
    private TrackUser trackUser;
 
    public Member() {

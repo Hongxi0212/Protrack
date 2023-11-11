@@ -1,6 +1,7 @@
 package com.protrack.protrack.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
 import java.security.SecureRandom;
@@ -25,17 +26,12 @@ public class Project {
    @Column(name = "MPlace")
    private String meetingPlace;
 
-   @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
-   private Rubric rubric;
-
    @OneToMany(mappedBy = "project")
    @JsonManagedReference
    private Set<Member> members = new HashSet<>();
 
    @OneToMany(mappedBy = "project")
-   private Set<Requirement> requirements = new HashSet<>();
-
-   @OneToMany(mappedBy = "project")
+   @JsonSerialize
    private Set<Deliverable> deliverables = new HashSet<>();
 
    public Project() {
@@ -105,14 +101,6 @@ public class Project {
 
    public void setMembers(Set<Member> members) {
       this.members = members;
-   }
-
-   public Set<Requirement> getRequirements() {
-      return requirements;
-   }
-
-   public void setRequirements(Set<Requirement> requirements) {
-      this.requirements = requirements;
    }
 
    public Set<Deliverable> getDeliverables() {

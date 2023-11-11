@@ -1,5 +1,6 @@
-package com.protrack.protrack.entities;
+package com.protrack.protrack.entities.obsolete;
 
+import com.protrack.protrack.entities.Project;
 import jakarta.persistence.*;
 
 @Entity

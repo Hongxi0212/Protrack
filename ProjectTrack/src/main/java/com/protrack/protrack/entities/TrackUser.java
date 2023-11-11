@@ -1,5 +1,6 @@
 package com.protrack.protrack.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -25,7 +26,7 @@ public class TrackUser {
    private String password;
 
    @OneToMany(mappedBy = "trackUser")
-   @JsonManagedReference
+   @JsonBackReference
    private Set<Member> members = new HashSet<>();
 
    public TrackUser() {

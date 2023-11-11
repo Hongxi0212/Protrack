@@ -1,4 +1,4 @@
-package com.protrack.protrack.entities;
+package com.protrack.protrack.entities.obsolete;
 
 import java.io.Serializable;
 

@@ -22,8 +22,6 @@ public class Deliverable {
    private String phase;
    @Column(name = "Date")
    private Date date;
-   @Column(name = "UID")
-   private Integer uid;
    @Column(name="Mode")
    private String mode;
    @Column(name="Necessity")
@@ -38,18 +36,21 @@ public class Deliverable {
    private String comment;
 
    @ManyToOne
-   @JoinColumn(name = "PID", insertable = false, updatable = false)
+   @JoinColumn(name = "MID")
+   private Member member;
+
+   @ManyToOne
+   @JoinColumn(name = "PID")
    private Project project;
 
    public Deliverable() {
    }
 
-   public Deliverable(String item, Float number, String phase, Date date, Integer uid, String mode, String necessity, String assessment, Integer point, Float weight, String comment) {
+   public Deliverable(String item, Float number, String phase, Date date, String mode, String necessity, String assessment, Integer point, Float weight, String comment) {
       this.item = item;
       this.number = number;
       this.phase = phase;
       this.date = date;
-      this.uid = uid;
       this.mode = mode;
       this.necessity = necessity;
       this.assessment = assessment;
@@ -96,14 +97,6 @@ public class Deliverable {
 
    public void setDate(Date date) {
       this.date = date;
-   }
-
-   public Integer getUid() {
-      return uid;
-   }
-
-   public void setUid(Integer uid) {
-      this.uid = uid;
    }
 
    public String getMode() {
