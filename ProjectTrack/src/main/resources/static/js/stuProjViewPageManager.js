@@ -6,18 +6,24 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(project => {
-            console.log(project);
-            const titleContainer = document.getElementById('container_title');
+            const titleContainer = document.getElementById('title_container');
 
             titleContainer.insertBefore(generateProjectTitle(project), titleContainer.firstChild);
 
-            const tabContainer = document.getElementById('container_tab');
+            const tabContainer = document.getElementById('tab_container');
 
             tabContainer.appendChild(generateOverviewTab(project));
-            tabContainer.appendChild(generatePlanTab(project));
 
-            insertPlanMemberTable(project.members);
-            insertPlanDeliverableTable(project.deliverables);
+            if (project.meetingTime === null && project.meetingPlace === null && project.deliverables.length === 0) {
+                tabContainer.appendChild(generateNoPlanTab());
+
+                listenPlanCreateBtn();
+            } else {
+                tabContainer.appendChild(generatePlanTab(project));
+
+                insertPlanMemberTable(project.members);
+                insertPlanDeliverableTable(project.deliverables);
+            }
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -34,7 +40,7 @@ function generateProjectTitle(project) {
 function generateOverviewTab(project) {
     let overviewTab = document.createElement('div');
     overviewTab.className = 'tab-pane fade show active';
-    overviewTab.id = 'tab_overview';
+    overviewTab.id = 'overview_tab';
     overviewTab.innerHTML = `
         <div class="tab-pane fade show active profile-overview">
             <h5 class="card-title">Project Code</h5>
@@ -46,6 +52,21 @@ function generateOverviewTab(project) {
     `;
 
     return overviewTab;
+}
+
+function generateNoPlanTab() {
+    let noPlanTab = document.createElement('div');
+
+    noPlanTab.className = 'tab-pane fade pt-3';
+    noPlanTab.id = 'plan_tab';
+    noPlanTab.innerHTML = `
+    <p>Project Plan has not been created yet.</p>
+    <div class="text-center">
+        <button id="plan_create_btn" class="btn btn-primary">Create</button>
+    </div>
+    `;
+
+    return noPlanTab;
 }
 
 function generatePlanTab(project) {
@@ -69,8 +90,7 @@ function generatePlanTab(project) {
             </div>
 
             <div class="row mb-3">
-                <label class="col-3 col-form-label">Team
-                    Members</label>
+                <label class="col-3 col-form-label">Team Members</label>
                 <table>
                     <tbody>
                     <tr>
@@ -166,21 +186,19 @@ function insertPlanMemberTable(members) {
 }
 
 function insertPlanDeliverableTable(deliverables) {
+    if (deliverables.length === 0) {
+        const deliverableThead = document.getElementById("deliverables_thead");
 
-    if (deliverables.length===0) {
-        const deliverableThead=document.getElementById("deliverables_thead");
+        deliverableThead.innerHTML = ``;
 
-        deliverableThead.innerHTML=``;
-
-        let newInner=document.createElement('tr');
-        newInner.innerHTML=`
+        let newInner = document.createElement('tr');
+        newInner.innerHTML = `
         <th>Deliverables has not been created yet.</th>
         `;
 
         deliverableThead.appendChild(newInner);
 
-    }
-    else {
+    } else {
         const deliverableTbody = document.getElementById("deliverables_tbody");
 
         deliverables.foreach(deliverable => {
@@ -192,9 +210,18 @@ function insertPlanDeliverableTable(deliverables) {
             <td><input type="text" class="form-control" placeholder="Responsible" value=${deliverable.member}></td>
             <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode}> </td>
             <td><input type="text" class="form-control" placeholder="Comment" value=${deliverable.comment}></td>
-        `;
+            `;
 
             deliverableTbody.appendChild(deliverableRow);
         })
     }
+}
+
+function listenPlanCreateBtn() {
+    let createBtn = document.getElementById("plan_create_btn");
+
+    createBtn.addEventListener('click', function () {
+        let tempPath = window.location.pathname;
+        window.location.href = tempPath.slice(0, -4) + "edit";
+    });
 }
