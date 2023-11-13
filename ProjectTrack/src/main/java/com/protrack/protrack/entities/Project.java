@@ -1,6 +1,7 @@
 package com.protrack.protrack.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "projects")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Project {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,6 @@ public class Project {
    private String meetingPlace;
 
    @OneToMany(mappedBy = "project")
-   @JsonManagedReference
    private Set<Member> members = new HashSet<>();
 
    @OneToMany(mappedBy = "project")

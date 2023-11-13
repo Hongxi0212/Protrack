@@ -1,5 +1,7 @@
 package com.protrack.protrack.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -7,24 +9,21 @@ import java.util.Date;
 @Entity
 @Table(name = "deliverables")
 @IdClass(DeliverableId.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "item")
 public class Deliverable {
-   @Id
-   @Column(name = "PID")
-   private Integer pid;
-
    @Id
    @Column(name = "Item")
    private String item;
 
-   @Column(name="Number")
+   @Column(name = "Number")
    private Float number;
    @Column(name = "Phase")
    private String phase;
    @Column(name = "Date")
    private Date date;
-   @Column(name="Mode")
+   @Column(name = "Mode")
    private String mode;
-   @Column(name="Necessity")
+   @Column(name = "Necessity")
    private String necessity;
    @Column(name = "Assessment")
    private String assessment;
@@ -39,6 +38,7 @@ public class Deliverable {
    @JoinColumn(name = "MID")
    private Member member;
 
+   @Id
    @ManyToOne
    @JoinColumn(name = "PID")
    private Project project;
@@ -46,25 +46,8 @@ public class Deliverable {
    public Deliverable() {
    }
 
-   public Deliverable(String item, Float number, String phase, Date date, String mode, String necessity, String assessment, Integer point, Float weight, String comment) {
-      this.item = item;
-      this.number = number;
-      this.phase = phase;
-      this.date = date;
-      this.mode = mode;
-      this.necessity = necessity;
-      this.assessment = assessment;
-      this.point = point;
-      this.weight = weight;
-      this.comment = comment;
-   }
-
-   public Integer getPid() {
-      return pid;
-   }
-
-   public void setPid(Integer pid) {
-      this.pid = pid;
+   public Deliverable(Project belong) {
+      this.project=belong;
    }
 
    public String getItem() {
@@ -145,5 +128,21 @@ public class Deliverable {
 
    public void setComment(String comment) {
       this.comment = comment;
+   }
+
+   public Member getMember() {
+      return member;
+   }
+
+   public void setMember(Member member) {
+      this.member = member;
+   }
+
+   public Project getProject() {
+      return project;
+   }
+
+   public void setProject(Project project) {
+      this.project = project;
    }
 }

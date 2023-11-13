@@ -3,20 +3,19 @@ package com.protrack.protrack.entities;
 import java.io.Serializable;
 
 public class DeliverableId implements Serializable {
-   private Integer pid;
+   private Project project;
    private String item;
 
-   public DeliverableId(Integer pid, String item) {
-      this.pid = pid;
-      this.item = item;
+   public DeliverableId() {
+
    }
 
-   public Integer getPid() {
-      return pid;
+   public Project getProject() {
+      return project;
    }
 
-   public void setPid(Integer pid) {
-      this.pid = pid;
+   public void setProject(Project project) {
+      this.project = project;
    }
 
    public String getItem() {

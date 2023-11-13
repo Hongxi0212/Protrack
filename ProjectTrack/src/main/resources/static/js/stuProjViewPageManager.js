@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tabContainer.appendChild(generatePlanTab(project));
 
                 insertPlanMemberTable(project.members);
-                insertPlanDeliverableTable(project.deliverables);
+                insertPlanDeliverableTable(project);
             }
         })
         .catch(error => {
@@ -72,7 +72,7 @@ function generateNoPlanTab() {
 function generatePlanTab(project) {
     let planTab = document.createElement('div');
     planTab.className = 'tab-pane fade pt-3';
-    planTab.id = 'tab_plan';
+    planTab.id = 'plan_tab';
     planTab.innerHTML = `
         <form>
             <div class="row mb-3">
@@ -185,7 +185,10 @@ function insertPlanMemberTable(members) {
     })
 }
 
-function insertPlanDeliverableTable(deliverables) {
+function insertPlanDeliverableTable(project) {
+    let deliverables = project.deliverables;
+    let members = project.members;
+
     if (deliverables.length === 0) {
         const deliverableThead = document.getElementById("deliverables_thead");
 
@@ -200,16 +203,26 @@ function insertPlanDeliverableTable(deliverables) {
 
     } else {
         const deliverableTbody = document.getElementById("deliverables_tbody");
+        console.log(deliverables);
 
-        deliverables.foreach(deliverable => {
+        deliverables.forEach(deliverable => {
+            let responsibleMID=deliverable.member;
+            let responsibleName="";
+
+            members.forEach(member=>{
+                if(member.id===responsibleMID){
+                    responsibleName=member.trackUser.name;
+                }
+            })
+
             let deliverableRow = document.createElement('tr');
             deliverableRow.innerHTML = `
-            <td><input type="text" class="form-control" placeholder="Task Number" value=${deliverable.number}></td>
-            <td><input type="text" class="form-control" placeholder="Task Name" value=${deliverable.item}></td>
-            <td><input type="text" class="form-control" placeholder="Phase Number" value=${deliverable.phase}></td>
-            <td><input type="text" class="form-control" placeholder="Responsible" value=${deliverable.member}></td>
-            <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode}> </td>
-            <td><input type="text" class="form-control" placeholder="Comment" value=${deliverable.comment}></td>
+            <td><input type="text" class="form-control" placeholder="Task Number" value=${deliverable.number} disabled></td>
+            <td><input type="text" class="form-control" placeholder="Task Name" value=${deliverable.item} disabled></td>
+            <td><input type="text" class="form-control" placeholder="Phase Number" value=${deliverable.phase} disabled></td>
+            <td><input type="text" class="form-control" placeholder="Responsible" value=${responsibleName} disabled></td>
+            <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode} disabled> </td>
+            <td><input type="text" class="form-control" placeholder="Comment" value=${deliverable.comment} disabled></td>
             `;
 
             deliverableTbody.appendChild(deliverableRow);
@@ -221,7 +234,6 @@ function listenPlanCreateBtn() {
     let createBtn = document.getElementById("plan_create_btn");
 
     createBtn.addEventListener('click', function () {
-        let tempPath = window.location.pathname;
-        window.location.href = tempPath.slice(0, -4) + "edit";
+        window.location.href = window.location.pathname.slice(0, -4) + "edit";
     });
 }
