@@ -38,10 +38,15 @@ public class ProjectController {
    public ResponseEntity<?> createProject(@RequestBody String createInfo) throws JsonProcessingException {
       ObjectMapper mapper = new ObjectMapper();
       JsonNode jsNode = mapper.readTree(createInfo);
+      Integer id =jsNode.get("id").asInt();
       String title = jsNode.get("title").asText();
       String link = jsNode.get("link").asText();
 
       Project project = new Project(title, link);
+
+      TrackUser user=userService.getUserWithId(id);
+      project.setInstructor(user);
+
       projectService.addProject(project);
 
       project.setCode();
@@ -131,9 +136,22 @@ public class ProjectController {
       return ResponseEntity.ok(project);
    }
 
+   @GetMapping("/instr/{uid}/all")
+   public ResponseEntity<List<Project>> getAllProjectsOfInstructor(@PathVariable Integer uid){
+      TrackUser user=userService.getUserWithId(uid);
+
+      List<Project> allProjects=projectService.getProjectsWithInstructorId(user);
+      return ResponseEntity.ok(allProjects);
+   }
+
    @GetMapping("/stu/{uid}/all")
-   public ResponseEntity<List<Project>> getAllProjectsOfUser(@PathVariable Integer uid) {
-      List<Project> allProjects = projectService.getProjectWithUserId(uid);
+   public ResponseEntity<List<Project>> getAllProjectsOfStudent(@PathVariable Integer uid) {
+      List<Project> allProjects = projectService.getProjectWithStuId(uid);
+
+      for (Project project:
+           allProjects) {
+         System.out.println(project.toString());
+      }
       return ResponseEntity.ok(allProjects);
    }
 }

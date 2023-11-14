@@ -1,6 +1,7 @@
 package com.protrack.protrack.repositories;
 
 import com.protrack.protrack.entities.Project;
+import com.protrack.protrack.entities.TrackUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,7 @@ public interface ProjectRepo extends JpaRepository<Project,Integer> {
    Optional<Project> findProjectByTitle(String title);
 
    @Query("SELECT m.project FROM Member m WHERE m.trackUser.id=:uid")
-   List<Project> findProjectByUserId(@Param("uid") Integer uid);
+   List<Project> findProjectsByStuId(@Param("uid") Integer uid);
+
+   List<Project> findProjectsByInstructor(TrackUser instructor);
 }

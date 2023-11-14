@@ -25,7 +25,7 @@ document.getElementById('login-btn').addEventListener('click', async function ()
                     window.location.href = `/protrack/dashboard/stu/${user.uid}`
                 }
                 if (user.message==="Instructor") {
-                    window.location.href = `/protrack/dashboard/prof`
+                    window.location.href = `/protrack/dashboard/instr/${user.uid}`
                 }
             })
             .catch(error => {

@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "trackusers")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class TrackUser {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

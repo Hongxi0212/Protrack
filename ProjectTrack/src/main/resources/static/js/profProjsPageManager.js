@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetch('/project/find/all')
-        .then(
-            response => response.json()
-        )
+    let id = window.location.pathname.split('/')[4];
+
+    listenInstrDashboardNavA(id);
+    listenInstrProjectsNavA(id);
+
+    fetch('/project/instr/' + encodeURIComponent(id) + '/all')
+        .then(response => {
+            return response.json();
+        })
         .then(allProjects => {
             const container = document.getElementById('projects-container');
 
@@ -31,9 +36,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             container.appendChild(generateProjectCreateImg());
 
             listenProjectCreateImg();
-            listenProjectCreateBtn();
+            listenProjectCreateBtn(id);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 });
 
 function generateProjectCreateImg() {
@@ -92,32 +99,33 @@ function listenProjectCreateImg() {
     });
 }
 
-function listenProjectCreateBtn() {
+function listenProjectCreateBtn(id) {
     let createBtn = document.getElementById('project_create_btn');
     if (createBtn) {
         createBtn.addEventListener('click', async function () {
             let title = document.getElementById('project_create_name').value.trim();
             let link = document.getElementById('project_create_syllabus').value.trim();
+
             fetch("/project/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+                    id: id,
                     title: title,
                     link: link
                 })
             })
                 .then(function (response) {
                     alert(response.status);
-                    window.location.href = "/protrack/dashboard/prof"
+                    window.location.href = "/protrack/dashboard/instr/" + id;
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error: ', error);
                 });
         });
-    }
-    else {
+    } else {
         console.error('The project create button was not found.');
     }
 }

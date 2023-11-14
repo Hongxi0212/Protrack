@@ -1,5 +1,6 @@
 package com.protrack.protrack.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -9,7 +10,6 @@ import java.util.Date;
 @Entity
 @Table(name = "deliverables")
 @IdClass(DeliverableId.class)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "item")
 public class Deliverable {
    @Id
    @Column(name = "Item")
@@ -36,11 +36,13 @@ public class Deliverable {
 
    @ManyToOne
    @JoinColumn(name = "MID")
+   @JsonBackReference
    private Member member;
 
    @Id
    @ManyToOne
    @JoinColumn(name = "PID")
+   @JsonBackReference
    private Project project;
 
    public Deliverable() {

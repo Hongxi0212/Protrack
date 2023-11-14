@@ -1,8 +1,16 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    fetch('/project/find/all')
-        .then(response => response.json())
+document.addEventListener('DOMContentLoaded', function () {
+    let id = window.location.pathname.split('/')[4];
+
+    listenInstrDashboardNavA(id);
+    listenInstrProjectsNavA(id);
+
+    fetch('/project/instr/' + encodeURIComponent(id) + '/all')
+        .then(response => {
+            return response.json();
+        })
         .then(allProjects => {
             const container = document.getElementById('projects-container');
+
             allProjects.forEach(project => {
                 const projectElement = document.createElement('div');
                 projectElement.className = 'col-6';
@@ -13,9 +21,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
                     </div>
                 </div>
-            `;
+                `;
+
                 container.appendChild(projectElement);
             });
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 });

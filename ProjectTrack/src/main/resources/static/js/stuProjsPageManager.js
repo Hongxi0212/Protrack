@@ -1,10 +1,13 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', function () {
     let id = window.location.pathname.split('/')[4];
 
+    listenStuDashboardNavA(id);
+    listenStuProjectsNavA(id);
+
     fetch('/project/stu/' + encodeURIComponent(id) + '/all')
-        .then(
-            response => response.json()
-        )
+        .then(response => {
+            return response.json();
+        })
         .then(allProjects => {
             const container = document.getElementById('projects-container');
 
@@ -34,11 +37,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             listenProjectJoinImg();
             listenProjectJoinBtn(id);
-
-            listenSideDashboardNavA(id);
-            listenSideProjectsNavA(id);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 });
 
 function generateProjectJoinImg() {
@@ -112,7 +114,7 @@ function listenProjectJoinBtn(id) {
                     window.location.href = "/protrack/projects/stu/" + id;
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error: ', error);
                 });
         });
     } else {

@@ -1,6 +1,7 @@
 package com.protrack.protrack.services;
 
 import com.protrack.protrack.entities.Project;
+import com.protrack.protrack.entities.TrackUser;
 import com.protrack.protrack.exceptions.ProjectNotFoundException;
 import com.protrack.protrack.repositories.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,11 @@ public class ProjectService {
       repository.deleteProjectById(id);
    }
 
-   public List<Project> getProjectWithUserId(Integer id){
-      return repository.findProjectByUserId(id);
+   public List<Project> getProjectWithStuId(Integer id){
+      return repository.findProjectsByStuId(id);
+   }
+
+   public List<Project> getProjectsWithInstructorId(TrackUser user){
+      return repository.findProjectsByInstructor(user);
    }
 }

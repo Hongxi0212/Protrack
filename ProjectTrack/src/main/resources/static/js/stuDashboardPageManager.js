@@ -1,11 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     let id = window.location.pathname.split('/')[4];
 
+    listenStuDashboardNavA(id);
+    listenStuProjectsNavA(id);
+
     fetch('/project/stu/' + encodeURIComponent(id) + '/all')
         .then(response => {
             return response.json();
         })
         .then(allProjects => {
+            console.log(allProjects);
             const container = document.getElementById('projects-container');
 
             allProjects.forEach(project => {
@@ -22,9 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 container.appendChild(projectElement);
             });
-
-            listenSideDashboardNavA(id);
-            listenSideProjectsNavA(id);
         })
-
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 });

@@ -28,8 +28,8 @@ public class WebController {
       return "contact";
    }
 
-   @GetMapping("/dashboard/prof")
-   public String dashboard_prof() {
+   @GetMapping("/dashboard/instr/{uid}")
+   public String dashboard_prof(@PathVariable String uid) {
       return "dashboard_prof";
    }
 
@@ -38,19 +38,14 @@ public class WebController {
       return "dashboard_stu";
    }
 
-   @GetMapping("/projects/prof")
-   public String projects_prof() {
+   @GetMapping("/projects/instr/{uid}")
+   public String projects_prof(@PathVariable String uid) {
       return "projects_prof";
    }
 
    @GetMapping("/projects/stu/{uid}")
    public String projects_stu(@PathVariable String uid) {
       return "projects_stu";
-   }
-
-   @GetMapping("/{projectTitle}/view")
-   public String project_details(@PathVariable String projectTitle) {
-      return "project_details";
    }
 
    @GetMapping("/stu/{id}/{projectTitle}/view")
@@ -61,6 +56,11 @@ public class WebController {
    @GetMapping("/stu/{id}/{projectTitle}/edit")
    public String project_edit(@PathVariable String id, @PathVariable String projectTitle){
       return "project_edit_stu";
+   }
+
+   @GetMapping("/{projectTitle}/view")
+   public String project_details(@PathVariable String projectTitle) {
+      return "project_details";
    }
 
    @GetMapping("/project/edit")
