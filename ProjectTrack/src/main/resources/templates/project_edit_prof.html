@@ -48,7 +48,7 @@
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Stu. CBA</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Prof. CBA</span>
                 </a>
             </li>
         </ul>
@@ -60,7 +60,7 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/protrack/dashboard/stu">
+            <a id="sidenav_dashboard_a" class="nav-link collapsed">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -69,7 +69,7 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/protrack/projects/stu">
+            <a id="sidenav_projects_a" class="nav-link">
                 <i class="bi bi-gem"></i>
                 <span>Projects</span>
             </a>
@@ -95,8 +95,7 @@
 
 <main id="main" class="main">
 
-    <div class="pagetitle">
-        <h1>Gamified Network</h1>
+    <div id="title_container" class="pagetitle">
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/protrack/dashboard/prof">Home</a></li>
@@ -114,26 +113,22 @@
                     <div class="card-body pt-3">
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
-                                    Overall
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#plan_tab">
+                                    Plan
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Members
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">
-                                    Deliverables
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
-                                    Requirements
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#member_tab">Members
                                 </button>
                             </li>
                         </ul>
 
+
+                        <div id="tab_container" class="tab-content pt-2">
+                            <!--Dynamic Load Project Tab-->
+
+                        </div>
+<!--
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -459,7 +454,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>
@@ -483,16 +478,10 @@
     </div>
 </footer>
 
-<script src="/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/vendor/chart.js/chart.umd.js"></script>
-<script src="/vendor/echarts/echarts.min.js"></script>
-<script src="/vendor/quill/quill.min.js"></script>
-<script src="/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="/vendor/tinymce/tinymce.min.js"></script>
-<script src="/vendor/php-email-form/validate.js"></script>
-
-<script src="/vendor/niceadmin/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/mainPageSideNavDirector.js"></script>
+<script src="/js/profProjEditPageManager.js"></script>
 
 </body>
 </html>

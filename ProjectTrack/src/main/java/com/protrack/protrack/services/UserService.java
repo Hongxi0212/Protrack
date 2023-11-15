@@ -1,6 +1,5 @@
 package com.protrack.protrack.services;
 
-import com.protrack.protrack.entities.Project;
 import com.protrack.protrack.exceptions.UserNotFoundException;
 import com.protrack.protrack.entities.TrackUser;
 import com.protrack.protrack.repositories.UserRepo;
@@ -18,8 +17,8 @@ public class UserService {
       this.repository = repository;
    }
 
-   public TrackUser addUser(TrackUser user){
-      return repository.save(user);
+   public void addUser(TrackUser user){
+      repository.save(user);
    }
 
    public TrackUser updateUser(TrackUser user){
@@ -46,4 +45,7 @@ public class UserService {
       repository.deleteUserById(id);
    }
 
+   public List<TrackUser> getTrackUsersWithProjectTitle(String title){
+      return repository.findTrackUsersByProjectTitle(title);
+   }
 }

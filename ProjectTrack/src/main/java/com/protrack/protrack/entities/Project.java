@@ -1,5 +1,6 @@
 package com.protrack.protrack.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -33,12 +34,12 @@ public class Project {
    private TrackUser instructor;
 
    @OneToMany(mappedBy = "project")
-   @JsonManagedReference
+   @JsonBackReference
    private Set<Member> members = new HashSet<>();
 
    @OneToMany(mappedBy = "project")
    @JsonSerialize
-   @JsonManagedReference
+   @JsonBackReference
    private Set<Deliverable> deliverables = new HashSet<>();
 
    public Project() {

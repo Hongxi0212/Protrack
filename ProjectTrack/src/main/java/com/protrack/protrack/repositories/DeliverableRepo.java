@@ -10,5 +10,5 @@ import java.util.List;
 public interface DeliverableRepo extends JpaRepository<Deliverable, DeliverableId> {
    void deleteDeliverableByItem(String item);
 
-   List<Deliverable> findAllDeliverablesByProject(Project project);
+   List<Deliverable> findDeliverablesByProject(Project project);
 }

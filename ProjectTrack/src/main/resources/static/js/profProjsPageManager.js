@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <img src="/images/sql.png" style="max-width: 100%; height: auto"/>
                             <div>
                                 <ul class="nav" style="padding-top: 20px">
-                                    <li id="project_view_link" class="nav-item ms-3"><a href="/protrack/${project.title}/view">View</a></li>
-                                    <li id="project_edit_link" class="nav-item ms-3"><a href="/protrack/${project.title}/edit">Edit</a></li>
-                                    <li class="nav-item ms-3"><a href="#">Validate</a></li>
+                                    <li id="project_view_link" class="nav-item ms-3"><a href="/protrack/instr/${id}/${project.title}/view">View</a></li>
+                                    <li id="project_edit_link" class="nav-item ms-3"><a href="/protrack/instr/${id}/${project.title}/edit">Edit</a></li>
+                                    <li id="project_validate_link" class="nav-item ms-3"><a href="/protrack/instr/${id}/${project.title}/validate">Validate</a></li>
                                 </ul>
                             </div>
                         </div>

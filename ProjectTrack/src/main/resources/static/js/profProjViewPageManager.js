@@ -1,19 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let title = window.location.pathname.split('/')[2];
+    let userId = window.location.pathname.split('/')[3];
+    let title = window.location.pathname.split('/')[4];
+
+    listenInstrDashboardNavA(userId);
+    listenInstrProjectsNavA(userId);
 
     fetch('/project/' + encodeURIComponent(title) + '/view')
         .then(response => {
             return response.json();
         })
-        .then(project => {
-            const titleContainer=document.getElementById('container_title');
+        .then(respObject => {
+            const project = respObject.project;
+            const members=respObject.members;
+            console.log(members);
+
+            const titleContainer=document.getElementById('title_container');
 
             titleContainer.insertBefore(generateProjectTitle(project),titleContainer.firstChild);
 
-            const tabContainer = document.getElementById('container_tab');
+            const tabContainer = document.getElementById('tab_container');
 
-            tabContainer.appendChild(generatePlanTab(project));
             tabContainer.appendChild(generateOverviewTab(project));
+
+            if (project.meetingTime === null && project.meetingPlace === null) {
+                tabContainer.appendChild(generateNoPlanTab());
+
+            } else {
+                tabContainer.appendChild(generatePlanTab(members));
+
+                insertPlanMemberTable(members);
+                insertPlanDeliverableTable(members);
+            }
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -30,48 +47,54 @@ function generateProjectTitle(project){
 function generateOverviewTab(project) {
     let overviewTab = document.createElement('div');
     overviewTab.className = 'tab-pane fade show active';
-    overviewTab.id = 'tab_overview';
+    overviewTab.id = 'overview_tab';
     overviewTab.innerHTML = `
-        <div class="tab-pane fade show active profile-overview">
-            <h5 class="card-title">Project Code</h5>
-            <p class="small fst-italic">${project.code}</p>
+    <h5 class="card-title">Project Code</h5>
+    <p class="small fst-italic">${project.code}</p>
 
-            <h5 class="card-title">Syllabus</h5>
-            <p class="small fst-italic">${project.link}</p>
-        </div>
+    <h5 class="card-title">Syllabus</h5>
+    <p class="small fst-italic">${project.link}</p>
     `;
 
     return overviewTab;
 }
 
-function generatePlanTab(project){
+function generateNoPlanTab() {
+    let noPlanTab = document.createElement('div');
+
+    noPlanTab.className = 'tab-pane fade pt-3';
+    noPlanTab.id = 'plan_tab';
+    noPlanTab.innerHTML = `
+    <p>Students have not created any plan.</p>
+    `;
+
+    return noPlanTab;
+}
+
+function generatePlanTab(members){
+    const project=members[0].project;
     let planTab=document.createElement('div');
+
     planTab.className='tab-pane fade pt-3';
-    planTab.id='tab_plan';
+    planTab.id = 'plan_tab';
     planTab.innerHTML=`
         <form>
             <div class="row mb-3">
-                <label for="projectTitle_plan" class="col-md-3 col-form-label">Project
-                    Title</label>
-                <div class="col-md-8 col-lg-9">
-                    <input name="projectTitle_plan" type="text" class="form-control"
-                           id="projectTitle_plan" value="Gamified Network">
+                <label for="projectTitle_plan" class="col-3 col-form-label">Project Title</label>
+                <div class="col-9">
+                    <input id="projectTitle_plan"  name="projectTitle_plan" type="text" class="form-control" value=${project.title} disabled>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="teamNumbers_plan"
-                       class="col-md-3 col-form-label">Team Numbers</label>
-                <div class="col-md-8 col-lg-9">
-                    <input name="teamNumbers_plan" type="text" class="form-control"
-                           id="teamNumbers_plan"
-                           value="4">
+                <label for="teamNumbers_plan" class="col-3 col-form-label">Team Numbers</label>
+                <div class="col-9">
+                    <input id="teamNumbers_plan"  name="teamNumbers_plan" type="text" class="form-control" value=${members.length} disabled>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-md-3 col-form-label">Team
-                    Members</label>
+                <label class="col-3 col-form-label">Team Members</label>
                 <table>
                     <tbody>
                     <tr>
@@ -85,31 +108,9 @@ function generatePlanTab(project){
                                     <th style="width:25%">Designation</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Name"
-                                               value="Jane Doe"></td>
-                                    <td><input type="text" class="form-control" placeholder="ID"
-                                               value="123"></td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Contact"
-                                               value="janedoe123@yahoo.com"></td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Designation" value="Leader"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Name"
-                                               value="John Doe"></td>
-                                    <td><input type="text" class="form-control" placeholder="ID"
-                                               value="256"></td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Contact"
-                                               value="johndoe256@yahoo.com"></td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Designation" value="Member"></td>
-                                </tr>
+                                <tbody id="members_tbody">
+                                <!--Dynamic Load Members Info-->
+                                
                                 </tbody>
                             </table>
                         </td>
@@ -119,32 +120,27 @@ function generatePlanTab(project){
             </div>
 
             <div class="row mb-3">
-                <label for="meetingTime" class="col-md-3 col-form-label">Meeting
-                    Time</label>
-                <div class="col-md-8 col-lg-9">
-                    <input name="meetingTime" type="text" class="form-control" id="meetingTime"
-                           value="Wed. 4-5pm">
+                <label for="meeting_time" class="col-3 col-form-label">Meeting Time</label>
+                <div class="col-9">
+                    <input id="meeting_time" name="meeting_time" type="text" class="form-control" value=${project.meetingTime} disabled>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="meetingPlace" class="col-md-3 col-form-label">Meeting
-                    Place</label>
-                <div class="col-md-8 col-lg-9">
-                    <input name="meetingPlace" type="text" class="form-control"
-                           id="meetingPlace"
-                           value="Office">
+                <label for="meeting_place" class="col-3 col-form-label">Meeting Place</label>
+                <div class="col-9">
+                    <input id="meeting_place" name="meeting_place" type="text" class="form-control" value=${project.meetingPlace} disabled>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-md-3 col-form-label">Deliverables</label>
+                <label class="col-3 col-form-label">Deliverables</label>
                 <table>
                     <tbody>
                     <tr>
                         <td>
                             <table class="table table-bordered">
-                                <thead>
+                                <thead id="deliverables_thead">
                                 <tr>
                                     <th style="width:15%;">Task</th>
                                     <th style="width:25%;">Item</th>
@@ -155,78 +151,9 @@ function generatePlanTab(project){
                                 </tr>
                                 </thead>
 
-                                <tbody>
-                                <tr>
-                                    <td><input type="text" class="form-control" value="1"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="User interface">
-                                    </td>
-                                    <td><input type="text" class="form-control" value="IV"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="John Doe"></td>
-                                    <td><input type="text" class="form-control" value="Link">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Comment">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" value="1.1">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               value="Login screen">
-                                    </td>
-                                    <td><input type="text" class="form-control" value="IV"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="John Doe"></td>
-                                    <td><input type="text" class="form-control" value="Link">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Comment">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" value="1.2">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               value="Signup screen">
-                                    </td>
-                                    <td><input type="text" class="form-control" value="IV"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="John Doe"></td>
-                                    <td><input type="text" class="form-control" value="Link">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Comment">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" value="2"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="ER Diagram"></td>
-                                    <td><input type="text" class="form-control" value="I"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="Jane Doe"></td>
-                                    <td><input type="text" class="form-control" value="Image">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Comment">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" value="2.1">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               value="Revise ER Diagram"></td>
-                                    <td><input type="text" class="form-control" value="I"></td>
-                                    <td><input type="text" class="form-control"
-                                               value="Jane Doe"></td>
-                                    <td><input type="text" class="form-control" value="Image">
-                                    </td>
-                                    <td><input type="text" class="form-control"
-                                               placeholder="Comment">
-                                    </td>
-                                </tr>
+                                <tbody id="deliverables_tbody">
+                                <!--Dynamic Load Deliverables Info-->
+                                
                                 </tbody>
                             </table>
                         </td>
@@ -238,4 +165,68 @@ function generatePlanTab(project){
     `
 
     return planTab;
+}
+
+
+function insertPlanMemberTable(members) {
+    const membersTbody = document.getElementById("members_tbody");
+
+    members.forEach(member => {
+        let memberRow = document.createElement('tr');
+        memberRow.innerHTML = `
+            <td><input type="text" class="form-control"
+                       placeholder="Name"
+                       value=${member.trackUser.name} disabled></td>
+            <td><input type="text" class="form-control" placeholder="ID"
+                       value=${member.id} disabled></td>
+            <td><input type="text" class="form-control"
+                       placeholder="Contact"
+                       value=${member.trackUser.email} disabled></td>
+            <td><input type="text" class="form-control"
+                       placeholder="Are you leader?" value=${member.designation} disabled></td>
+        `;
+
+        membersTbody.appendChild(memberRow);
+    })
+}
+
+function insertPlanDeliverableTable(members) {
+    let dlbrbsCount = 0;
+
+    members.forEach(member => {
+        dlbrbsCount += member.deliverables.length;
+    });
+
+    if (dlbrbsCount === 0) {
+        const deliverableThead = document.getElementById("deliverables_thead");
+
+        deliverableThead.innerHTML = ``;
+
+        let newInner = document.createElement('tr');
+        newInner.innerHTML = `
+        <th>Deliverables has not been created yet.</th>
+        `;
+
+        deliverableThead.appendChild(newInner);
+
+    } else {
+        const deliverableTbody = document.getElementById("deliverables_tbody");
+
+        members.forEach(member => {
+            member.deliverables.forEach(deliverable => {
+                let deliverableRow = document.createElement('tr');
+                deliverableRow.innerHTML = `
+                <td><input type="text" class="form-control" placeholder="Task Number" value=${deliverable.number} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Name" value=${deliverable.item} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Phase Number" value=${deliverable.phase} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Responsible" value=${member.trackUser.name} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode} disabled> </td>
+                <td><input type="text" class="form-control" placeholder="Comment" value=${deliverable.comment} disabled></td>
+                `;
+
+                deliverableTbody.appendChild(deliverableRow);
+            });
+        });
+
+    }
 }

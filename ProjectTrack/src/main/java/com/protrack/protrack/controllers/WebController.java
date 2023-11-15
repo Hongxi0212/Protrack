@@ -49,23 +49,33 @@ public class WebController {
    }
 
    @GetMapping("/stu/{id}/{projectTitle}/view")
-   public String project_details(@PathVariable String projectTitle, @PathVariable String id) {
+   public String project_view_stu(@PathVariable String projectTitle, @PathVariable String id) {
       return "project_view_stu";
    }
 
    @GetMapping("/stu/{id}/{projectTitle}/edit")
-   public String project_edit(@PathVariable String id, @PathVariable String projectTitle){
+   public String project_edit_stu(@PathVariable String id, @PathVariable String projectTitle){
       return "project_edit_stu";
    }
 
-   @GetMapping("/{projectTitle}/view")
-   public String project_details(@PathVariable String projectTitle) {
-      return "project_details";
+   @GetMapping("/instr/{id}/{projectTitle}/view")
+   public String project_view_prof(@PathVariable String projectTitle, @PathVariable String id) {
+      return "project_view_prof";
    }
 
-   @GetMapping("/project/edit")
-   public String project_edit(){
-      return "project_edit";
+   @GetMapping("/instr/{id}/{projectTitle}/edit")
+   public String project_edit_prof(@PathVariable String projectTitle, @PathVariable String id){
+      return "project_edit_prof";
+   }
+
+   @GetMapping("/instr/{id}/{projectTitle}/validate")
+   public String project_validate_instr(@PathVariable String projectTitle, @PathVariable String id){
+      return "project_validate_instr";
+   }
+
+   @GetMapping("/stu/{id}/{projectTitle}/validate")
+   public String project_validate_stu(){
+      return "project_validate_stu";
    }
 
 /*

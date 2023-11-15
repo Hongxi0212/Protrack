@@ -17,4 +17,6 @@ public interface UserRepo extends JpaRepository<TrackUser,Integer> {
 
    Optional<TrackUser> findUserByEmail(String email);
 
+   @Query("SELECT m.trackUser FROM Member m WHERE m.project.title=:title")
+   List<TrackUser> findTrackUsersByProjectTitle(@Param("title") String title);
 }

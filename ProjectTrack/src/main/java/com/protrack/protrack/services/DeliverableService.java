@@ -1,9 +1,11 @@
 package com.protrack.protrack.services;
 
 import com.protrack.protrack.entities.Deliverable;
+import com.protrack.protrack.entities.Project;
 import com.protrack.protrack.repositories.DeliverableRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -24,5 +26,9 @@ public class DeliverableService {
 
    public void updateDeliverable(Deliverable deliverable) {
       repository.save(deliverable);
+   }
+
+   public List<Deliverable> getDeliverablesWithProject(Project project){
+      return repository.findDeliverablesByProject(project);
    }
 }

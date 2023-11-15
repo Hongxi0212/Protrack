@@ -28,7 +28,7 @@ public class TrackUser {
    private String password;
 
    @OneToMany(mappedBy = "trackUser")
-   @JsonManagedReference
+   @JsonBackReference
    private Set<Member> members = new HashSet<>();
 
    public TrackUser() {

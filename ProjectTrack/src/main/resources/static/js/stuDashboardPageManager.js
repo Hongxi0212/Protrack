@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(allProjects => {
-            console.log(allProjects);
             const container = document.getElementById('projects-container');
 
             allProjects.forEach(project => {

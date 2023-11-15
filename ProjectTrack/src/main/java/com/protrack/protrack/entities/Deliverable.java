@@ -2,6 +2,7 @@ package com.protrack.protrack.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
@@ -42,7 +43,7 @@ public class Deliverable {
    @Id
    @ManyToOne
    @JoinColumn(name = "PID")
-   @JsonBackReference
+   @JsonManagedReference
    private Project project;
 
    public Deliverable() {

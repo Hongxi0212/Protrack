@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let userId = window.location.pathname.split('/')[3];
     let title = window.location.pathname.split('/')[4];
 
-    listenStuDashboardNavA(userId);
-    listenStuProjectsNavA(userId);
+    listenInstrDashboardNavA(userId);
+    listenInstrProjectsNavA(userId);
 
     fetch('/project/' + encodeURIComponent(title) + '/view')
         .then(response => {
@@ -22,12 +22,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const tabContainer = document.getElementById('tab_container');
 
             tabContainer.appendChild(generatePlanTab(project));
+            tabContainer.appendChild(generateMemberTab());
 
             insertPlanDeliverableTable(members);
+            insertMemberTable(members);
 
             listenAddDeliverableBtn();
-            listenDeleteDeliverableBtn();
+            listenDeleteBtn();
             listenSavePlanBtn();
+            listenSaveMemberBtn();
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -50,7 +53,7 @@ function generatePlanTab(project) {
         <div class="row mb-3">
             <label class="col-3 col-form-label">Project Title</label>
                 <div class="col-9">
-                    <input id="projectTitle_plan"  name="projectTitle_plan" type="text" class="form-control" value=${project.title} disabled>
+                    <input id="projectTitle_plan" name="projectTitle_plan" type="text" class="form-control" value=${project.title}>
                 </div>
         </div>
 
@@ -71,7 +74,7 @@ function generatePlanTab(project) {
         </div>
 
         <div class="row mb-3">
-            <label class="col-3 col-form-label">Deliverables</label>
+            <label class="col-md-3 col-form-label">Deliverables</label>
             <table>
                 <tbody>
                 <tr>
@@ -105,6 +108,49 @@ function generatePlanTab(project) {
     `;
 
     return planTab;
+}
+
+function generateMemberTab() {
+    let memberTab = document.createElement('div');
+    memberTab.className = "tab-pane fade show";
+    memberTab.id = "member_tab"
+    memberTab.innerHTML = `
+    <form class="member_edit_form">
+        <div class="row mb-3">
+            <label class="col-3 col-form-label">Team Members</label>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="width:25%;">Name</th>
+                                <th style="width:10%">ID</th>
+                                <th style="width:35%">Contact</th>
+                                <th style="width:25%">Designation</th>
+<!--                                
+                                <th style="width:5%">Operation</th>
+                                -->
+                            </tr>
+                            </thead>
+                            <tbody id="members_tbody">
+                            <!--Dynamic Load Members Info-->
+                            
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="text-center">
+        <button id="member_save_btn" class="btn btn-primary">Save</button>
+    </div>
+    `;
+
+    return memberTab;
 }
 
 function insertPlanDeliverableTable(members) {
@@ -153,6 +199,27 @@ function insertPlanDeliverableTable(members) {
     }
 }
 
+function insertMemberTable(members) {
+    const membersTbody = document.getElementById("members_tbody");
+
+    members.forEach(member => {
+        let memberRow = document.createElement('tr');
+        memberRow.innerHTML = `
+            <td><input type="text" class="form-control"placeholder="Name" value=${member.trackUser.name} disabled></td>
+            <td><input type="text" class="form-control" placeholder="ID" value=${member.id} disabled></td>
+            <td><input type="text" class="form-control" placeholder="Contact" value=${member.trackUser.email} disabled></td>
+            <td><input type="text" class="form-control" placeholder="Designation" value=${member.designation}></td>
+<!--            
+            <td>
+                <button type="button" class="btn btn-danger deliverable_delete_btn">-</button>
+            </td>
+            -->
+        `;
+
+        membersTbody.appendChild(memberRow);
+    })
+}
+
 function listenAddDeliverableBtn() {
     const deliverableTbody = document.getElementById("deliverables_tbody");
 
@@ -182,8 +249,9 @@ function listenAddDeliverableBtn() {
     });
 }
 
-function listenDeleteDeliverableBtn() {
+function listenDeleteBtn() {
     const deliverableTbody = document.getElementById("deliverables_tbody");
+    const memberTbody=document.getElementById("members_tbody");
 
     deliverableTbody.addEventListener('click', function (event) {
         if (event.target.classList.contains("deliverable_delete_btn")) {
@@ -206,6 +274,13 @@ function listenDeleteDeliverableBtn() {
             }
         }
     });
+/*
+    memberTbody.addEventListener('click', function (event){
+       if(event.target.classList.contains("deliverable_delete_btn")){
+           event.target.closest("tr").remove();
+       }
+    });
+    */
 }
 
 function listenSavePlanBtn() {
@@ -254,7 +329,42 @@ function listenSavePlanBtn() {
                 window.location.href = window.location.pathname.slice(0, -4) + "view";
             })
             .catch(error => {
+                console.error('Error: ', error);
+            })
+    });
+}
+
+function listenSaveMemberBtn(){
+    const saveBtn=document.getElementById("member_save_btn");
+
+    saveBtn.addEventListener('click',function(){
+        let members = [];
+
+        document.querySelectorAll("#members_tbody tr").forEach(row => {
+            let member = {
+                name: row.querySelector("input[placeholder='Name']").value,
+                id: row.querySelector("input[placeholder='ID']").value,
+                designation: row.querySelector("input[placeholder='Designation']").value,
+            }
+
+            members.push(member);
+        });
+
+        let title = window.location.pathname.split('/')[4];
+
+        fetch("/project/"+encodeURIComponent(title)+"/member/update",{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(members)
+        })
+            .then(function(response){
+                alert(response.status);
+                window.location.reload();
+            })
+            .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
             });
-    });
+    })
 }

@@ -11,13 +11,13 @@ import com.protrack.protrack.services.DeliverableService;
 import com.protrack.protrack.services.MemberService;
 import com.protrack.protrack.services.ProjectService;
 import com.protrack.protrack.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.sound.midi.Track;
+import java.util.*;
 
 @RestController
 @RequestMapping("/project")
@@ -38,13 +38,13 @@ public class ProjectController {
    public ResponseEntity<?> createProject(@RequestBody String createInfo) throws JsonProcessingException {
       ObjectMapper mapper = new ObjectMapper();
       JsonNode jsNode = mapper.readTree(createInfo);
-      Integer id =jsNode.get("id").asInt();
+      Integer id = jsNode.get("id").asInt();
       String title = jsNode.get("title").asText();
       String link = jsNode.get("link").asText();
 
       Project project = new Project(title, link);
 
-      TrackUser user=userService.getUserWithId(id);
+      TrackUser user = userService.getUserWithId(id);
       project.setInstructor(user);
 
       projectService.addProject(project);
@@ -87,9 +87,15 @@ public class ProjectController {
    }
 
    @GetMapping("/{title}/view")
-   public ResponseEntity<Project> getProjectOfTitle(@PathVariable String title) {
-      Project p = projectService.findProjectByTitle(title);
-      return ResponseEntity.ok(p);
+   public ResponseEntity<Map<String,Object>> getProjectInfoOfTitle(@PathVariable String title){
+      Project project=projectService.findProjectByTitle(title);
+      List<Member> allMembers=memberService.getMembersWithProjectTitle(title);
+
+      Map<String,Object> response =new HashMap<>();
+      response.put("project",project);
+      response.put("members",allMembers);
+
+      return ResponseEntity.ok(response);
    }
 
    @PutMapping("/{title}/plan/update")
@@ -109,13 +115,13 @@ public class ProjectController {
             Double taskNum = node.get("taskNumber").asDouble();
             String item = node.get("taskName").asText();
             String phase = node.get("phase").asText();
-            Member member = memberService.findMemberOfName(node.get("responsible").asText());
+            Member member = memberService.getMemberWithProjectTitleAndTrackUserName(title, node.get("responsible").asText());
             String mode = node.get("taskMode").asText();
 
             Deliverable deliverable = new Deliverable();
 
             deliverable.setItem(item);
-            deliverable.setNumber((float)taskNum.doubleValue());
+            deliverable.setNumber((float) taskNum.doubleValue());
             deliverable.setPhase(phase);
             deliverable.setMode(mode);
             deliverable.setMember(member);
@@ -136,11 +142,41 @@ public class ProjectController {
       return ResponseEntity.ok(project);
    }
 
-   @GetMapping("/instr/{uid}/all")
-   public ResponseEntity<List<Project>> getAllProjectsOfInstructor(@PathVariable Integer uid){
-      TrackUser user=userService.getUserWithId(uid);
+   @Transactional
+   @PutMapping("/{title}/member/update")
+   public ResponseEntity<?> updateProjectMember(@RequestBody String membersInfo, @PathVariable String title) throws JsonProcessingException {
+      ObjectMapper mapper=new ObjectMapper();
+      JsonNode members=mapper.readTree(membersInfo);
 
-      List<Project> allProjects=projectService.getProjectsWithInstructorId(user);
+      Project project=projectService.findProjectByTitle(title);
+
+      Set<Member> newMembers=new HashSet<>();
+
+      if(members.isArray()){
+         for(JsonNode node:members){
+            String name=node.get("name").asText();
+            Integer id =node.get("id").asInt();
+            String designation=node.get("designation").asText();
+
+            Member member =memberService.getMemberWithId(id);
+
+            member.setDesignation(designation);
+
+            newMembers.add(member);
+         }
+
+         project.setMembers(newMembers);
+         memberService.addMembers(newMembers);
+      }
+
+      return new ResponseEntity<>(HttpStatus.ACCEPTED);
+   }
+
+   @GetMapping("/instr/{uid}/all")
+   public ResponseEntity<List<Project>> getAllProjectsOfInstructor(@PathVariable Integer uid) {
+      TrackUser user = userService.getUserWithId(uid);
+
+      List<Project> allProjects = projectService.getProjectsWithInstructorId(user);
       return ResponseEntity.ok(allProjects);
    }
 
@@ -148,10 +184,6 @@ public class ProjectController {
    public ResponseEntity<List<Project>> getAllProjectsOfStudent(@PathVariable Integer uid) {
       List<Project> allProjects = projectService.getProjectWithStuId(uid);
 
-      for (Project project:
-           allProjects) {
-         System.out.println(project.toString());
-      }
       return ResponseEntity.ok(allProjects);
    }
 }

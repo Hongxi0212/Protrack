@@ -26,12 +26,12 @@ public class Member {
 
    @ManyToOne
    @JoinColumn(name = "PID")
-   @JsonBackReference
+   @JsonManagedReference
    private Project project;
 
    @ManyToOne
    @JoinColumn(name = "UID")
-   @JsonBackReference
+   @JsonManagedReference
    private TrackUser trackUser;
 
    public Member() {
