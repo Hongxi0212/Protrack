@@ -26,7 +26,7 @@ public class Member {
 
    @ManyToOne
    @JoinColumn(name = "PID")
-   @JsonManagedReference
+   @JsonBackReference
    private Project project;
 
    @ManyToOne

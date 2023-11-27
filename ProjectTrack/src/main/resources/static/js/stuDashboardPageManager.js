@@ -3,9 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     listenStuDashboardNavA(id);
     listenStuProjectsNavA(id);
+    listenLogoutNavA(id);
 
-    fetch('/project/stu/' + encodeURIComponent(id) + '/all')
+    fetch('/project/user/allProjects')
         .then(response => {
+            if(!response.ok){
+                document.body.innerHTML = '<h1>403 Forbidden</h1><p>Access to this resource on the server is denied!</p>';
+            }
+
             return response.json();
         })
         .then(allProjects => {

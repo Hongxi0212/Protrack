@@ -7,7 +7,9 @@ import com.protrack.protrack.repositories.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProjectService {
@@ -36,7 +38,7 @@ public class ProjectService {
             "Project by Code: "+code+" was not found!"));
    }
 
-   public Project findProjectByTitle(String title){
+   public Project getProjectWithTitle(String title){
       return repository.findProjectByTitle(title).orElseThrow(()->new ProjectNotFoundException(
             "Project by Title: "+title+" was not found!"));
    }
@@ -49,11 +51,14 @@ public class ProjectService {
       repository.deleteProjectById(id);
    }
 
-   public List<Project> getProjectWithStuId(Integer id){
-      return repository.findProjectsByStuId(id);
-   }
+   public List<Project> getProjectsWithUser(TrackUser user){
+      if(Objects.equals(user.getRole(), "Instructor")){
+         return repository.findProjectsByInstructor(user);
+      }
+      else if(Objects.equals(user.getRole(), "Student")){
+         return repository.findProjectsByStudent(user);
+      }
 
-   public List<Project> getProjectsWithInstructorId(TrackUser user){
-      return repository.findProjectsByInstructor(user);
+      return new ArrayList<>();
    }
 }

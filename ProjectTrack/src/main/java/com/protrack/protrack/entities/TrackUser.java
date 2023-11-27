@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "trackusers")
-public class TrackUser {
+public class TrackUser{
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "UID")
@@ -22,8 +22,6 @@ public class TrackUser {
    private String email;
    @Column(name="Role")
    private String role;
-   @Column(name = "Timezone")
-   private String timezone;
    @Column(name = "Password")
    private String password;
 
@@ -34,11 +32,10 @@ public class TrackUser {
    public TrackUser() {
    }
 
-   public TrackUser(String name, String email, String role, String timezone, String password) {
+   public TrackUser(String name, String email, String role, String password) {
       this.name = name;
       this.email = email;
       this.role = role;
-      this.timezone = timezone;
       this.password = password;
    }
 
@@ -74,13 +71,6 @@ public class TrackUser {
       this.role = role;
    }
 
-   public String getTimezone() {
-      return timezone;
-   }
-
-   public void setTimezone(String timezone) {
-      this.timezone = timezone;
-   }
 
    public String getPassword() {
       return password;
@@ -96,7 +86,6 @@ public class TrackUser {
             "name='" + name + '\'' +
             ", email='" + email + '\'' +
             ", role='" + role + '\'' +
-            ", timezone='" + timezone + '\'' +
             '}';
    }
 }

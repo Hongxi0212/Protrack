@@ -1,27 +1,21 @@
 package com.protrack.protrack.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "deliverables")
-@IdClass(DeliverableId.class)
 public class Deliverable {
    @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "DID")
+   private Integer id;
    @Column(name = "Item")
    private String item;
-
    @Column(name = "Number")
    private Float number;
-   @Column(name = "Phase")
-   private String phase;
-   @Column(name = "Date")
-   private Date date;
    @Column(name = "Mode")
    private String mode;
    @Column(name = "Necessity")
@@ -40,17 +34,24 @@ public class Deliverable {
    @JsonBackReference
    private Member member;
 
-   @Id
    @ManyToOne
-   @JoinColumn(name = "PID")
-   @JsonManagedReference
-   private Project project;
+   @JoinColumn(name = "PHID")
+   @JsonBackReference
+   private Phase phase;
 
    public Deliverable() {
    }
 
-   public Deliverable(Project belong) {
-      this.project=belong;
+   public Deliverable(Phase belong) {
+      this.phase=belong;
+   }
+
+   public Integer getId() {
+      return id;
+   }
+
+   public void setId(Integer id) {
+      this.id = id;
    }
 
    public String getItem() {
@@ -67,22 +68,6 @@ public class Deliverable {
 
    public void setNumber(Float number) {
       this.number = number;
-   }
-
-   public String getPhase() {
-      return phase;
-   }
-
-   public void setPhase(String phase) {
-      this.phase = phase;
-   }
-
-   public Date getDate() {
-      return date;
-   }
-
-   public void setDate(Date date) {
-      this.date = date;
    }
 
    public String getMode() {
@@ -141,11 +126,29 @@ public class Deliverable {
       this.member = member;
    }
 
-   public Project getProject() {
-      return project;
+   public Phase getPhase() {
+      return phase;
    }
 
-   public void setProject(Project project) {
-      this.project = project;
+   public void setPhase(Phase phase) {
+      this.phase = phase;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      Deliverable that = (Deliverable) o;
+
+      if (!Objects.equals(number, that.number)) return false;
+      return Objects.equals(phase, that.phase);
+   }
+
+   @Override
+   public int hashCode() {
+      int result = number != null ? number.hashCode() : 0;
+      result = 31 * result + (phase != null ? phase.hashCode() : 0);
+      return result;
    }
 }

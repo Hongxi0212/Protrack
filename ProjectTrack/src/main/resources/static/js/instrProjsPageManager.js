@@ -3,9 +3,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     listenInstrDashboardNavA(id);
     listenInstrProjectsNavA(id);
+    listenLogoutNavA(id);
 
-    fetch('/project/instr/' + encodeURIComponent(id) + '/all')
+    fetch('/project/user/allProjects')
         .then(response => {
+            if(!response.ok){
+                document.body.innerHTML = '<h1>403 Forbidden</h1><p>Access to this resource on the server is denied!</p>';
+            }
+
             return response.json();
         })
         .then(allProjects => {
@@ -39,7 +44,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             listenProjectCreateBtn(id);
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            console.error('Fetch Error:', error);
         });
 });
 

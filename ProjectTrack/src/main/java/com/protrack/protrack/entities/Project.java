@@ -1,9 +1,7 @@
 package com.protrack.protrack.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
@@ -31,16 +29,17 @@ public class Project {
 
    @ManyToOne
    @JoinColumn(name = "UID")
+   @JsonBackReference
    private TrackUser instructor;
 
    @OneToMany(mappedBy = "project")
-   @JsonBackReference
+   @JsonManagedReference
    private Set<Member> members = new HashSet<>();
 
    @OneToMany(mappedBy = "project")
    @JsonSerialize
-   @JsonBackReference
-   private Set<Deliverable> deliverables = new HashSet<>();
+   @JsonManagedReference
+   private Set<Phase> phases = new HashSet<>();
 
    public Project() {
    }
@@ -119,12 +118,12 @@ public class Project {
       this.members = members;
    }
 
-   public Set<Deliverable> getDeliverables() {
-      return deliverables;
+   public Set<Phase> getPhases() {
+      return phases;
    }
 
-   public void setDeliverables(Set<Deliverable> deliverables) {
-      this.deliverables = deliverables;
+   public void setPhases(Set<Phase> phases) {
+      this.phases = phases;
    }
 
    @Override
@@ -138,7 +137,7 @@ public class Project {
             ", meetingPlace='" + meetingPlace + '\'' +
             ", instructor=" + instructor +
             ", members=" + members +
-            ", deliverables=" + deliverables +
+            ", phases=" + phases +
             '}';
    }
 }

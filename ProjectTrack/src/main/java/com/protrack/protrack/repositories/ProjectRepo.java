@@ -18,8 +18,8 @@ public interface ProjectRepo extends JpaRepository<Project,Integer> {
 
    Optional<Project> findProjectByTitle(String title);
 
-   @Query("SELECT m.project FROM Member m WHERE m.trackUser.id=:uid")
-   List<Project> findProjectsByStuId(@Param("uid") Integer uid);
+   @Query("SELECT m.project FROM Member m WHERE m.trackUser=:stu")
+   List<Project> findProjectsByStudent(@Param("stu") TrackUser stu);
 
    List<Project> findProjectsByInstructor(TrackUser instructor);
 }

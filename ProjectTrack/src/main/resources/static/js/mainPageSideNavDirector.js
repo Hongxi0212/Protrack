@@ -33,3 +33,11 @@ function listenInstrProjectsNavA(id){
         window.location.href = '/protrack/projects/instr/' + id;
     });
 }
+
+function listenLogoutNavA(id){
+    const logoutA=document.getElementById('sidenav_logout_a');
+
+    logoutA.addEventListener('click',function (event){
+        window.location.href='/protrack/logout';
+    })
+}

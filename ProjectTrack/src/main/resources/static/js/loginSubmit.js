@@ -21,10 +21,10 @@ document.getElementById('login-btn').addEventListener('click', async function ()
             )
             .then(user => {
                 console.log(user);
-                if (user.message==="Student") {
+                if (user.message==="STUDENT") {
                     window.location.href = `/protrack/dashboard/stu/${user.uid}`
                 }
-                if (user.message==="Instructor") {
+                if (user.message==="INSTRUCTOR") {
                     window.location.href = `/protrack/dashboard/instr/${user.uid}`
                 }
             })

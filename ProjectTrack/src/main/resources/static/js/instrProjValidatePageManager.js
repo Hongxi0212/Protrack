@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let userId = window.location.pathname.split('/')[3];
+    let id = window.location.pathname.split('/')[3];
     let title = window.location.pathname.split('/')[4];
 
-    listenInstrDashboardNavA(userId);
-    listenInstrProjectsNavA(userId);
+    listenInstrDashboardNavA(id);
+    listenInstrProjectsNavA(id);
+    listenLogoutNavA(id);
 
     fetch('/project/' + encodeURIComponent(title) + '/view')
         .then(response => {

@@ -3,20 +3,17 @@ package com.protrack.protrack.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.protrack.protrack.entities.Deliverable;
-import com.protrack.protrack.entities.Member;
-import com.protrack.protrack.entities.Project;
-import com.protrack.protrack.entities.TrackUser;
-import com.protrack.protrack.services.DeliverableService;
-import com.protrack.protrack.services.MemberService;
-import com.protrack.protrack.services.ProjectService;
-import com.protrack.protrack.services.UserService;
+import com.protrack.protrack.entities.*;
+import com.protrack.protrack.services.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.midi.Track;
+import javax.swing.text.html.Option;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -25,12 +22,14 @@ public class ProjectController {
    private final ProjectService projectService;
    private final UserService userService;
    private final MemberService memberService;
+   private final PhaseService phaseService;
    private final DeliverableService deliverableService;
 
-   public ProjectController(ProjectService projectService, UserService userService, MemberService memberService, DeliverableService deliverableService) {
+   public ProjectController(ProjectService projectService, UserService userService, MemberService memberService, PhaseService phaseService, DeliverableService deliverableService) {
       this.projectService = projectService;
       this.userService = userService;
       this.memberService = memberService;
+      this.phaseService = phaseService;
       this.deliverableService = deliverableService;
    }
 
@@ -87,55 +86,81 @@ public class ProjectController {
    }
 
    @GetMapping("/{title}/view")
-   public ResponseEntity<Map<String,Object>> getProjectInfoOfTitle(@PathVariable String title){
-      Project project=projectService.findProjectByTitle(title);
-      List<Member> allMembers=memberService.getMembersWithProjectTitle(title);
+   public ResponseEntity<Map<String, Object>> getProjectInfoOfTitle(@PathVariable String title) {
+      Project project = projectService.getProjectWithTitle(title);
+      List<Member> allMembers = memberService.getMembersWithProjectTitle(title);
+      List<TrackUser> responsibles = new ArrayList<>();
+      for (Member member : allMembers) {
+         responsibles.add(member.getTrackUser());
+      }
 
-      Map<String,Object> response =new HashMap<>();
-      response.put("project",project);
-      response.put("members",allMembers);
+      Map<String, Object> response = new HashMap<>();
+      response.put("project", project);
+      response.put("responsibles", responsibles);
 
       return ResponseEntity.ok(response);
    }
 
    @PutMapping("/{title}/plan/update")
    public ResponseEntity<Project> updateProjectPlan(@RequestBody String planInfo, @PathVariable("title") String title) throws JsonProcessingException {
-      Project project = projectService.findProjectByTitle(title);
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonNode rootNode = objectMapper.readTree(planInfo);
 
-      ObjectMapper mapper = new ObjectMapper();
-      JsonNode root = mapper.readTree(planInfo);
-      String mTime = root.get("mTime").asText();
-      String mPlace = root.get("mPlace").asText();
+      JsonNode mTimeNode = rootNode.path("mTime");
+      JsonNode mPlaceNode = rootNode.path("mPlace");
+      JsonNode phasesNode = rootNode.path("phases");
 
-      Set<Deliverable> allDeliverables = new HashSet<>();
-      JsonNode deliverables = root.get("deliverables");
-
-      if (deliverables.isArray()) {
-         for (JsonNode node : deliverables) {
-            Double taskNum = node.get("taskNumber").asDouble();
-            String item = node.get("taskName").asText();
-            String phase = node.get("phase").asText();
-            Member member = memberService.getMemberWithProjectTitleAndTrackUserName(title, node.get("responsible").asText());
-            String mode = node.get("taskMode").asText();
-
-            Deliverable deliverable = new Deliverable();
-
-            deliverable.setItem(item);
-            deliverable.setNumber((float) taskNum.doubleValue());
-            deliverable.setPhase(phase);
-            deliverable.setMode(mode);
-            deliverable.setMember(member);
-            deliverable.setProject(project);
-
-            allDeliverables.add(deliverable);
-         }
+      Project project = projectService.getProjectWithTitle(title);
+      if (project == null) {
+         return ResponseEntity.notFound().build();
       }
 
-      deliverableService.addDeliverables(allDeliverables);
+      project.setMeetingTime(mTimeNode.asText());
+      project.setMeetingPlace(mPlaceNode.asText());
 
-      project.setMeetingTime(mTime);
-      project.setMeetingPlace(mPlace);
-      project.setDeliverables(allDeliverables);
+      if (phasesNode.isArray()) {
+         for (JsonNode phaseNode : phasesNode) {
+            Integer phaseNum = phaseNode.path("phaseNum").asInt();
+            LocalDate phaseDate = LocalDate.parse(phaseNode.path("phaseDate").asText());
+            JsonNode allTaskNode = phaseNode.path("allTask");
+
+            Optional<Phase> opPhase = phaseService.getPhaseWithProjectAndNumber(project, phaseNum);
+            Phase phase = new Phase();
+            if (opPhase.isPresent()) {
+               phase = opPhase.get();
+            }
+
+            phase.setNumber(phaseNum);
+            phase.setDue(phaseDate);
+            phase.setProject(project);
+
+            phaseService.updatePhase(phase);
+            if (allTaskNode.isArray()) {
+               for (JsonNode taskNode : allTaskNode) {
+                  String taskName = taskNode.path("taskName").asText();
+                  String taskMode = taskNode.path("taskMode").asText();
+                  Float taskNumber = (float) taskNode.path("taskNumber").asDouble();
+                  Member member = memberService.getMemberWithProjectTitleAndTrackUserName(title, taskNode.get("responsible").asText());
+
+                  Optional<Deliverable> opDeliverable = deliverableService.getDeliverableWithPhaseAndNumber(phase, taskNumber);
+                  Deliverable deliverable = new Deliverable();
+                  if (opDeliverable.isPresent()) {
+                     deliverable = opDeliverable.get();
+                  }
+
+                  deliverable.setItem(taskName);
+                  deliverable.setMode(taskMode);
+                  deliverable.setNumber(taskNumber);
+                  deliverable.setMember(member);
+                  deliverable.setPhase(phase);
+
+                  deliverableService.updateDeliverable(deliverable);
+               }
+            }
+
+            phaseService.updatePhase(phase);
+         }
+      }
 
       projectService.updateProject(project);
 
@@ -145,20 +170,20 @@ public class ProjectController {
    @Transactional
    @PutMapping("/{title}/member/update")
    public ResponseEntity<?> updateProjectMember(@RequestBody String membersInfo, @PathVariable String title) throws JsonProcessingException {
-      ObjectMapper mapper=new ObjectMapper();
-      JsonNode members=mapper.readTree(membersInfo);
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode members = mapper.readTree(membersInfo);
 
-      Project project=projectService.findProjectByTitle(title);
+      Project project = projectService.getProjectWithTitle(title);
 
-      Set<Member> newMembers=new HashSet<>();
+      Set<Member> newMembers = new HashSet<>();
 
-      if(members.isArray()){
-         for(JsonNode node:members){
-            String name=node.get("name").asText();
-            Integer id =node.get("id").asInt();
-            String designation=node.get("designation").asText();
+      if (members.isArray()) {
+         for (JsonNode node : members) {
+            String name = node.get("name").asText();
+            Integer id = node.get("id").asInt();
+            String designation = node.get("designation").asText();
 
-            Member member =memberService.getMemberWithId(id);
+            Member member = memberService.getMemberWithId(id);
 
             member.setDesignation(designation);
 
@@ -172,18 +197,22 @@ public class ProjectController {
       return new ResponseEntity<>(HttpStatus.ACCEPTED);
    }
 
-   @GetMapping("/instr/{uid}/all")
-   public ResponseEntity<List<Project>> getAllProjectsOfInstructor(@PathVariable Integer uid) {
-      TrackUser user = userService.getUserWithId(uid);
 
-      List<Project> allProjects = projectService.getProjectsWithInstructorId(user);
-      return ResponseEntity.ok(allProjects);
-   }
+   /**
+    * 根据浏览器session中保存的user属性获取当前用户所在的项目的列表
+    *
+    * @param request 浏览器传来的请求信息
+    * @return 如果请求信息中的session没有user属性，即未登录，则返回FORBIDDEN拒绝访问
+    * 如果包含则返回该user参与的所有project
+    */
+   @GetMapping("/user/allProjects")
+   public ResponseEntity<List<Project>> getProjectsOfInstructor(HttpServletRequest request) {
+      TrackUser user = (TrackUser) request.getSession().getAttribute("user");
+      if (request.getSession().getAttribute("user") == null) {
+         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+      }
 
-   @GetMapping("/stu/{uid}/all")
-   public ResponseEntity<List<Project>> getAllProjectsOfStudent(@PathVariable Integer uid) {
-      List<Project> allProjects = projectService.getProjectWithStuId(uid);
-
+      List<Project> allProjects = projectService.getProjectsWithUser(user);
       return ResponseEntity.ok(allProjects);
    }
 }

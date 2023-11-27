@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let userId = window.location.pathname.split('/')[3];
+    let id = window.location.pathname.split('/')[3];
     let title = window.location.pathname.split('/')[4];
 
-    listenInstrDashboardNavA(userId);
-    listenInstrProjectsNavA(userId);
+    listenInstrDashboardNavA(id);
+    listenInstrProjectsNavA(id);
+    listenLogoutNavA(id);
 
     fetch('/project/' + encodeURIComponent(title) + '/view')
         .then(response => {
@@ -231,7 +232,7 @@ function insertPlanDeliverableTable(members) {
                 deliverableRow.innerHTML = `
                 <td><input type="text" class="form-control" placeholder="Task Name" value=${deliverable.item} disabled></td>
                 <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Point" value=${deliverable.point}></td>
+                <td><input type="text" class="form-control" placeholder="Point" value=${deliverable.point} disabled></td>
                 `;
 
                 deliverableTbody.appendChild(deliverableRow);

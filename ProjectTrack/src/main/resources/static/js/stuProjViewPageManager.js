@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let userId = window.location.pathname.split('/')[3];
+    let id = window.location.pathname.split('/')[3];
     let title = window.location.pathname.split('/')[4];
 
-    listenStuDashboardNavA(userId);
-    listenStuProjectsNavA(userId);
+    listenStuDashboardNavA(id);
+    listenStuProjectsNavA(id);
+    listenLogoutNavA(id);
 
     fetch('/project/' + encodeURIComponent(title) + '/view')
         .then(response => {
@@ -11,8 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(respObject => {
             const project = respObject.project;
-            const members=respObject.members;
-            console.log(members);
+            console.log(project);
 
             const titleContainer = document.getElementById('title_container');
 
@@ -23,14 +23,17 @@ document.addEventListener('DOMContentLoaded', function () {
             tabContainer.appendChild(generateOverviewTab(project));
 
             if (project.meetingTime === null && project.meetingPlace === null) {
-                tabContainer.appendChild(generateNoPlanTab());
+                if (project.phases.length === 1 && project.phases.deliverables.length === 0) {
+                    tabContainer.appendChild(generateNoPlanTab());
 
-                listenPlanCreateBtn();
+                    console.log("here")
+                    listenPlanCreateBtn();
+                }
             } else {
-                tabContainer.appendChild(generatePlanTab(members));
+                tabContainer.appendChild(generatePlanTab(project));
 
-                insertPlanMemberTable(members);
-                insertPlanDeliverableTable(members);
+                insertPlanMemberTable(project);
+                insertPlanDeliverableTable(project);
             }
         })
         .catch(error => {
@@ -75,10 +78,8 @@ function generateNoPlanTab() {
     return noPlanTab;
 }
 
-function generatePlanTab(members) {
-    const project = members[0].project;
+function generatePlanTab(project) {
     let planTab = document.createElement('div');
-
     planTab.className = 'tab-pane fade pt-3';
     planTab.id = 'plan_tab';
     planTab.innerHTML = `
@@ -93,7 +94,7 @@ function generatePlanTab(members) {
             <div class="row mb-3">
                 <label for="teamNumbers_plan" class="col-3 col-form-label">Team Numbers</label>
                 <div class="col-9">
-                    <input id="teamNumbers_plan"  name="teamNumbers_plan" type="text" class="form-control" value=${members.length} disabled>
+                    <input id="teamNumbers_plan"  name="teamNumbers_plan" type="text" class="form-control" value=${project.members.length} disabled>
                 </div>
             </div>
 
@@ -139,31 +140,43 @@ function generatePlanTab(members) {
 
             <div class="row mb-3">
                 <label class="col-3 col-form-label">Deliverables</label>
-                <table>
-                    <tbody>
+            <table class="table table-bordered">
+                <thead id="phase_thead">
                     <tr>
-                        <td>
-                            <table class="table table-bordered">
-                                <thead id="deliverables_thead">
-                                <tr>
-                                    <th style="width:15%;">Task</th>
-                                    <th style="width:25%;">Item</th>
-                                    <th style="width:15%">Phase</th>
-                                    <th style="width:15%">Responsible</th>
-                                    <th style="width:15%">Mode</th>
-                                    <th style="width:15%">Comment</th>
-                                </tr>
-                                </thead>
-
-                                <tbody id="deliverables_tbody">
-                                <!--Dynamic Load Deliverables Info-->
-                                
-                                </tbody>
-                            </table>
-                        </td>
+                        <th style="width:5%;">Phase</th>
+                        <th style="width:70%;">Content</th>
+                        <th style="width:20%;">Date</th>
+                        <th style="width:5%">Operation</th>
                     </tr>
-                    </tbody>
-                </table>
+                </thead>
+                <tbody id="phases_tbody">
+                <tr>
+                <td><input type="text" class="form-control" placeholder="Phase Number" value="I" disabled</td>
+                <td>
+                    <table class="table table-bordered">
+                        <thead class="task_thead">
+                        <tr>
+                            <th style="width:15%;">Task</th>
+                            <th style="width:30%;">Item</th>
+                            <th style="width:25%">Responsible</th>
+                            <th style="width:20%">Mode</th>
+                            <th style="width:10%">Operation</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="tasks_tbody">
+                        <!--Dynamic Load Deliverables Info-->
+                        
+                        </tbody>
+                    </table>
+                </td>
+                <td><input type="date" class="form-control" value=${project.phases.at(project.phases.length-1).due} disabled></td>
+                <td>
+                    <button type="button" class="btn btn-primary phase_add_btn">+</button>
+                </td>
+                </tr>
+                </tbody>
+            </table>
             </div>
         </form>
     `
@@ -171,7 +184,8 @@ function generatePlanTab(members) {
     return planTab;
 }
 
-function insertPlanMemberTable(members) {
+function insertPlanMemberTable(project) {
+    let members = project.members;
     const membersTbody = document.getElementById("members_tbody");
 
     members.forEach(member => {
@@ -193,14 +207,20 @@ function insertPlanMemberTable(members) {
     })
 }
 
-function insertPlanDeliverableTable(members) {
-    let dlbrbsCount = 0;
+function insertPlanDeliverableTable(project) {
+    let phases = project.phases
+    let members = project.members;
+
+    let dlvrbsCount = 0;
 
     members.forEach(member => {
-        dlbrbsCount += member.deliverables.length;
+        dlvrbsCount += member.deliverables.length;
     });
 
-    if (dlbrbsCount === 0) {
+    const phaseTbody = document.getElementById("phases_tbody");
+    const tasksTbody = document.querySelector(".tasks_tbody");
+
+    if (dlvrbsCount === 0) {
         const deliverableThead = document.getElementById("deliverables_thead");
 
         deliverableThead.innerHTML = ``;
@@ -213,21 +233,66 @@ function insertPlanDeliverableTable(members) {
         deliverableThead.appendChild(newInner);
 
     } else {
-        const deliverableTbody = document.getElementById("deliverables_tbody");
+        phases.forEach(phase => {
+            if (phase.number > 1) {
+                let newPhase = document.createElement('tr');
 
-        members.forEach(member => {
-            member.deliverables.forEach(deliverable => {
+                newPhase.innerHTML = `
+                <td><input type="text" class="form-control" placeholder="Phase Number" value=${switchIntRoman(phase.number)} disabled></td>
+                <td>
+                    <table class="table table-bordered">
+                        <thead class="task_thead">
+                        <tr>
+                            <th style="width:15%;">Task</th>
+                            <th style="width:30%;">Item</th>
+                            <th style="width:25%">Responsible</th>
+                            <th style="width:20%">Mode</th>
+                            <th style="width:10%">Operation</th>
+                        </tr>
+                        </thead>
+    
+                        <tbody class="tasks_tbody">
+                        
+                        </tbody>
+                    </table>
+                </td>
+                <td><input type="date" class="form-control" value=${phase.due} disabled></td>
+                <td>
+                    <button type="button" class="btn btn-primary phase_add_btn">+</button>
+                    <button type="button" class="btn btn-danger phase_delete_btn">-</button>
+                </td>
+           `;
+
+                phaseTbody.appendChild(newPhase);
+            }
+        });
+
+        phases.forEach(phase => {
+            let currentTaskTbody = phaseTbody.children[phase.number - 1].querySelector(".tasks_tbody");
+            let responsible = "";
+
+            phase.deliverables.forEach(pdeliverable => {
+                members.forEach(member => {
+                    member.deliverables.forEach(mdeliverable => {
+                        if (mdeliverable.id === pdeliverable.id) {
+                            responsible = member.trackUser.name;
+                        }
+                    })
+                });
+
                 let deliverableRow = document.createElement('tr');
                 deliverableRow.innerHTML = `
-                <td><input type="text" class="form-control" placeholder="Task Number" value=${deliverable.number} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Task Name" value=${deliverable.item} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Phase Number" value=${deliverable.phase} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Responsible" value=${member.trackUser.name} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode} disabled> </td>
-                <td><input type="text" class="form-control" placeholder="Comment" value=${deliverable.comment} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Number" value=${pdeliverable.number} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Name" value=${pdeliverable.item} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Responsible" value=${responsible} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Mode" value=${pdeliverable.mode} disabled> </td>
+                <td>
+                    <button type="button" class="btn btn-primary task_add_btn">+</button>
+                    <button type="button" class="btn btn-danger task_delete_btn">-</button>
+                </td>
                 `;
 
-                deliverableTbody.appendChild(deliverableRow);
+                currentTaskTbody.appendChild(deliverableRow);
             });
         });
 
@@ -240,4 +305,19 @@ function listenPlanCreateBtn() {
     createBtn.addEventListener('click', function () {
         window.location.href = window.location.pathname.slice(0, -4) + "edit";
     });
+}
+
+function switchIntRoman(swc) {
+    switch (swc) {
+        case 1:
+            return "I";
+        case 2:
+            return "II";
+        case 3:
+            return "III";
+        case 4:
+            return "IV";
+        case 5:
+            return "V";
+    }
 }

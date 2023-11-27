@@ -3,7 +3,6 @@ document.getElementById('register-btn').addEventListener('click', async function
     let email = document.getElementById("email").value.trim();
     let password = document.getElementById("password").value.trim();
     let role = document.getElementById("role").value.trim();
-    let timezone = document.getElementById("timezone").value.trim();
     event.preventDefault();
 
     let user = {
@@ -11,7 +10,6 @@ document.getElementById('register-btn').addEventListener('click', async function
         email: email,
         password: password,
         role: role,
-        timezone: timezone
     };
 
     fetch("/trackuser/register", {

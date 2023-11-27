@@ -1,11 +1,12 @@
 package com.protrack.protrack.services;
 
 import com.protrack.protrack.entities.Deliverable;
-import com.protrack.protrack.entities.Project;
+import com.protrack.protrack.entities.Phase;
 import com.protrack.protrack.repositories.DeliverableRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -28,7 +29,11 @@ public class DeliverableService {
       repository.save(deliverable);
    }
 
-   public List<Deliverable> getDeliverablesWithProject(Project project){
-      return repository.findDeliverablesByProject(project);
+   public Optional<Deliverable> getDeliverableWithPhaseAndNumber(Phase phase, Float number){
+      return repository.findDeliverableByPhaseAndNumber(phase,number);
+   }
+
+   public Set<Deliverable> getDeliverablesWithPhase(Phase phase){
+      return repository.findDeliverablesByPhase(phase);
    }
 }
