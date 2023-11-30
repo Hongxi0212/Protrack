@@ -197,7 +197,6 @@ public class ProjectController {
       return new ResponseEntity<>(HttpStatus.ACCEPTED);
    }
 
-
    /**
     * 根据浏览器session中保存的user属性获取当前用户所在的项目的列表
     *

@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(respObject => {
             const project = respObject.project;
-            const members=respObject.members;
-            console.log(members);
-
 
             const titleContainer = document.getElementById('title_container');
 
@@ -24,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             tabContainer.appendChild(generateValidateTab(project));
 
-            insertPlanDeliverableTable(members);
+            insertPlanDeliverableTable(project);
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -204,14 +201,20 @@ function generateValidateTab(project){
     return validateTab;
 }
 
-function insertPlanDeliverableTable(members) {
-    let dlbrbsCount = 0;
+function insertPlanDeliverableTable(project) {
+    let phases = project.phases
+    let members = project.members;
+
+    let dlvrbsCount = 0;
 
     members.forEach(member => {
-        dlbrbsCount += member.deliverables.length;
+        dlvrbsCount += member.deliverables.length;
     });
 
-    if (dlbrbsCount === 0) {
+    const phaseTbody = document.getElementById("phases_tbody");
+    const tasksTbody = document.querySelector(".tasks_tbody");
+
+    if (dlvrbsCount === 0) {
         const deliverableThead = document.getElementById("deliverables_thead");
 
         deliverableThead.innerHTML = ``;
