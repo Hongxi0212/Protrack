@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             insertPhaseDate(project);
             insertPlanDeliverableTable(project);
+            insertPointsChart(project);
 
             listenSaveValidateBtn();
         })
@@ -84,7 +85,7 @@ function generateValidateTab(project) {
         </div>
     
         <div class="row mb-3">
-                <label class="col-2 col-form-label">Deliverables</label>
+            <label class="col-2 col-form-label">Deliverables</label>
             <div class="col-10">
                 <table class="table table-bordered">
                     <thead id="deliverables_thead">
@@ -101,7 +102,12 @@ function generateValidateTab(project) {
                 </table>
             </div>
         </div>
-    
+        
+        <div class="row mb-3">
+            <label class="col-2 col-form-label">Chart</label>
+            <canvas id="chart_canvas" class="col-10"></canvas>
+        </div>
+        
         <div class="row mb-3">
             <label for="rubric" class="col-md-2 col-form-label">Rubric</label>
             <div class="col-md-10">
@@ -255,6 +261,95 @@ function insertPlanDeliverableTable(project) {
         });
 
     }
+}
+
+function insertPointsChart(project) {
+    const phases = project.phases;
+    let phasesLabels = [];
+    switch (phases.length) {
+        case 1:
+            phasesLabels = ['Current', '1st', 'Overall'];
+            break;
+        case 2:
+            phasesLabels = ['Current', '1st', '2nd', 'Overall'];
+            break;
+        case 3:
+            phasesLabels = ['Current', '1st', '2nd', '3rd', 'Overall'];
+            break;
+        case 4:
+            phasesLabels = ['Current', '1st', '2nd', '3rd', '4th', 'Overall'];
+            break;
+        case 5:
+            phasesLabels = ['Current', '1st', '2nd', '3rd', '4th', '5th', 'Overall'];
+            break;
+    }
+
+    let phaseData = [];
+    //计算当前已获得和总览分数
+    let currentTotalPoint = 0;
+    let currentMaxPoint = 0;
+    let overallTotalPoint = 0;
+    let overallMaxPoint = 0;
+    phases.forEach(phase => {
+        phase.deliverables.forEach(deliverable => {
+            if (!deliverable.point === null) {
+                currentTotalPoint += deliverable.point;
+                currentMaxPoint++;
+                overallTotalPoint += deliverable.point;
+            }
+            overallMaxPoint++;
+        })
+    });
+    currentMaxPoint *= 10;
+    phaseData.push(currentTotalPoint / currentMaxPoint * 100);
+
+    //计算各个阶段分数
+    phases.forEach(phase => {
+        let phaseTotalPoint = 0;
+        let phaseMaxPoint = 0;
+        phase.deliverables.forEach(deliverable => {
+            phaseTotalPoint += deliverable.point === null ? deliverable.point : 0;
+            currentMaxPoint++;
+        })
+        phaseMaxPoint *= 10;
+        phaseData.push(phaseTotalPoint / phaseMaxPoint * 100);
+    });
+
+    phaseData.push(overallTotalPoint / overallMaxPoint * 100);
+
+    let phaseBackgroundColor = [];
+    let phaseBorderColor = [];
+    phaseData.forEach(data => {
+        if (data < 60) {
+            phaseBackgroundColor.push('#EA8993');
+            phaseBorderColor.push('#DC3545')
+        } else {
+            phaseBackgroundColor.push('#72AAFE');
+            phaseBorderColor.push('#0D6EFD');
+        }
+    });
+
+    const ctx = document.getElementById('chart_canvas').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: phasesLabels,
+            datasets: [{
+                label: 'Points of Phases',
+                data: phaseData,
+                backgroundColor: phaseBackgroundColor,
+                borderColor: phaseBorderColor,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 function listenSaveValidateBtn() {
