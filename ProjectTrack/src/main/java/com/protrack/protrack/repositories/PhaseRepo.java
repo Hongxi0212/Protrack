@@ -11,9 +11,11 @@ import java.util.Set;
 public interface PhaseRepo extends JpaRepository<Phase, Integer> {
    void deleteById(Integer id);
 
-   Optional<Phase> findPhaseByProjectAndNumber(Project project, Integer Number);
+   Optional<Phase> findPhaseByProjectAndNumber(Project project, Integer number);
 
-   Set<Phase> findPhasesByProject(Project project);
+   List<Phase> findPhasesByProject(Project project);
 
    void deleteAllByProject(Project project);
+
+   void deletePhaseByProjectAndNumber(Project project, Integer number);
 }

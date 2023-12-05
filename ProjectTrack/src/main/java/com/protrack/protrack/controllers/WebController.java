@@ -81,7 +81,7 @@ public class WebController {
    }
 
    @GetMapping("/stu/{id}/{projectTitle}/validate")
-   public String project_validate_stu(){
+   public String project_validate_stu(@PathVariable String id, @PathVariable String projectTitle){
       return "project_validate_stu";
    }
 

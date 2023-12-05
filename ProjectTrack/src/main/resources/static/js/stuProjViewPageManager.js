@@ -23,10 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
             tabContainer.appendChild(generateOverviewTab(project));
 
             if (project.meetingTime === null && project.meetingPlace === null) {
-                if (project.phases.length === 1 && project.phases.deliverables.length === 0) {
+                if (project.phases.length === 0) {
                     tabContainer.appendChild(generateNoPlanTab());
 
-                    console.log("here")
                     listenPlanCreateBtn();
                 }
             } else {
@@ -70,9 +69,7 @@ function generateNoPlanTab() {
     noPlanTab.id = 'plan_tab';
     noPlanTab.innerHTML = `
     <p>Project Plan has not been created yet.</p>
-    <div class="text-center">
-        <button id="plan_create_btn" class="btn btn-primary">Create</button>
-    </div>
+    <button id="plan_create_btn" type="button" class="btn btn-primary">Create</button>
     `;
 
     return noPlanTab;
@@ -145,36 +142,11 @@ function generatePlanTab(project) {
                     <tr>
                         <th style="width:5%;">Phase</th>
                         <th style="width:70%;">Content</th>
-                        <th style="width:20%;">Date</th>
-                        <th style="width:5%">Operation</th>
+                        <th style="width:25%;">Date</th>
                     </tr>
                 </thead>
                 <tbody id="phases_tbody">
-                <tr>
-                <td><input type="text" class="form-control" placeholder="Phase Number" value="I" disabled</td>
-                <td>
-                    <table class="table table-bordered">
-                        <thead class="task_thead">
-                        <tr>
-                            <th style="width:15%;">Task</th>
-                            <th style="width:30%;">Item</th>
-                            <th style="width:25%">Responsible</th>
-                            <th style="width:20%">Mode</th>
-                            <th style="width:10%">Operation</th>
-                        </tr>
-                        </thead>
-
-                        <tbody class="tasks_tbody">
-                        <!--Dynamic Load Deliverables Info-->
-                        
-                        </tbody>
-                    </table>
-                </td>
-                <td><input type="date" class="form-control" value=${project.phases.at(project.phases.length-1).due} disabled></td>
-                <td>
-                    <button type="button" class="btn btn-primary phase_add_btn">+</button>
-                </td>
-                </tr>
+                
                 </tbody>
             </table>
             </div>
@@ -233,43 +205,44 @@ function insertPlanDeliverableTable(project) {
         deliverableThead.appendChild(newInner);
 
     } else {
-        phases.forEach(phase => {
-            if (phase.number > 1) {
-                let newPhase = document.createElement('tr');
+        phases.sort(function (a, b) {
+            return a.number - b.number;
+        });
 
-                newPhase.innerHTML = `
-                <td><input type="text" class="form-control" placeholder="Phase Number" value=${switchIntRoman(phase.number)} disabled></td>
-                <td>
-                    <table class="table table-bordered">
-                        <thead class="task_thead">
-                        <tr>
-                            <th style="width:15%;">Task</th>
-                            <th style="width:30%;">Item</th>
-                            <th style="width:25%">Responsible</th>
-                            <th style="width:20%">Mode</th>
-                            <th style="width:10%">Operation</th>
-                        </tr>
-                        </thead>
-    
-                        <tbody class="tasks_tbody">
-                        
-                        </tbody>
-                    </table>
-                </td>
-                <td><input type="date" class="form-control" value=${phase.due} disabled></td>
-                <td>
-                    <button type="button" class="btn btn-primary phase_add_btn">+</button>
-                    <button type="button" class="btn btn-danger phase_delete_btn">-</button>
-                </td>
+        phases.forEach(phase => {
+            let newPhase = document.createElement('tr');
+
+            newPhase.innerHTML = `
+            <td><input type="text" class="form-control" placeholder="Phase Number" value=${switchIntRoman(phase.number)} disabled></td>
+            <td>
+                <table class="table table-bordered">
+                    <thead class="task_thead">
+                    <tr>
+                        <th style="width:15%;">Task</th>
+                        <th style="width:40%;">Item</th>
+                        <th style="width:25%">Responsible</th>
+                        <th style="width:20%">Mode</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="tasks_tbody">
+                    
+                    </tbody>
+                </table>
+            </td>
+            <td><input type="date" class="form-control" value=${phase.due} disabled></td>
            `;
 
-                phaseTbody.appendChild(newPhase);
-            }
+            phaseTbody.appendChild(newPhase);
         });
 
         phases.forEach(phase => {
             let currentTaskTbody = phaseTbody.children[phase.number - 1].querySelector(".tasks_tbody");
             let responsible = "";
+
+            phase.deliverables.sort(function(a, b){
+                return a.number-b.number;
+            })
 
             phase.deliverables.forEach(pdeliverable => {
                 members.forEach(member => {
@@ -286,10 +259,6 @@ function insertPlanDeliverableTable(project) {
                 <td><input type="text" class="form-control" placeholder="Task Name" value=${pdeliverable.item} disabled></td>
                 <td><input type="text" class="form-control" placeholder="Responsible" value=${responsible} disabled></td>
                 <td><input type="text" class="form-control" placeholder="Task Mode" value=${pdeliverable.mode} disabled> </td>
-                <td>
-                    <button type="button" class="btn btn-primary task_add_btn">+</button>
-                    <button type="button" class="btn btn-danger task_delete_btn">-</button>
-                </td>
                 `;
 
                 currentTaskTbody.appendChild(deliverableRow);

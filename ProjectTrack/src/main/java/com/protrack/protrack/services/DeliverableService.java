@@ -2,7 +2,9 @@ package com.protrack.protrack.services;
 
 import com.protrack.protrack.entities.Deliverable;
 import com.protrack.protrack.entities.Phase;
+import com.protrack.protrack.entities.Project;
 import com.protrack.protrack.repositories.DeliverableRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,11 +31,24 @@ public class DeliverableService {
       repository.save(deliverable);
    }
 
-   public Optional<Deliverable> getDeliverableWithPhaseAndNumber(Phase phase, Float number){
-      return repository.findDeliverableByPhaseAndNumber(phase,number);
+   public List<Deliverable> getDeliverablesWithProject(Project project){
+      return repository.findDeliverablesByProject(project);
    }
 
-   public Set<Deliverable> getDeliverablesWithPhase(Phase phase){
+   public Optional<Deliverable> getDeliverableWithProjectAndPhaseAndNumber(Project project, Phase phase, Float number) {
+      return repository.findDeliverableByProjectAndPhaseAndNumber(project, phase, number);
+   }
+
+   public Optional<Deliverable> getDeliverableWithProjectAndItem(Project project, String item) {
+      return repository.findDeliverableByProjectAndItem(project, item);
+   }
+
+   public Set<Deliverable> getDeliverablesWithPhase(Phase phase) {
       return repository.findDeliverablesByPhase(phase);
+   }
+
+   @Transactional
+   public void removeDeliverableWithProjectAndItem(Project project, String item){
+      repository.deleteDeliverableByProjectAndItem(project, item);
    }
 }

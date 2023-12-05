@@ -26,6 +26,24 @@ public class Project {
    private String meetingTime;
    @Column(name = "MPlace")
    private String meetingPlace;
+   @Column(name="Rubric")
+   private String rubric;
+   @Column(name="StrengthStu")
+   private String strengthStu;
+   @Column(name="StrengthInstr")
+   private String strengthInstr;
+   @Column(name="WeaknessStu")
+   private String weaknessStu;
+   @Column(name="WeaknessInstr")
+   private String weaknessInstr;
+   @Column(name="ErrorStu")
+   private String errorStu;
+   @Column(name="ErrorInstr")
+   private String errorInstr;
+   @Column(name="CommentStu")
+   private String commentStu;
+   @Column(name="CommentInstr")
+   private String commentInstr;
 
    @ManyToOne
    @JoinColumn(name = "UID")
@@ -126,6 +144,78 @@ public class Project {
       this.phases = phases;
    }
 
+   public String getRubric() {
+      return rubric;
+   }
+
+   public void setRubric(String rubric) {
+      this.rubric = rubric;
+   }
+
+   public String getStrengthStu() {
+      return strengthStu;
+   }
+
+   public void setStrengthStu(String strengthStu) {
+      this.strengthStu = strengthStu;
+   }
+
+   public String getStrengthInstr() {
+      return strengthInstr;
+   }
+
+   public void setStrengthInstr(String strengthInstr) {
+      this.strengthInstr = strengthInstr;
+   }
+
+   public String getWeaknessStu() {
+      return weaknessStu;
+   }
+
+   public void setWeaknessStu(String weaknessStu) {
+      this.weaknessStu = weaknessStu;
+   }
+
+   public String getWeaknessInstr() {
+      return weaknessInstr;
+   }
+
+   public void setWeaknessInstr(String weaknessInstr) {
+      this.weaknessInstr = weaknessInstr;
+   }
+
+   public String getErrorStu() {
+      return errorStu;
+   }
+
+   public void setErrorStu(String errorStu) {
+      this.errorStu = errorStu;
+   }
+
+   public String getErrorInstr() {
+      return errorInstr;
+   }
+
+   public void setErrorInstr(String errorInstr) {
+      this.errorInstr = errorInstr;
+   }
+
+   public String getCommentStu() {
+      return commentStu;
+   }
+
+   public void setCommentStu(String commentStu) {
+      this.commentStu = commentStu;
+   }
+
+   public String getCommentInstr() {
+      return commentInstr;
+   }
+
+   public void setCommentInstr(String commentInstr) {
+      this.commentInstr = commentInstr;
+   }
+
    @Override
    public String toString() {
       return "Project{" +
@@ -136,8 +226,6 @@ public class Project {
             ", meetingTime='" + meetingTime + '\'' +
             ", meetingPlace='" + meetingPlace + '\'' +
             ", instructor=" + instructor +
-            ", members=" + members +
-            ", phases=" + phases +
             '}';
    }
 }

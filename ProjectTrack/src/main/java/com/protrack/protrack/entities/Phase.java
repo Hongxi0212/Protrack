@@ -24,7 +24,7 @@ public class Phase {
    @Column(name = "Due")
    private LocalDate due;
 
-   @OneToMany(mappedBy = "phase")
+   @OneToMany(mappedBy = "phase", cascade = CascadeType.REMOVE)
    @JsonSerialize
    @JsonManagedReference
    private Set<Deliverable> deliverables = new HashSet<Deliverable>();

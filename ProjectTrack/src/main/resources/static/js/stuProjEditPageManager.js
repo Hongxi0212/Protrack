@@ -85,31 +85,7 @@ function generatePlanTab(project) {
                     </tr>
                 </thead>
                 <tbody id="phases_tbody">
-                <tr>
-                <td><input type="text" class="form-control" placeholder="Phase Number" value="I"</td>
-                <td>
-                    <table class="table table-bordered">
-                        <thead class="task_thead">
-                        <tr>
-                            <th style="width:15%;">Task</th>
-                            <th style="width:30%;">Item</th>
-                            <th style="width:25%">Responsible</th>
-                            <th style="width:20%">Mode</th>
-                            <th style="width:10%">Operation</th>
-                        </tr>
-                        </thead>
-
-                        <tbody class="tasks_tbody">
-                        <!--Dynamic Load Deliverables Info-->
-                        
-                        </tbody>
-                    </table>
-                </td>
-                <td><input type="date" class="form-control" min="2024-01-01" max="2025-12-31" value="2024-01-01"></td>
-                <td>
-                    <button type="button" class="btn btn-primary phase_add_btn">+</button>
-                </td>
-                </tr>
+                
                 </tbody>
             </table>
         </div>
@@ -136,63 +112,94 @@ function insertPlanDeliverableTable(project) {
     const tasksTbody = document.querySelector(".tasks_tbody");
 
     if (dlvrbsCount === 0) {
-        let newDeliverable = document.createElement('tr');
-        newDeliverable.innerHTML = `
-            <td><input type="text" class="form-control" placeholder="Task Number" value="Assign your Task Number"></td>
-            <td><input type="text" class="form-control" placeholder="Task Name" value="Name your Task"></td>
-            <td><input type="text" class="form-control" placeholder="Responsible" value="Who will do this Task"></td>
-            <td><input type="text" class="form-control" placeholder="Task Mode" value="What is your task submit mode"></td>
+        let newPhase = document.createElement('tr');
+        newPhase.innerHTML = `
+        <tr>
+        <td><input type="text" class="form-control" placeholder="Phase Number" value="I"</td>
+        <td>
+            <table class="table table-bordered">
+                <thead class="task_thead">
+                <tr>
+                    <th style="width:15%;">Task</th>
+                    <th style="width:30%;">Item</th>
+                    <th style="width:25%">Responsible</th>
+                    <th style="width:20%">Mode</th>
+                    <th style="width:10%">Operation</th>
+                </tr>
+                </thead>
+
+                <tbody class="tasks_tbody">
+                <tr>
+                <td><input type="text" class="form-control" placeholder="Task Number" value="Assign your Task Number"></td>
+                <td><input type="text" class="form-control" placeholder="Task Name" value="Name your Task"></td>
+                <td><input type="text" class="form-control" placeholder="Responsible" value="Who will do this Task"></td>
+                <td><input type="text" class="form-control" placeholder="Task Mode" value="What is your task submit mode"></td>
+                <td>
+                    <button type="button" class="btn btn-primary task_add_btn">+</button>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        <td><input type="date" class="form-control" min="2024-01-01" max="2025-12-31" value="2024-01-01"></td>
+        <td>
+            <button type="button" class="btn btn-primary phase_add_btn">+</button>
+        </td>
+        </tr>
+        `;
+
+        phaseTbody.appendChild(newPhase);
+
+    } else {
+        phases.sort(function (a, b) {
+            return a.number - b.number;
+        });
+
+        phases.forEach(phase => {
+            let newPhase = document.createElement('tr');
+
+            newPhase.innerHTML = `
+            <td><input type="text" class="form-control" placeholder="Phase Number" value=${switchIntRoman(phase.number)}></td>
             <td>
-                <button type="button" class="btn btn-primary task_add_btn">+</button>
+                <table class="table table-bordered">
+                    <thead class="task_thead">
+                    <tr>
+                        <th style="width:15%;">Task</th>
+                        <th style="width:30%;">Item</th>
+                        <th style="width:25%">Responsible</th>
+                        <th style="width:20%">Mode</th>
+                        <th style="width:10%">Operation</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="tasks_tbody">
+                    
+                    </tbody>
+                </table>
+            </td>
+            <td><input type="date" class="form-control" min="2024-01-01" max="2025-12-31" value=${phase.due}></td>
+            <td>
+                <button type="button" class="btn btn-primary phase_add_btn">+</button>
+                <button type="button" class="btn btn-danger phase_delete_btn">-</button>
             </td>
             `;
 
-        tasksTbody.appendChild(newDeliverable);
-
-    } else {
-        phases.forEach(phase => {
-            if (phase.number > 1) {
-                let newPhase = document.createElement('tr');
-
-                newPhase.innerHTML = `
-                <td><input type="text" class="form-control" placeholder="Phase Number" value=${switchIntRoman(phase.number)}></td>
-                <td>
-                    <table class="table table-bordered">
-                        <thead class="task_thead">
-                        <tr>
-                            <th style="width:15%;">Task</th>
-                            <th style="width:30%;">Item</th>
-                            <th style="width:25%">Responsible</th>
-                            <th style="width:20%">Mode</th>
-                            <th style="width:10%">Operation</th>
-                        </tr>
-                        </thead>
-    
-                        <tbody class="tasks_tbody">
-                        
-                        </tbody>
-                    </table>
-                </td>
-                <td><input type="date" class="form-control" min="2024-01-01" max="2025-12-31" value="2024-01-01"></td>
-                <td>
-                    <button type="button" class="btn btn-primary phase_add_btn">+</button>
-                    <button type="button" class="btn btn-danger phase_delete_btn">-</button>
-                </td>
-           `;
-
-                phaseTbody.appendChild(newPhase);
-            }
+            phaseTbody.appendChild(newPhase);
         });
 
-        phases.forEach(phase=>{
-            let currentTaskTbody=phaseTbody.children[phase.number-1].querySelector(".tasks_tbody");
-            let responsible="";
+        phases.forEach(phase => {
+            let currentTaskTbody = phaseTbody.children[phase.number - 1].querySelector(".tasks_tbody");
+            let responsible = "";
+
+            phase.deliverables.sort(function(a, b){
+                return a.number-b.number;
+            })
 
             phase.deliverables.forEach(pdeliverable => {
-                members.forEach(member=>{
-                    member.deliverables.forEach(mdeliverable=>{
-                        if(mdeliverable.id===pdeliverable.id){
-                            responsible=member.trackUser.name;
+                members.forEach(member => {
+                    member.deliverables.forEach(mdeliverable => {
+                        if (mdeliverable.id === pdeliverable.id) {
+                            responsible = member.trackUser.name;
                         }
                     })
                 });

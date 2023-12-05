@@ -141,13 +141,15 @@ public class Deliverable {
 
       Deliverable that = (Deliverable) o;
 
+      if (!item.equals(that.item)) return false;
       if (!Objects.equals(number, that.number)) return false;
       return Objects.equals(phase, that.phase);
    }
 
    @Override
    public int hashCode() {
-      int result = number != null ? number.hashCode() : 0;
+      int result = item.hashCode();
+      result = 31 * result + (number != null ? number.hashCode() : 0);
       result = 31 * result + (phase != null ? phase.hashCode() : 0);
       return result;
    }

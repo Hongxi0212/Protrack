@@ -3,6 +3,7 @@ package com.protrack.protrack.services;
 import com.protrack.protrack.entities.Phase;
 import com.protrack.protrack.exceptions.PhaseNotFoundException;
 import com.protrack.protrack.repositories.PhaseRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.protrack.protrack.entities.Project;
 
@@ -35,7 +36,7 @@ public class PhaseService {
       repository.saveAll(phases);
    }
 
-   public Set<Phase> getPhasesWithProject(Project project){
+   public List<Phase> getPhasesWithProject(Project project){
       return repository.findPhasesByProject(project);
    }
 
@@ -45,5 +46,10 @@ public class PhaseService {
 
    public void deletePhasesWithProject(Project project){
       repository.deleteAllByProject(project);
+   }
+
+   @Transactional
+   public void removePhaseWithProjectAndNumber(Project project, Integer number) {
+      repository.deletePhaseByProjectAndNumber(project, number);
    }
 }

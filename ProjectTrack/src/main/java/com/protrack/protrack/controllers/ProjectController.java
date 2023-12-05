@@ -111,14 +111,16 @@ public class ProjectController {
       JsonNode phasesNode = rootNode.path("phases");
 
       Project project = projectService.getProjectWithTitle(title);
-      if (project == null) {
-         return ResponseEntity.notFound().build();
-      }
 
       project.setMeetingTime(mTimeNode.asText());
       project.setMeetingPlace(mPlaceNode.asText());
 
       if (phasesNode.isArray()) {
+         List<Phase> oldPhases=phaseService.getPhasesWithProject(project);
+         List<Phase> newPhases=new ArrayList<>();
+         List<Deliverable> oldDeliverables=deliverableService.getDeliverablesWithProject(project);
+         List<Deliverable> newDeliverables=new ArrayList<>();
+
          for (JsonNode phaseNode : phasesNode) {
             Integer phaseNum = phaseNode.path("phaseNum").asInt();
             LocalDate phaseDate = LocalDate.parse(phaseNode.path("phaseDate").asText());
@@ -142,11 +144,11 @@ public class ProjectController {
                   Float taskNumber = (float) taskNode.path("taskNumber").asDouble();
                   Member member = memberService.getMemberWithProjectTitleAndTrackUserName(title, taskNode.get("responsible").asText());
 
-                  Optional<Deliverable> opDeliverable = deliverableService.getDeliverableWithPhaseAndNumber(phase, taskNumber);
-                  Deliverable deliverable = new Deliverable();
-                  if (opDeliverable.isPresent()) {
-                     deliverable = opDeliverable.get();
+                  Optional<Deliverable> opDeliverable = deliverableService.getDeliverableWithProjectAndPhaseAndNumber(project, phase, taskNumber);
+                  if (opDeliverable.isEmpty()) {
+                     opDeliverable = deliverableService.getDeliverableWithProjectAndItem(project, taskName);
                   }
+                  Deliverable deliverable = opDeliverable.orElse(new Deliverable());
 
                   deliverable.setItem(taskName);
                   deliverable.setMode(taskMode);
@@ -154,12 +156,82 @@ public class ProjectController {
                   deliverable.setMember(member);
                   deliverable.setPhase(phase);
 
+                  newDeliverables.add(deliverable);
                   deliverableService.updateDeliverable(deliverable);
                }
             }
 
+            newPhases.add(phase);
             phaseService.updatePhase(phase);
          }
+
+         for(Deliverable oldD:oldDeliverables) {
+            boolean isDeleted = true;
+            for (Deliverable newD : newDeliverables) {
+               if (oldD.getItem().equals(newD.getItem())) {
+                  isDeleted=false;
+                  break;
+               }
+            }
+            if (isDeleted) {
+                deliverableService.removeDeliverableWithProjectAndItem(project, oldD.getItem());
+            }
+         }
+
+         for (Phase oldPhase: oldPhases) {
+            boolean isDeleted = true;
+            for (Phase newPhase: newPhases) {
+               if (oldPhase.getNumber() == newPhase.getNumber()) {
+                  isDeleted = false;
+               }
+            }
+            if (isDeleted) {
+               phaseService.removePhaseWithProjectAndNumber(project, oldPhase.getNumber());
+            }
+         }
+
+      }
+
+      projectService.updateProject(project);
+
+      return ResponseEntity.ok(project);
+   }
+
+   @PutMapping("/{title}/validate/update")
+   public ResponseEntity<?> updateProjectValidate(@PathVariable String title, @RequestBody String validateInfo) throws JsonProcessingException {
+      ObjectMapper mapper = new ObjectMapper();
+      System.out.println(validateInfo);
+      JsonNode info = mapper.readTree(validateInfo);
+
+      String role = info.path("role").asText();
+
+      Project project = projectService.getProjectWithTitle(title);
+
+      if (Objects.equals(role, "Student")) {
+         String rubric = info.path("rubric").asText();
+         String strengthStu=info.path("strengthStu").asText();
+         String weaknessStu=info.path("weaknessStu").asText();
+         String errorStu=info.path("errorStu").asText();
+         String commentStu=info.path("commentStu").asText();
+
+         project.setRubric(rubric);
+         project.setStrengthStu(strengthStu);
+         project.setWeaknessStu(weaknessStu);
+         project.setErrorStu(errorStu);
+         project.setCommentStu(commentStu);
+
+      } else if (Objects.equals(role, "Instructor")) {
+         JsonNode validateContent = info.path("validate");
+
+         String strengthInstr = validateContent.path("strengthInstr").asText();
+         String weaknessInstr = validateContent.path("weaknessInstr").asText();
+         String errorInstr = validateContent.path("errorInstr").asText();
+         String commentInstr = validateContent.path("commentInstr").asText();
+
+         project.setStrengthInstr(strengthInstr);
+         project.setWeaknessInstr(weaknessInstr);
+         project.setErrorInstr(errorInstr);
+         project.setCommentInstr(commentInstr);
       }
 
       projectService.updateProject(project);
