@@ -1,0 +1,55 @@
+<!DOCTYPE>
+
+<html lang="en">
+<head>
+    <!-- 链接样式表文件 -->
+    <link href="/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.4.css" />
+    <link rel="stylesheet" type="text/css" href="/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="/css/jquery.ganttView.css" />
+    <style type="text/css">
+        body {
+            font-size: 0.8rem; /* 使用相对单位rem */
+            padding: 1.6rem;   /* 使用相对单位rem，并根据设计调整值 */
+        }
+    </style>
+
+    <title>Gantt</title>
+</head>
+<body>
+
+<div id="ganttChart"></div>
+<br/><br/>
+<div id="eventMessage"></div>
+
+<script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="/js/date.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.8.4.js"></script>
+<script type="text/javascript" src="/js/jquery.ganttView.js"></script>
+<script type="text/javascript" src="/js/data.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#ganttChart").ganttView({  /* 创建一个甘特图对象 */
+            data: ganttData,  /* 设置数据源为ganttData */
+            slideWidth: 1200,  /* 设置幻灯片宽度为900 */
+            behavior: {  /* 设置行为选项 */
+                onClick: function (data) {  /* 点击事件处理函数 */
+                    var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+                    $("#eventMessage").text(msg);  /* 显示事件消息 */
+                },
+                onResize: function (data) {  /* 调整事件大小事件处理函数 */
+                    var msg = "You resized an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+                    $("#eventMessage").text(msg);  /* 显示事件消息 */
+                },
+                onDrag: function (data) {  /* 拖动事件事件处理函数 */
+                    var msg = "You dragged an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+                    $("#eventMessage").text(msg);  /* 显示事件消息 */
+                }
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
