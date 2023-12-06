@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('There has been a problem with your fetch operation:', error);
         });
 });
 
@@ -190,6 +190,7 @@ function insertPlanDeliverableTable(project) {
     });
 
     const phaseTbody = document.getElementById("phases_tbody");
+    const tasksTbody = document.querySelector(".tasks_tbody");
 
     if (dlvrbsCount === 0) {
         const deliverableThead = document.getElementById("deliverables_thead");
@@ -203,8 +204,7 @@ function insertPlanDeliverableTable(project) {
 
         deliverableThead.appendChild(newInner);
 
-    }
-    else {
+    } else {
         phases.sort(function (a, b) {
             return a.number - b.number;
         });
