@@ -64,7 +64,7 @@ function generateValidateTab(project) {
             <label for="evaludationDate" class="col-3 col-form-label">Evaluation Date:</label>
             <div class="col-9">
                 <input name="evaludationDate" type="text" class="form-control"
-                       id="evaludationDate" value=${phases[0].due} disabled>
+                       id="evaludationDate" value=${phases[phases.length - 1].due} disabled>
             </div>
         </div>
     
@@ -77,7 +77,7 @@ function generateValidateTab(project) {
             <div class="col-2"></div>
             <div id="phaseDate_div" class="col-6">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="all">
+                    <input class="form-check-input" type="checkbox" id="all" checked>
                     <label class="form-check-label" for="all">All</label>
                 </div>
 <!--            Dynamic Generated Phases Date-->
@@ -207,7 +207,7 @@ function insertPhaseDate(project) {
         let newPhaseDate = document.createElement('div');
         newPhaseDate.className = "form-check";
         newPhaseDate.innerHTML = `
-        <input class="form-check-input" type="checkbox">
+        <input class="form-check-input" type="checkbox" id="phase1_input">
         <label class="form-check-label" for="phase1">${phase.due}</label>
         `
 
@@ -216,7 +216,7 @@ function insertPhaseDate(project) {
         } else {
             phaseDateContainer.insertBefore(newPhaseDate, phaseDateContainer.firstChild.nextSibling.nextSibling);
         }
-    });
+    })
 }
 
 function insertPlanDeliverableTable(project) {
@@ -265,10 +265,6 @@ function insertPlanDeliverableTable(project) {
 
 function insertPointsChart(project) {
     const phases = project.phases;
-    phases.sort(function (a, b) {
-        return a.number - b.number;
-    });
-
     let phasesLabels = [];
     switch (phases.length) {
         case 1:
@@ -296,7 +292,7 @@ function insertPointsChart(project) {
     let overallMaxPoint = 0;
     phases.forEach(phase => {
         phase.deliverables.forEach(deliverable => {
-            if (deliverable.point !== null) {
+            if (!deliverable.point === null) {
                 currentTotalPoint += deliverable.point;
                 currentMaxPoint++;
                 overallTotalPoint += deliverable.point;
@@ -305,7 +301,6 @@ function insertPointsChart(project) {
         })
     });
     currentMaxPoint *= 10;
-    overallMaxPoint *= 10;
     phaseData.push(currentTotalPoint / currentMaxPoint * 100);
 
     //计算各个阶段分数
@@ -313,11 +308,10 @@ function insertPointsChart(project) {
         let phaseTotalPoint = 0;
         let phaseMaxPoint = 0;
         phase.deliverables.forEach(deliverable => {
-            phaseTotalPoint += deliverable.point !== null ? deliverable.point : 0;
-            phaseMaxPoint++;
+            phaseTotalPoint += deliverable.point === null ? deliverable.point : 0;
+            currentMaxPoint++;
         })
         phaseMaxPoint *= 10;
-
         phaseData.push(phaseTotalPoint / phaseMaxPoint * 100);
     });
 

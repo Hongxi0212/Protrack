@@ -35,6 +35,12 @@ public class WebController {
       return "contact";
    }
 
+
+   @GetMapping("/Gantt")
+   public String Gantt() {
+      return "gantt";
+   }
+
    @GetMapping("/dashboard/instr/{uid}")
    public String dashboard_prof(@PathVariable String uid) {
       return "dashboard_prof";
@@ -69,6 +75,7 @@ public class WebController {
    public String project_view_prof(@PathVariable String projectTitle, @PathVariable String id) {
       return "project_view_prof";
    }
+
 
    @GetMapping("/instr/{id}/{projectTitle}/edit")
    public String project_edit_prof(@PathVariable String projectTitle, @PathVariable String id){
