@@ -1,6 +1,7 @@
 package com.protrack.protrack.repositories;
 
 import com.protrack.protrack.entities.Deliverable;
+import com.protrack.protrack.entities.Member;
 import com.protrack.protrack.entities.Phase;
 import com.protrack.protrack.entities.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,6 @@ public interface DeliverableRepo extends JpaRepository<Deliverable, Integer> {
    @Modifying
    @Query("DELETE FROM Deliverable d WHERE d.phase.project=:project AND d.item=:item")
    void deleteDeliverableByProjectAndItem(@Param("project") Project project, @Param("item") String item);
+
+   List<Deliverable> findDeliverablesByMember(Member member);
 }

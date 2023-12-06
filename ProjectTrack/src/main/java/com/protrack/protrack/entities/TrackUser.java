@@ -71,13 +71,20 @@ public class TrackUser{
       this.role = role;
    }
 
-
    public String getPassword() {
       return password;
    }
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public Set<Member> getMembers() {
+      return members;
+   }
+
+   public void setMembers(Set<Member> members) {
+      this.members = members;
    }
 
    @Override

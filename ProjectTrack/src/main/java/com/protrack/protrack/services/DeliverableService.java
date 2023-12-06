@@ -1,6 +1,7 @@
 package com.protrack.protrack.services;
 
 import com.protrack.protrack.entities.Deliverable;
+import com.protrack.protrack.entities.Member;
 import com.protrack.protrack.entities.Phase;
 import com.protrack.protrack.entities.Project;
 import com.protrack.protrack.repositories.DeliverableRepo;
@@ -31,6 +32,10 @@ public class DeliverableService {
       repository.save(deliverable);
    }
 
+   public void updateDeliverables(Set<Deliverable> deliverables){
+      repository.saveAll(deliverables);
+   }
+
    public List<Deliverable> getDeliverablesWithProject(Project project){
       return repository.findDeliverablesByProject(project);
    }
@@ -50,5 +55,9 @@ public class DeliverableService {
    @Transactional
    public void removeDeliverableWithProjectAndItem(Project project, String item){
       repository.deleteDeliverableByProjectAndItem(project, item);
+   }
+
+   public List<Deliverable> getDeliverablesWithMember(Member member) {
+      return repository.findDeliverablesByMember(member);
    }
 }

@@ -2,8 +2,10 @@ package com.protrack.protrack.services;
 
 import com.protrack.protrack.entities.Member;
 import com.protrack.protrack.entities.Project;
+import com.protrack.protrack.entities.TrackUser;
 import com.protrack.protrack.exceptions.MemberNotFoundException;
 import com.protrack.protrack.repositories.MemberRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,6 @@ public class MemberService {
       this.repository = repository;
    }
 
-   public void deleteMembersWithProjectTitle(String title){
-      repository.deleteMembersByProjectTitle(title);
-   }
 
    public void addMember(Member member) {
       repository.save(member);
@@ -29,6 +28,11 @@ public class MemberService {
 
    public void addMembers(Set<Member> members){
       repository.saveAll(members);
+   }
+
+   @Transactional
+   public void removeMember(Member member) {
+      repository.delete(member);
    }
 
    public Member getMemberWithId(Integer id) {
@@ -43,7 +47,15 @@ public class MemberService {
                   "Member by User Name: " + name + " was not found!"));
    }
 
-   public List<Member> getMembersWithProjectTitle(String title) {
-      return repository.findMembersByProjectTitle(title);
+   public List<Member> getMembersWithProject(Project project) {
+      return repository.findMembersByProject(project);
+   }
+
+   public List<Member> getMembersWithTrackUser(TrackUser user){
+      return repository.findMembersByTrackUser(user);
+   }
+
+   public void updateMember(Member member) {
+      repository.save(member);
    }
 }

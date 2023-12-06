@@ -44,4 +44,8 @@ public class UserService {
             .orElseThrow(() -> new UserNotFoundException(
                   "User by Member ID: " + memberId + " was not found!"));
    }
+
+   public void updateTrackUser(TrackUser user){
+      repository.save(user);
+   }
 }

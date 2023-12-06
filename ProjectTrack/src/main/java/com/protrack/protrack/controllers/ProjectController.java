@@ -7,13 +7,12 @@ import com.protrack.protrack.entities.*;
 import com.protrack.protrack.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -88,7 +87,7 @@ public class ProjectController {
    @GetMapping("/{title}/view")
    public ResponseEntity<Map<String, Object>> getProjectInfoOfTitle(@PathVariable String title) {
       Project project = projectService.getProjectWithTitle(title);
-      List<Member> allMembers = memberService.getMembersWithProjectTitle(title);
+      List<Member> allMembers = memberService.getMembersWithProject(project);
       List<TrackUser> responsibles = new ArrayList<>();
       for (Member member : allMembers) {
          responsibles.add(member.getTrackUser());
@@ -116,10 +115,10 @@ public class ProjectController {
       project.setMeetingPlace(mPlaceNode.asText());
 
       if (phasesNode.isArray()) {
-         List<Phase> oldPhases=phaseService.getPhasesWithProject(project);
-         List<Phase> newPhases=new ArrayList<>();
-         List<Deliverable> oldDeliverables=deliverableService.getDeliverablesWithProject(project);
-         List<Deliverable> newDeliverables=new ArrayList<>();
+         List<Phase> oldPhases = phaseService.getPhasesWithProject(project);
+         List<Phase> newPhases = new ArrayList<>();
+         List<Deliverable> oldDeliverables = deliverableService.getDeliverablesWithProject(project);
+         List<Deliverable> newDeliverables = new ArrayList<>();
 
          for (JsonNode phaseNode : phasesNode) {
             Integer phaseNum = phaseNode.path("phaseNum").asInt();
@@ -165,24 +164,25 @@ public class ProjectController {
             phaseService.updatePhase(phase);
          }
 
-         for(Deliverable oldD:oldDeliverables) {
+         for (Deliverable oldD : oldDeliverables) {
             boolean isDeleted = true;
             for (Deliverable newD : newDeliverables) {
                if (oldD.getItem().equals(newD.getItem())) {
-                  isDeleted=false;
+                  isDeleted = false;
                   break;
                }
             }
             if (isDeleted) {
-                deliverableService.removeDeliverableWithProjectAndItem(project, oldD.getItem());
+               deliverableService.removeDeliverableWithProjectAndItem(project, oldD.getItem());
             }
          }
 
-         for (Phase oldPhase: oldPhases) {
+         for (Phase oldPhase : oldPhases) {
             boolean isDeleted = true;
-            for (Phase newPhase: newPhases) {
-               if (oldPhase.getNumber() == newPhase.getNumber()) {
+            for (Phase newPhase : newPhases) {
+               if (Objects.equals(oldPhase.getNumber(), newPhase.getNumber())) {
                   isDeleted = false;
+                  break;
                }
             }
             if (isDeleted) {
@@ -209,10 +209,10 @@ public class ProjectController {
 
       if (Objects.equals(role, "Student")) {
          String rubric = info.path("rubric").asText();
-         String strengthStu=info.path("strengthStu").asText();
-         String weaknessStu=info.path("weaknessStu").asText();
-         String errorStu=info.path("errorStu").asText();
-         String commentStu=info.path("commentStu").asText();
+         String strengthStu = info.path("strengthStu").asText();
+         String weaknessStu = info.path("weaknessStu").asText();
+         String errorStu = info.path("errorStu").asText();
+         String commentStu = info.path("commentStu").asText();
 
          project.setRubric(rubric);
          project.setStrengthStu(strengthStu);
@@ -221,12 +221,27 @@ public class ProjectController {
          project.setCommentStu(commentStu);
 
       } else if (Objects.equals(role, "Instructor")) {
-         JsonNode validateContent = info.path("validate");
+         JsonNode points = info.path("points");
 
-         String strengthInstr = validateContent.path("strengthInstr").asText();
-         String weaknessInstr = validateContent.path("weaknessInstr").asText();
-         String errorInstr = validateContent.path("errorInstr").asText();
-         String commentInstr = validateContent.path("commentInstr").asText();
+         if (points.isArray()) {
+            for (JsonNode point : points) {
+               Optional<Deliverable> opDeliverable = deliverableService.getDeliverableWithProjectAndItem(
+                     project, point.path("deliverableItem").asText());
+               Deliverable deliverable = new Deliverable();
+               if (opDeliverable.isPresent()) {
+                  deliverable = opDeliverable.get();
+               }
+
+               deliverable.setPoint(point.path("deliverablePoint").asInt());
+
+               deliverableService.updateDeliverable(deliverable);
+            }
+         }
+
+         String strengthInstr = info.path("strengthInstr").asText();
+         String weaknessInstr = info.path("weaknessInstr").asText();
+         String errorInstr = info.path("errorInstr").asText();
+         String commentInstr = info.path("commentInstr").asText();
 
          project.setStrengthInstr(strengthInstr);
          project.setWeaknessInstr(weaknessInstr);
@@ -239,19 +254,25 @@ public class ProjectController {
       return ResponseEntity.ok(project);
    }
 
-   @Transactional
    @PutMapping("/{title}/member/update")
-   public ResponseEntity<?> updateProjectMember(@RequestBody String membersInfo, @PathVariable String title) throws JsonProcessingException {
+   public ResponseEntity<?> updateProjectMember(@RequestBody String membersInfo, @PathVariable String title, HttpServletRequest request) throws JsonProcessingException {
       ObjectMapper mapper = new ObjectMapper();
       JsonNode members = mapper.readTree(membersInfo);
 
+      if (request.getSession().getAttribute("user") == null) {
+         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+      }
+
+      String userEmail = ((TrackUser) request.getSession().getAttribute("user")).getEmail();
+      TrackUser user = userService.getUserWithEmail(userEmail);
       Project project = projectService.getProjectWithTitle(title);
 
-      Set<Member> newMembers = new HashSet<>();
+      List<Member> projectMembers = memberService.getMembersWithProject(project);
+      List<Member> userMembers = memberService.getMembersWithTrackUser(user);
+      List<Member> newMembers = new ArrayList<>();
 
       if (members.isArray()) {
          for (JsonNode node : members) {
-            String name = node.get("name").asText();
             Integer id = node.get("id").asInt();
             String designation = node.get("designation").asText();
 
@@ -260,10 +281,39 @@ public class ProjectController {
             member.setDesignation(designation);
 
             newMembers.add(member);
+            memberService.updateMember(member);
          }
 
-         project.setMembers(newMembers);
-         memberService.addMembers(newMembers);
+         Iterator<Member> iterator=projectMembers.iterator();
+         while (iterator.hasNext()) {
+            Member oldMember =iterator.next();
+            boolean isDeleted = true;
+
+            for (Member newMember : newMembers) {
+               if (Objects.equals(oldMember.getTrackUser().getName(), newMember.getTrackUser().getName())) {
+                  isDeleted = false;
+                  break;
+               }
+            }
+            if (isDeleted) {
+               List<Deliverable> memberDeliverables = deliverableService.getDeliverablesWithMember(oldMember);
+
+               iterator.remove();
+               userMembers.remove(oldMember);
+               for (Deliverable deliverable : memberDeliverables) {
+                  deliverable.setMember(null);
+               }
+
+               project.setMembers(new HashSet<>(projectMembers));
+               user.setMembers(new HashSet<>(userMembers));
+
+               projectService.updateProject(project);
+               userService.updateTrackUser(user);
+               deliverableService.updateDeliverables(new HashSet<>(memberDeliverables));
+
+               memberService.removeMember(oldMember);
+            }
+         }
       }
 
       return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -277,12 +327,12 @@ public class ProjectController {
     * 如果包含则返回该user参与的所有project
     */
    @GetMapping("/user/allProjects")
-   public ResponseEntity<List<Project>> getProjectsOfInstructor(HttpServletRequest request) {
-      TrackUser user = (TrackUser) request.getSession().getAttribute("user");
+   public ResponseEntity<List<Project>> getProjectsOfUser(HttpServletRequest request) {
       if (request.getSession().getAttribute("user") == null) {
          return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
       }
 
+      TrackUser user = (TrackUser) request.getSession().getAttribute("user");
       List<Project> allProjects = projectService.getProjectsWithUser(user);
       return ResponseEntity.ok(allProjects);
    }

@@ -12,8 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(respObject => {
             const project = respObject.project;
-            const members=respObject.members;
-            console.log(members);
+            console.log(project);
 
             const titleContainer=document.getElementById('title_container');
 
@@ -26,15 +25,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (project.meetingTime === null && project.meetingPlace === null) {
                 tabContainer.appendChild(generateNoPlanTab());
 
-            } else {
-                tabContainer.appendChild(generatePlanTab(members));
+            }
+            else {
+                tabContainer.appendChild(generatePlanTab(project));
 
-                insertPlanMemberTable(members);
-                insertPlanDeliverableTable(members);
+                insertPlanMemberTable(project);
+                insertPlanDeliverableTable(project);
             }
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            console.error('Error:', error);
         });
 });
 
@@ -72,13 +72,11 @@ function generateNoPlanTab() {
     return noPlanTab;
 }
 
-function generatePlanTab(members){
-    const project=members[0].project;
-    let planTab=document.createElement('div');
-
-    planTab.className='tab-pane fade pt-3';
+function generatePlanTab(project) {
+    let planTab = document.createElement('div');
+    planTab.className = 'tab-pane fade pt-3';
     planTab.id = 'plan_tab';
-    planTab.innerHTML=`
+    planTab.innerHTML = `
         <form>
             <div class="row mb-3">
                 <label for="projectTitle_plan" class="col-3 col-form-label">Project Title</label>
@@ -90,7 +88,7 @@ function generatePlanTab(members){
             <div class="row mb-3">
                 <label for="teamNumbers_plan" class="col-3 col-form-label">Team Numbers</label>
                 <div class="col-9">
-                    <input id="teamNumbers_plan"  name="teamNumbers_plan" type="text" class="form-control" value=${members.length} disabled>
+                    <input id="teamNumbers_plan"  name="teamNumbers_plan" type="text" class="form-control" value=${project.members.length} disabled>
                 </div>
             </div>
 
@@ -104,8 +102,8 @@ function generatePlanTab(members){
                                 <thead>
                                 <tr>
                                     <th style="width:25%;">Name</th>
-                                    <th style="width:25%">ID</th>
-                                    <th style="width:25%">Contact</th>
+                                    <th style="width:15%">ID</th>
+                                    <th style="width:35%">Contact</th>
                                     <th style="width:25%">Designation</th>
                                 </tr>
                                 </thead>
@@ -136,31 +134,18 @@ function generatePlanTab(members){
 
             <div class="row mb-3">
                 <label class="col-3 col-form-label">Deliverables</label>
-                <table>
-                    <tbody>
+            <table class="table table-bordered">
+                <thead id="phase_thead">
                     <tr>
-                        <td>
-                            <table class="table table-bordered">
-                                <thead id="deliverables_thead">
-                                <tr>
-                                    <th style="width:15%;">Task</th>
-                                    <th style="width:25%;">Item</th>
-                                    <th style="width:15%">Phase</th>
-                                    <th style="width:15%">Responsible</th>
-                                    <th style="width:15%">Mode</th>
-                                    <th style="width:15%">Comment</th>
-                                </tr>
-                                </thead>
-
-                                <tbody id="deliverables_tbody">
-                                <!--Dynamic Load Deliverables Info-->
-                                
-                                </tbody>
-                            </table>
-                        </td>
+                        <th style="width:5%;">Phase</th>
+                        <th style="width:70%;">Content</th>
+                        <th style="width:25%;">Date</th>
                     </tr>
-                    </tbody>
-                </table>
+                </thead>
+                <tbody id="phases_tbody">
+                
+                </tbody>
+            </table>
             </div>
         </form>
     `
@@ -169,7 +154,8 @@ function generatePlanTab(members){
 }
 
 
-function insertPlanMemberTable(members) {
+function insertPlanMemberTable(project) {
+    let members=project.members;
     const membersTbody = document.getElementById("members_tbody");
 
     members.forEach(member => {
@@ -191,14 +177,19 @@ function insertPlanMemberTable(members) {
     })
 }
 
-function insertPlanDeliverableTable(members) {
-    let dlbrbsCount = 0;
+function insertPlanDeliverableTable(project) {
+    let phases = project.phases
+    let members = project.members;
+
+    let dlvrbsCount = 0;
 
     members.forEach(member => {
-        dlbrbsCount += member.deliverables.length;
+        dlvrbsCount += member.deliverables.length;
     });
 
-    if (dlbrbsCount === 0) {
+    const phaseTbody = document.getElementById("phases_tbody");
+
+    if (dlvrbsCount === 0) {
         const deliverableThead = document.getElementById("deliverables_thead");
 
         deliverableThead.innerHTML = ``;
@@ -210,24 +201,83 @@ function insertPlanDeliverableTable(members) {
 
         deliverableThead.appendChild(newInner);
 
-    } else {
-        const deliverableTbody = document.getElementById("deliverables_tbody");
+    }
+    else {
+        phases.sort(function (a, b) {
+            return a.number - b.number;
+        });
 
-        members.forEach(member => {
-            member.deliverables.forEach(deliverable => {
+        phases.forEach(phase => {
+            let newPhase = document.createElement('tr');
+
+            newPhase.innerHTML = `
+            <td><input type="text" class="form-control" placeholder="Phase Number" value=${switchIntRoman(phase.number)} disabled></td>
+            <td>
+                <table class="table table-bordered">
+                    <thead class="task_thead">
+                    <tr>
+                        <th style="width:15%;">Task</th>
+                        <th style="width:40%;">Item</th>
+                        <th style="width:25%">Responsible</th>
+                        <th style="width:20%">Mode</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="tasks_tbody">
+                    
+                    </tbody>
+                </table>
+            </td>
+            <td><input type="date" class="form-control" value=${phase.due} disabled></td>
+           `;
+
+            phaseTbody.appendChild(newPhase);
+        });
+
+        phases.forEach(phase => {
+            let currentTaskTbody = phaseTbody.children[phase.number - 1].querySelector(".tasks_tbody");
+            let responsible = "";
+
+            phase.deliverables.sort(function(a, b){
+                return a.number-b.number;
+            })
+
+            phase.deliverables.forEach(pdeliverable => {
+                members.forEach(member => {
+                    member.deliverables.forEach(mdeliverable => {
+                        if (mdeliverable.id === pdeliverable.id) {
+                            responsible = member.trackUser.name;
+                        }
+                    })
+                });
+
                 let deliverableRow = document.createElement('tr');
                 deliverableRow.innerHTML = `
-                <td><input type="text" class="form-control" placeholder="Task Number" value=${deliverable.number} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Task Name" value=${deliverable.item} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Phase Number" value=${deliverable.phase} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Responsible" value=${member.trackUser.name} disabled></td>
-                <td><input type="text" class="form-control" placeholder="Task Mode" value=${deliverable.mode} disabled> </td>
-                <td><input type="text" class="form-control" placeholder="Comment" value=${deliverable.comment} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Number" value=${pdeliverable.number} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Name" value=${pdeliverable.item} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Responsible" value=${responsible} disabled></td>
+                <td><input type="text" class="form-control" placeholder="Task Mode" value=${pdeliverable.mode} disabled> </td>
                 `;
 
-                deliverableTbody.appendChild(deliverableRow);
+                currentTaskTbody.appendChild(deliverableRow);
             });
         });
 
+    }
+}
+
+
+function switchIntRoman(swc) {
+    switch (swc) {
+        case 1:
+            return "I";
+        case 2:
+            return "II";
+        case 3:
+            return "III";
+        case 4:
+            return "IV";
+        case 5:
+            return "V";
     }
 }
