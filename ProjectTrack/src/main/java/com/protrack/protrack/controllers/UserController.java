@@ -17,6 +17,7 @@ import javax.sound.midi.Track;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/trackuser")
@@ -40,8 +41,8 @@ public class UserController {
       String password = jsNode.get("password").asText();
       String role = jsNode.get("role").asText();
 
-      TrackUser checkUser=service.getUserWithEmail(email);
-      if(checkUser!=null){
+      Optional<TrackUser> opUser=service.getUserWithEmail(email);
+      if(opUser.isPresent()){
          return new ResponseEntity<>(HttpStatus.FORBIDDEN);
       }
 
@@ -60,7 +61,14 @@ public class UserController {
       String email = jsNode.get("email").asText();
       String password = jsNode.get("password").asText();
 
-      TrackUser user = service.getUserWithEmail(email);
+      Optional<TrackUser> opUser = service.getUserWithEmail(email);
+      TrackUser user;
+      if(opUser.isPresent()){
+         user=opUser.get();
+      }
+      else{
+         return new ResponseEntity<>(new HashMap<>(), HttpStatus.NOT_FOUND);
+      }
       String role = user.getRole();
       Map<String, Object> response = new HashMap<>();
 

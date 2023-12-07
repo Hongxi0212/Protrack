@@ -312,7 +312,14 @@ public class ProjectController {
       }
 
       String userEmail = ((TrackUser) request.getSession().getAttribute("user")).getEmail();
-      TrackUser user = userService.getUserWithEmail(userEmail);
+      Optional<TrackUser> opUser=userService.getUserWithEmail(userEmail);
+      TrackUser user;
+      if(opUser.isPresent()){
+         user=opUser.get();
+      }
+      else{
+         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+      }
       Project project = projectService.getProjectWithTitle(title);
 
       List<Member> projectMembers = memberService.getMembersWithProject(project);

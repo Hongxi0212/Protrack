@@ -20,8 +20,11 @@ document.getElementById('login-btn').addEventListener('click', async function ()
                 response => response.json()
             )
             .then(user => {
-                if(user.success===false){
+                if(user.status===403){
                     alert("Wrong Email or Password!");
+                }
+                if(user.status===404){
+                    alert("Account Email does Not Existed!");
                 }
 
                 if (user.message==="STUDENT") {

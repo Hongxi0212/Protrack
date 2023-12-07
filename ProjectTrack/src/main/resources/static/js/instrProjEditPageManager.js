@@ -541,6 +541,9 @@ function listenSaveMemberBtn(){
                 if(response.status===202){
                     alert("Remove Project Member Successful!");
                 }
+                if(response.status===404){
+                    alert("Wrong Member Information! Please check and try Again.");
+                }
                 window.location.reload();
             })
             .catch(error => {

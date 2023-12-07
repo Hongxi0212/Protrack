@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,10 +30,8 @@ public class UserService {
                   "User by ID: " + id + " was not found!"));
    }
 
-   public TrackUser getUserWithEmail(String email) {
-      return repository.findUserByEmail(email)
-            .orElseThrow(() -> new UserNotFoundException(
-                  "User by Emial: " + email + " was not found!"));
+   public Optional<TrackUser> getUserWithEmail(String email) {
+      return repository.findUserByEmail(email);
    }
 
    public List<TrackUser> getTrackUsersWithProject(Project project) {
