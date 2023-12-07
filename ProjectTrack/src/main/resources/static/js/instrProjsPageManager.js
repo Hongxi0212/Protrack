@@ -123,7 +123,9 @@ function listenProjectCreateBtn(id) {
                 })
             })
                 .then(function (response) {
-                    alert(response.status);
+                    if(response.status===201){
+                        alert("Create Project Successful!")
+                    }
                     window.location.href = "/protrack/dashboard/instr/" + id;
                 })
                 .catch(error => {

@@ -20,7 +20,10 @@ document.getElementById('login-btn').addEventListener('click', async function ()
                 response => response.json()
             )
             .then(user => {
-                console.log(user);
+                if(user.success===false){
+                    alert("Wrong Email or Password!");
+                }
+
                 if (user.message==="STUDENT") {
                     window.location.href = `/protrack/dashboard/stu/${user.uid}`
                 }

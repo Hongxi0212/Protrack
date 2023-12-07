@@ -44,15 +44,18 @@
             <span class="d-none d-lg-block">ProTrack</span>
         </a>
     </div>
+<!--
+
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Prof. CBA</span>
+                    <span id="name_span" class="d-none d-md-block dropdown-toggle ps-2">Prof. ABC</span>
                 </a>
             </li>
         </ul>
     </nav>
+-->
 
 </header>
 
@@ -128,17 +131,15 @@
                                     Gantt Chart
                                 </button>
                             </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pert_tab">
-                                    PERT Chart
-                                </button>
-                            </li>
                         </ul>
 
 
                         <div id="tab_container" class="tab-content pt-2">
                             <!--Dynamic Load Project Tab-->
 
+                            <div id="gantt_tab" class="tab-pane fade">
+                                <div id="gantt_chart_div"></div>
+                            </div>
                         </div>
 <!--
                         <div class="tab-content pt-2">
@@ -494,6 +495,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/mainPageSideNavDirector.js"></script>
 <script src="/js/instrProjEditPageManager.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/js/ganttChartCreator.js"></script>
 
 </body>
 </html>

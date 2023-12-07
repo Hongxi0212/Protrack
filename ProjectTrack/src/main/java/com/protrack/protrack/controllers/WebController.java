@@ -37,7 +37,7 @@ public class WebController {
 
    @GetMapping("/dashboard/instr/{uid}")
    public String dashboard_prof(@PathVariable String uid) {
-      return "dashboard_prof";
+      return "dashboard_instr";
    }
 
    @GetMapping("/dashboard/stu/{uid}")
@@ -47,7 +47,7 @@ public class WebController {
 
    @GetMapping("/projects/instr/{uid}")
    public String projects_prof(@PathVariable String uid) {
-      return "projects_prof";
+      return "projects_instr";
    }
 
    @GetMapping("/projects/stu/{uid}")
@@ -67,12 +67,12 @@ public class WebController {
 
    @GetMapping("/instr/{id}/{projectTitle}/view")
    public String project_view_prof(@PathVariable String projectTitle, @PathVariable String id) {
-      return "project_view_prof";
+      return "project_view_instr";
    }
 
    @GetMapping("/instr/{id}/{projectTitle}/edit")
    public String project_edit_prof(@PathVariable String projectTitle, @PathVariable String id){
-      return "project_edit_prof";
+      return "project_edit_instr";
    }
 
    @GetMapping("/instr/{id}/{projectTitle}/validate")

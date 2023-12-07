@@ -77,7 +77,7 @@ function generateValidateTab(project){
             <div class="col-2"></div>
             <div id="phaseDate_div" class="col-6">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="all">
+                    <input class="form-check-input" type="checkbox" id="all_checkbox_input">
                     <label class="form-check-label" for="all">All</label>
                 </div>
 <!--            Dynamic Generated Phases Date-->
@@ -207,9 +207,9 @@ function insertPhaseDate(project) {
         let newPhaseDate = document.createElement('div');
         newPhaseDate.className = "form-check";
         newPhaseDate.innerHTML = `
-        <input class="form-check-input" type="checkbox">
+        <input class="form-check-input" type="checkbox" ${phase.hasCompleted ? 'checked' : ''}>
         <label class="form-check-label" for="phase1">${phase.due}</label>
-        `
+        `;
 
         if (phaseDateContainer.children.length === 1) {
             phaseDateContainer.appendChild(newPhaseDate);
@@ -217,11 +217,23 @@ function insertPhaseDate(project) {
             phaseDateContainer.insertBefore(newPhaseDate, phaseDateContainer.firstChild.nextSibling.nextSibling);
         }
     });
+
+    let checkCount = 0;
+    document.querySelectorAll("#phaseDate_div div").forEach(div => {
+        let date = div.querySelector("label").textContent;
+        let hasCompleted = div.querySelector("input[type='checkbox']").checked
+
+        if (date !== "All" && hasCompleted === true) {
+            checkCount++;
+        }
+    });
+
+    let allCheckBox=document.getElementById("all_checkbox_input");
+    allCheckBox.checked = checkCount === phases.length;
 }
 
 
 function insertPlanDeliverableTable(project) {
-    let phases = project.phases
     let members = project.members;
 
     let dlvrbsCount = 0;
@@ -229,9 +241,6 @@ function insertPlanDeliverableTable(project) {
     members.forEach(member => {
         dlvrbsCount += member.deliverables.length;
     });
-
-    const phaseTbody = document.getElementById("phases_tbody");
-    const tasksTbody = document.querySelector(".tasks_tbody");
 
     if (dlvrbsCount === 0) {
         const deliverableThead = document.getElementById("deliverables_thead");
@@ -365,6 +374,36 @@ function listenSaveValidateBtn() {
     const saveBtn = document.getElementById("validate_save_btn");
 
     saveBtn.addEventListener('click', function () {
+        let checks=[];
+        document.querySelectorAll("#phaseDate_div div").forEach(div=>{
+            let check= {
+                date: div.querySelector("label").textContent,
+                hasCompleted: div.querySelector("input[type='checkbox']").checked
+            }
+
+            checks.push(check);
+        });
+
+        let points=[];
+        let pointsLegal=true;
+        document.querySelectorAll("#deliverables_tbody tr").forEach(row=>{
+            let point={
+                deliverableItem:row.querySelector("input[placeholder='Task Name']").value,
+                deliverablePoint:row.querySelector("input[placeholder='Point']").value
+            }
+
+            if(point.deliverablePoint>10){
+                pointsLegal=false;
+            }
+
+            points.push(point);
+        });
+
+        if(!pointsLegal){
+            alert("Deliverable Point Must be within 0 to 10!");
+            return;
+        }
+
         //let rubric = document.getElementById("rubric_textarea").value;
         //let strengthStu = document.getElementById("strength_stu_textarea").value;
         let strengthInstr = document.getElementById("strength_instr_textarea").value;
@@ -375,19 +414,10 @@ function listenSaveValidateBtn() {
         //let commentStu = document.getElementById("comment_stu_textarea").value;
         let commentInstr = document.getElementById("comment_instr_textarea").value;
 
-        let points=[];
-        document.querySelectorAll("#deliverables_tbody tr").forEach(row=>{
-            let point={
-                deliverableItem:row.querySelector("input[placeholder='Task Name']").value,
-                deliverablePoint:row.querySelector("input[placeholder='Point']").value
-            }
-
-            points.push(point);
-        })
-
         let role = "Instructor";
         let info = {
             role,
+            checks,
             points,
             strengthInstr,
             weaknessInstr,

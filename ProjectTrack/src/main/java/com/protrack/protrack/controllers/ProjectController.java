@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.protrack.protrack.entities.*;
+import com.protrack.protrack.exceptions.MemberNotFoundException;
+import com.protrack.protrack.exceptions.ProjectNotFoundException;
 import com.protrack.protrack.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -60,18 +62,26 @@ public class ProjectController {
       JsonNode jsNode = mapper.readTree(info);
       Integer id = jsNode.get("id").asInt();
       Integer code = jsNode.get("code").asInt();
-      Project proj = projectService.findProjectByCode(code);
-      if (proj == null) {
+
+      Project project;
+      try{
+         project = projectService.findProjectByCode(code);
+      }
+      catch (ProjectNotFoundException e){
+         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+
+      if (project == null) {
          return new ResponseEntity<>(HttpStatus.FORBIDDEN);
       }
 
       TrackUser user = userService.getUserWithId(id);
 
-      boolean hasBeenMember = proj.getMembers().stream()
+      boolean hasBeenMember = project.getMembers().stream()
             .anyMatch(member -> member.getTrackUser().equals(user));
 
       if (!hasBeenMember) {
-         Member member = new Member(proj, user);
+         Member member = new Member(project, user);
          memberService.addMember(member);
       }
 
@@ -141,7 +151,14 @@ public class ProjectController {
                   String taskName = taskNode.path("taskName").asText();
                   String taskMode = taskNode.path("taskMode").asText();
                   Float taskNumber = (float) taskNode.path("taskNumber").asDouble();
-                  Member member = memberService.getMemberWithProjectTitleAndTrackUserName(title, taskNode.get("responsible").asText());
+
+                  Member member;
+                  try{
+                     member = memberService.getMemberWithProjectTitleAndTrackUserName(title, taskNode.get("responsible").asText());
+                  }
+                  catch (MemberNotFoundException e){
+                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                  }
 
                   Optional<Deliverable> opDeliverable = deliverableService.getDeliverableWithProjectAndPhaseAndNumber(project, phase, taskNumber);
                   if (opDeliverable.isEmpty()) {
@@ -203,9 +220,40 @@ public class ProjectController {
       System.out.println(validateInfo);
       JsonNode info = mapper.readTree(validateInfo);
 
-      String role = info.path("role").asText();
-
       Project project = projectService.getProjectWithTitle(title);
+
+      String role = info.path("role").asText();
+      JsonNode checks=info.path("checks");
+      if(checks.isArray()) {
+         for (JsonNode check : checks) {
+            Boolean hasCompleted = check.path("hasCompleted").asBoolean();
+            String dueString = check.path("date").asText();
+            System.out.println(dueString);
+            System.out.println(hasCompleted);
+            if (Objects.equals(dueString, "All")) {
+               if (hasCompleted) {
+                  List<Phase> phases = phaseService.getPhasesWithProject(project);
+
+                  for (Phase phase : phases) {
+                     phase.setHasCompleted(true );
+                     phaseService.updatePhase(phase);
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+
+            LocalDate due = LocalDate.parse(dueString);
+
+            Phase phase = phaseService.getPhaseWithProjectAndDue(project, due);
+
+            phase.setHasCompleted(hasCompleted);
+
+            phaseService.updatePhase(phase);
+         }
+      }
 
       if (Objects.equals(role, "Student")) {
          String rubric = info.path("rubric").asText();

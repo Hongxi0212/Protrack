@@ -40,6 +40,10 @@ public class UserController {
       String password = jsNode.get("password").asText();
       String role = jsNode.get("role").asText();
 
+      TrackUser checkUser=service.getUserWithEmail(email);
+      if(checkUser!=null){
+         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+      }
 
       String encryptedPassword = passwordEncoder.encode(password);
       TrackUser user = new TrackUser(name, email, role, encryptedPassword);

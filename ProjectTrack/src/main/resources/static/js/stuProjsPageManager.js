@@ -115,8 +115,13 @@ function listenProjectJoinBtn(id) {
                 })
             })
                 .then(function (response) {
-                    alert(response.status);
-                    window.location.href = "/protrack/projects/stu/" + id;
+                    if(response.status===201){
+                        alert("Join Project Successful!");
+                        window.location.href = "/protrack/projects/stu/" + id;
+                    }
+                    if(response.status===404){
+                        alert("No Project with Code Found!");
+                    }
                 })
                 .catch(error => {
                     console.error('Error: ', error);

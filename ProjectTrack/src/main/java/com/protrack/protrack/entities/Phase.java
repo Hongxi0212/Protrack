@@ -24,6 +24,9 @@ public class Phase {
    @Column(name = "Due")
    private LocalDate due;
 
+   @Column(name = "has_completed")
+   private Boolean hasCompleted;
+
    @OneToMany(mappedBy = "phase", cascade = CascadeType.REMOVE)
    @JsonSerialize
    @JsonManagedReference
@@ -64,6 +67,14 @@ public class Phase {
 
    public void setDue(LocalDate due) {
       this.due = due;
+   }
+
+   public Boolean getHasCompleted() {
+      return hasCompleted;
+   }
+
+   public void setHasCompleted(Boolean hasCompleted) {
+      this.hasCompleted = hasCompleted;
    }
 
    public Set<Deliverable> getDeliverables() {

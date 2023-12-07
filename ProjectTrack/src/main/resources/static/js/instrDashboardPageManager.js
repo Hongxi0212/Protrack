@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetch('/project/user/allProjects')
         .then(response => {
-            if(!response.ok){
+            if(response.status===403){
                 document.body.innerHTML = '<h1>403 Forbidden</h1><p>Access to this resource on the server is denied!</p>';
             }
 

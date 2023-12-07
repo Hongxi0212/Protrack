@@ -28,21 +28,13 @@ public class Project {
    private String meetingPlace;
    @Column(name="Rubric")
    private String rubric;
-   @Column(name="StrengthStu")
    private String strengthStu;
-   @Column(name="StrengthInstr")
    private String strengthInstr;
-   @Column(name="WeaknessStu")
    private String weaknessStu;
-   @Column(name="WeaknessInstr")
    private String weaknessInstr;
-   @Column(name="ErrorStu")
    private String errorStu;
-   @Column(name="ErrorInstr")
    private String errorInstr;
-   @Column(name="CommentStu")
    private String commentStu;
-   @Column(name="CommentInstr")
    private String commentInstr;
 
    @ManyToOne

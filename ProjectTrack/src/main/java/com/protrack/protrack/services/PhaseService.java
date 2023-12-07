@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.protrack.protrack.entities.Project;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -42,6 +43,10 @@ public class PhaseService {
 
    public Optional<Phase> getPhaseWithProjectAndNumber(Project project, Integer number){
       return repository.findPhaseByProjectAndNumber(project, number);
+   }
+
+   public Phase getPhaseWithProjectAndDue(Project project, LocalDate due){
+      return repository.findPhasesByProjectAndDue(project, due);
    }
 
    public void deletePhasesWithProject(Project project){

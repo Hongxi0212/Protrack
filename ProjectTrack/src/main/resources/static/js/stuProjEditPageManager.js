@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listenSavePlanBtn();
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            console.error('Error: ', error);
         });
 });
 
@@ -109,7 +109,6 @@ function insertPlanDeliverableTable(project) {
     });
 
     const phaseTbody = document.getElementById("phases_tbody");
-    const tasksTbody = document.querySelector(".tasks_tbody");
 
     if (dlvrbsCount === 0) {
         let newPhase = document.createElement('tr');
@@ -191,8 +190,8 @@ function insertPlanDeliverableTable(project) {
             let currentTaskTbody = phaseTbody.children[phase.number - 1].querySelector(".tasks_tbody");
             let responsible = "";
 
-            phase.deliverables.sort(function(a, b){
-                return a.number-b.number;
+            phase.deliverables.sort(function (a, b) {
+                return a.number - b.number;
             })
 
             phase.deliverables.forEach(pdeliverable => {
@@ -350,10 +349,30 @@ function listenSavePlanBtn() {
             taskTbody.removeChild(taskTbody.lastElementChild);
         }
 */
+
+        let dates = document.querySelectorAll("#phases_tbody input[type='date']");
+        let previousDate = null;
+        let phaseDueLegal = true;
+
+        dates.forEach(function(input) {
+            let currentDate = new Date(input.value);
+
+            if (previousDate !== null && currentDate <= previousDate) {
+                phaseDueLegal = false;
+            }
+            previousDate = currentDate;
+        });
+
+        if(!phaseDueLegal){
+            alert("Wrong Phase Due Order!");
+            return;
+        }
+
         let mTime = document.getElementById("mTime_input").value;
         let mPlace = document.getElementById("mPlace_input").value;
         let phases = [];
-
+        let allTasks=[];
+        let taskNumberLegal=true;
         document.querySelectorAll("#phases_tbody > tr").forEach(row => {
             let tasks = [];
 
@@ -366,7 +385,8 @@ function listenSavePlanBtn() {
                 }
 
                 tasks.push(task);
-            })
+                allTasks.push(task);
+            });
 
             let phase = {
                 allTask: tasks,
@@ -377,13 +397,24 @@ function listenSavePlanBtn() {
             phases.push(phase);
         });
 
+        for(let i=0;i<allTasks.length;i++){
+            for(let j=i+1;j<allTasks.length;j++){
+                if(allTasks[i].taskNumber===allTasks[j].taskNumber||allTasks[i].taskName===allTasks[j].taskName){
+                    taskNumberLegal=false;
+                }
+            }
+        }
+
+        if(!taskNumberLegal){
+            alert("Duplicate Item Name or Task Number!");
+            return;
+        }
+
         let plan = {
             mTime,
             mPlace,
             phases
         }
-
-        console.log(JSON.stringify(plan));
 
         let title = window.location.pathname.split('/')[4];
 
@@ -395,8 +426,13 @@ function listenSavePlanBtn() {
             body: JSON.stringify(plan)
         })
             .then(function (response) {
-                alert(response.status);
-                window.location.href = window.location.pathname.slice(0, -4) + "view";
+                if(response.status===200){
+                    alert("Edit Project Plan Successful!");
+                    window.location.href = window.location.pathname.slice(0, -4) + "view";
+                }
+                if(response.status===404){
+                    alert("Wrong Responsible For Deliverable. Please Check Name Spelling!")
+                }
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);

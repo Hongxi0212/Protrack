@@ -1,3 +1,18 @@
+function showName(user) {
+    const nameSpan = document.getElementById("name_span");
+
+    if (user.role === "Instructro") {
+        nameSpan.innerHTML = `
+        Instr. ${user.name}
+        `;
+    }
+    if (user.role === "Student") {
+        nameSpan.innerHTML = `
+        Stu. ${user.name}
+        `;
+    }
+}
+
 function listenStuDashboardNavA(id) {
     const dashboardA = document.getElementById('sidenav_dashboard_a');
 
