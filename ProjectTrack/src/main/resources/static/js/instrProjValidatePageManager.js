@@ -237,7 +237,6 @@ function insertPlanDeliverableTable(project) {
     let members = project.members;
 
     let dlvrbsCount = 0;
-
     members.forEach(member => {
         dlvrbsCount += member.deliverables.length;
     });

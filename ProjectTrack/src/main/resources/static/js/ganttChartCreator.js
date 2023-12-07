@@ -14,6 +14,25 @@ function drawChart() {
             const project = respObject.project;
             let phases = project.phases;
 
+            let dlvrbsCount = 0;
+            if (phases.length !== 0) {
+                phases.forEach(phase => {
+                    dlvrbsCount += phase.deliverables.length;
+                });
+            }
+
+            if (dlvrbsCount === 0) {
+                let tabContainer=document.getElementById("tab_container");
+                let ganttTab=document.getElementById("gantt_tab");
+                ganttTab.innerHTML = `
+                <p>Students have not created any Phases and Deliverables.</p>
+                `;
+
+                tabContainer.append(ganttTab);
+
+                return;
+            }
+
             phases.sort(function (a, b) {
                 return a.number - b.number;
             });
